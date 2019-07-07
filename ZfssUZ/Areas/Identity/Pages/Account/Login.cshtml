@@ -1,0 +1,99 @@
+﻿@page
+@model LoginModel
+
+@{
+    Layout = "";
+}
+
+<head>
+    <script>
+        addEventListener("load", function () {
+            setTimeout(hideURLbar, 0);
+        }, false);
+
+        function hideURLbar() {
+            window.scrollTo(0, 1);
+        }
+/**/</script>
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+    </environment>
+    <link href="~/css/font-awesome.css" rel="stylesheet">
+    <link href="~/css/style.css" rel='stylesheet' type='text/css' />
+    <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:200,200i,300,300i,400,400i,600,600i,700,700i,900,900i&amp;subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext,vietnamese" rel="stylesheet">
+</head>
+
+<body>
+    <h1 style="padding:0">Zakładowy Fundusz Świadczeń Socjalnych</h1>
+    <h1 style="padding:20px"> Uniwersytetu Zielonogórskiego</h1>
+    <div class="clear-loading spinner">
+        <span></span>
+    </div>
+    <div class="w3ls-login box box--big">
+        <form method="post">
+            <label style="font-size:48px; color:khaki; align-content:center">Logowanie</label>
+            <div class="agile-field-txt">
+                <div class="form-group">
+                    <label asp-for="Input.Username">Nazwa użytkownika</label>
+                    <input asp-for="Input.Username" class="form-control" placeholder="Wprowadź nazwę użytkownika" required />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.Password">Hasło</label>
+                    <input asp-for="Input.Password" class="form-control" placeholder="Wprowadź hasło" id="myInput" required />
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label asp-for="Input.RememberMe">
+                            <input asp-for="Input.RememberMe" />
+                            @Html.DisplayNameFor(m => m.Input.RememberMe)
+                        </label>
+                        <input id="check3" name="check3" type="checkbox" value="Pokaż hasło" onclick="myFunction()">
+                        <label class="check" id="showPassword" for="check3" style="font-size:24px">Pokaż hasło</label>
+                    </div>
+                </div>
+                <div class="agile_label">
+
+                </div>
+            </div>
+            <script>
+                function myFunction() {
+                    var x = document.getElementById("myInput");
+                    var label = document.getElementById("showPassword");
+                    if (x.type === "password") {
+                        x.type = "text";
+                        label.innerText = "Ukryj hasło";
+                    } else {
+                        x.type = "password";
+                        label.innerText = "Pokaż hasło";
+                    }
+                }
+            </script>
+
+            <input type="submit" value="Zaloguj" id="LogInBtn">
+            <script>
+                var x = @ViewData["ModelIsValid"].ToString().ToLower();
+                if (!x) {
+                    alert("Nieprawidłowa nazwa użytkownika lub hasło");
+                }
+            </script>
+
+            <input type="button" value="Zapomniałeś hasła?" onclick="window.location.href = '@Url.Action("Account/ForgotPassword", "Identity")';" />
+        </form>
+    </div>
+    <div class="copy-wthree" style="text-align:left; padding:0; position:fixed; bottom:0">
+        <p><b>© Projekt i wykonanie: Jędrzej Krysiukiewicz</b></p>
+        <p>Wydział Informatyki, Elektrotechniki i Automatyki</p>
+        <p>Uniwersytet Zielonogórski </p>
+        <p>2019</p>
+    </div>
+</body>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
