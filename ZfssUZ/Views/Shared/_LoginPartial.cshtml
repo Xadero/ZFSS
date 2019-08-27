@@ -1,26 +1,54 @@
-@using Microsoft.AspNetCore.Identity
+﻿@using Microsoft.AspNetCore.Identity
 @using ZfssUZData.Models.Users
+@using Microsoft.AspNetCore.Mvc.Localization
 
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
+@inject IViewLocalizer Localizer
 
 @if (SignInManager.IsSignedIn(User))
 {
     <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm" class="navbar-right">
         <ul class="nav navbar-nav navbar-right">
-            <li>
-                <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@UserManager.GetUserName(User)!</a>
-            </li>
-            <li>
-                <button type="submit" class="btn btn-link navbar-btn navbar-link">Logout</button>
+            @if (UserManager.GetUserAsync(User).Result.UserGroupId == 1)
+            {
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="collapse" role="button">
+                        @Localizer["Administrative panel"]
+                        <span class="caret"></span>
+                    </a>
+
+                    <ul class="dropdown-menu" role="menu">
+                        <li role="presentation">
+                            <a href="#'>@Localizer["User list"]</a>
+                        </li>
+
+                        <li role="presentation">
+                            <a asp-area="Identity" asp-page="/Account/Register">@Localizer["Add user"]</a>
+                        </li>
+                    </ul>
+                </li>
+            }
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="collapse" role="button">
+                    <b>@UserManager.GetUserAsync(User).Result.FirstName @UserManager.GetUserAsync(User).Result.LastName </b>
+                    <span class="caret"></span>
+                </a>
+
+                <ul class="dropdown-menu" role="menu">
+                    <li role="presentation">
+                        <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Wyświetl profil</a>
+                    </li>
+
+                    <li role="presentation">
+                        <button type="submit" class="btn btn-link navbar-btn navbar-link"><b>Wyloguj</b></button>
+                    </li>
+                </ul>
             </li>
         </ul>
     </form>
 }
 else
 {
-    <ul class="nav navbar-nav navbar-right">
-        <li><a asp-area="Identity" asp-page="/Account/Register">Register</a></li>
-        <li><a asp-area="Identity" asp-page="/Account/Login">Login</a></li>
-    </ul>
+
 }

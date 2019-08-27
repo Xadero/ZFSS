@@ -31,19 +31,20 @@
 </head>
 
 <body>
-    <h1 style="padding:0">Zakładowy Fundusz Świadczeń Socjalnych</h1>
-    <h1 style="padding:20px"> Uniwersytetu Zielonogórskiego</h1>
+    <h1 style="padding:20px; text-align:left">Zakładowy Fundusz Świadczeń Socjalnych</h1>
+    <h1 style="padding:20px;text-align:left">Uniwersytetu Zielonogórskiego</h1>
     <div class="clear-loading spinner">
         <span></span>
     </div>
     <div class="w3ls-login box box--big">
-        <form method="post">
+        <form method="post" style="padding-top:10px">
             <label style="font-size:48px; color:khaki; align-content:center">Logowanie</label>
             <div class="agile-field-txt">
                 <div class="form-group">
                     <label asp-for="Input.Username">Nazwa użytkownika</label>
                     <input asp-for="Input.Username" class="form-control" placeholder="Wprowadź nazwę użytkownika" required />
                 </div>
+                <br />
                 <div class="form-group">
                     <label asp-for="Input.Password">Hasło</label>
                     <input asp-for="Input.Password" class="form-control" placeholder="Wprowadź hasło" id="myInput" required />

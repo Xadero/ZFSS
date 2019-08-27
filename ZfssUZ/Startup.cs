@@ -10,6 +10,11 @@ using ZfssUZData;
 using ZfssUZData.Models.Users;
 using ZfssUZService;
 using ZfssUZData.Interfaces;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Mvc.Razor;
+using System.Collections.Generic;
 
 namespace ZfssUZ
 {
@@ -41,7 +46,25 @@ namespace ZfssUZ
                 .AddDefaultUI();
 
             services.AddScoped<IUserService, UserService>();
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
+
+            services.AddMvc()
+            .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix, opts => { opts.ResourcesPath = "Resources"; })
+            .AddDataAnnotationsLocalization();
+
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                var supportedCultures = new[]
+                {
+                    new CultureInfo("pl"),
+                    new CultureInfo("en"),
+                    new CultureInfo("fr")
+                };
+                options.DefaultRequestCulture = new RequestCulture("pl");
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,6 +86,8 @@ namespace ZfssUZ
             app.UseCookiePolicy();
 
             app.UseAuthentication();
+
+            app.UseRequestLocalization(app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>().Value);
 
             app.UseMvc(routes =>
             {

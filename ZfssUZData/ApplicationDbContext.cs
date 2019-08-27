@@ -7,7 +7,7 @@ namespace ZfssUZData
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
-
+       
         public new DbSet<ApplicationUser> Users { get; set; }
     }
 }
