@@ -9,5 +9,7 @@ namespace ZfssUZData
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
        
         public new DbSet<ApplicationUser> Users { get; set; }
+
+        public new DbSet<UserGroup> UserGroups { get; set; }
     }
 }

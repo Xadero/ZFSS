@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -94,6 +95,7 @@ namespace ZfssUZ.Areas.Identity.Pages.Account
         public void OnGet(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
+            ViewData["ModelIsValid"] = false;
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
@@ -129,7 +131,8 @@ namespace ZfssUZ.Areas.Identity.Pages.Account
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    //await _signInManager.SignInAsync(user, isPersistent: false);
+                    ViewData["ModelIsValid"] = true;
                     return LocalRedirect(returnUrl);
                 }
                 foreach (var error in result.Errors)

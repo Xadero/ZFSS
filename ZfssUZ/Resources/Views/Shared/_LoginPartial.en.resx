@@ -126,4 +126,7 @@
   <data name="User list" xml:space="preserve">
     <value>User list</value>
   </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Logout</value>
+  </data>
 </root>

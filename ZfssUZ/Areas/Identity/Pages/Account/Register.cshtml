@@ -79,11 +79,22 @@
             </div>
 
 
-            <button type="submit" class="btn btn-default">Register</button>
+            <button type="submit" class="btn btn-default" onclick="validateOnRegister()">Register</button>
+            <script>
+
+            </script>
         </form>
     </div>
 </div>
 
+<script type="text/javascript">
+    function validateOnRegister() {
+        var x = @ViewData["ModelIsValid"].ToString().ToLower();
+        if (x) {
+            alert("Konto użytkownika zostało utworzone prawidłowo");
+        }
+    }
+</script>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
