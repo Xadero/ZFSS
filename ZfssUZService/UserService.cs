@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using ZfssUZData;
 using ZfssUZData.Interfaces;
@@ -22,6 +23,18 @@ namespace ZfssUZService
         public UserGroup GetUserGroupById(decimal id)
         {
             return applicationDbContext.UserGroups.Where(x => x.Id == id).First();
+        }
+
+        public void LockUser(string id)
+        {
+            applicationDbContext.Users.Where(x => x.Id == id).First().LockoutEnd = new DateTime(2099, 1, 1);
+            applicationDbContext.SaveChanges();
+        }
+
+        public void UnlockUser(string id)
+        {
+            applicationDbContext.Users.Where(x => x.Id == id).First().LockoutEnd = null;
+            applicationDbContext.SaveChanges();
         }
     }
 }

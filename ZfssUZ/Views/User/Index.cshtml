@@ -14,7 +14,7 @@
         <div>
             <input class="form-control" id="myInput" type="text" placeholder="Search..">
             <br>
-            <table class="table table-striped table-bordered table-sm table-responsive table-hover" id="submissionIndexTable">
+            <table class="table table-bordered table-sm table-responsive " id="submissionIndexTable">
                 <thead>
                     <tr>
                         <th clss="th-sm">Nazwa użytkownika</th>
@@ -26,23 +26,49 @@
                         <th clss="th-sm">Kod pocztowy</th>
                         <th clss="th-sm">Miasto</th>
                         <th clss="th-sm">Grupa użytkowników</th>
+                        <th clss="th-sm"></th>
+                        <th clss="th-sm"></th>
+                        <th clss="th-sm"></th>
+                        <th clss="th-sm"></th>
                     </tr>
                 </thead>
                 <tbody id="myTable">
+                    @{int i = 0;}
                     @foreach (var userList in Model.UserList)
                     {
-                        <tr>
-                            <td>@userList.Username</td>
-                            <td>@userList.Firstname</td>
-                            <td>@userList.LastName</td>
-                            <td>@userList.EmailAddress</td>
-                            <td>@userList.PhoneNumber</td>
-                            <td>@userList.Address</td>
-                            <td>@userList.PostCode</td>
-                            <td>@userList.City</td>
-                            <td>@userList.UserGroup</td>
-                            @*<td><input type="submit" class="btn btn-default" id="sendSubmission" value="Prześlij wniosek" /></td>*@
-                        </tr>
+                    <tr id="userList@(i)">
+                        <td>@userList.Username</td>
+                        <td>@userList.Firstname</td>
+                        <td>@userList.LastName</td>
+                        <td>@userList.EmailAddress</td>
+                        <td>@userList.PhoneNumber</td>
+                        <td>@userList.Address</td>
+                        <td>@userList.PostCode</td>
+                        <td>@userList.City</td>
+                        <td>@userList.UserGroup</td>
+                        <td><input type="submit" class="btn btn-default" id="sendSubmission" value="wyświetl" /></td>
+                        <td><input type="submit" class="btn btn-default" id="sendSubmission" value="Edytuj" /></td>
+                        <td><input type="submit" class="btn btn-default" id="sendSubmission" value="Usuń" /></td>
+                        @if (userList.IsLocked)
+                        {
+                            <td>
+                                @using (Html.BeginForm("UnlockUser", "User", new { userId = userList.Id }, FormMethod.Post))
+                                {
+                                    <input type="submit" name="unlockUser" class="btn btn-default" id="unlockUser" value="Odblokuj" />
+                                }
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                @using (Html.BeginForm("LockUser", "User", new { userId = userList.Id }, FormMethod.Post))
+                                {
+                                    <input type="submit" class="btn btn-default" id="lockUser" value="Zablokuj" />
+                                }
+                            </td>
+                        }
+                    </tr>
+                        i++;
                     }
                 </tbody>
             </table>
@@ -57,7 +83,18 @@
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
             });
+
+            var unlockButton = document.getElementsByName("unlockUser");
+            if (unlockButton !== undefined) {
+                for (var i = 0; i < unlockButton.length; i++)
+                    selectLockedUser(unlockButton[i].parentElement.parentElement.parentElement.id);
+            }
         });
+
+        function selectLockedUser(rowIndex) {
+            $("#" + rowIndex).css("background-color", "red");
+        }
+
     </script>
 </body>
 </html>

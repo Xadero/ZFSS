@@ -15,6 +15,7 @@ namespace ZfssUZ.Controllers
         {
             userService = service;
         }
+
         [HttpGet]
         public IActionResult Index()
         {
@@ -22,6 +23,8 @@ namespace ZfssUZ.Controllers
 
             var userList = users.Select(result => new UserModel
             {
+                Id = result.Id,
+                IsLocked = result.LockoutEnd != null ? true : false,
                 Username = result.UserName,
                 Firstname = result.FirstName,
                 LastName = result.LastName,
@@ -37,6 +40,20 @@ namespace ZfssUZ.Controllers
             model.UserList = userList;
 
             return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult UnlockUser (string userId)
+        {
+            userService.UnlockUser(userId);
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult LockUser(string userId)
+        {
+            userService.LockUser(userId);
+            return RedirectToAction("Index");
         }
     }
 }

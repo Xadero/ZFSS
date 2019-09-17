@@ -10,5 +10,9 @@ namespace ZfssUZData.Interfaces
         IEnumerable<ApplicationUser> GetAllUsers();
 
         UserGroup GetUserGroupById(decimal id);
+
+        void LockUser(string id);
+
+        void UnlockUser(string id);
     }
 }
