@@ -36,5 +36,12 @@ namespace ZfssUZService
             applicationDbContext.Users.Where(x => x.Id == id).First().LockoutEnd = null;
             applicationDbContext.SaveChanges();
         }
+
+        public void DeleteUser(string id)
+        {
+            var userToDelete = applicationDbContext.Users.Where(x => x.Id == id).First();
+            applicationDbContext.Users.Remove(userToDelete);
+            applicationDbContext.SaveChanges();
+        }
     }
 }

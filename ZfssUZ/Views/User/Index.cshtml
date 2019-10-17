@@ -33,41 +33,41 @@
                     </tr>
                 </thead>
                 <tbody id="myTable">
-                    @{int i = 0;}
-                    @foreach (var userList in Model.UserList)
+                   @{int i = 0;}
+                   @foreach (var userList in Model.UserList)
                     {
-                    <tr id="userList@(i)">
-                        <td>@userList.Username</td>
-                        <td>@userList.Firstname</td>
-                        <td>@userList.LastName</td>
-                        <td>@userList.EmailAddress</td>
-                        <td>@userList.PhoneNumber</td>
-                        <td>@userList.Address</td>
-                        <td>@userList.PostCode</td>
-                        <td>@userList.City</td>
-                        <td>@userList.UserGroup</td>
-                        <td><input type="submit" class="btn btn-default" id="sendSubmission" value="wyświetl" /></td>
-                        <td><input type="submit" class="btn btn-default" id="sendSubmission" value="Edytuj" /></td>
-                        <td><input type="submit" class="btn btn-default" id="sendSubmission" value="Usuń" /></td>
-                        @if (userList.IsLocked)
-                        {
-                            <td>
+                        <tr id="userList@(i)">
+                            <td>@userList.Username</td>
+                            <td>@userList.Firstname</td>
+                            <td>@userList.LastName</td>
+                            <td>@userList.EmailAddress</td>
+                            <td>@userList.PhoneNumber</td>
+                            <td>@userList.Address</td>
+                            <td>@userList.PostCode</td>
+                            <td>@userList.City</td>
+                            <td>@userList.UserGroup</td>
+                            <td><input type="submit" class="btn btn-default" id="sendSubmission" value="wyświetl" /></td>
+                            <td><input type="submit" class="btn btn-default" id="sendSubmission" value="Edytuj" /></td>
+                            @using (Html.BeginForm("DeleteUser", "User", new { userId = userList.Id }, FormMethod.Post))
+                            {
+                                <td><input type="submit" class="btn btn-default" id="sendSubmission" value="Usuń" /></td>
+                            }
+
+                            @if (userList.IsLocked)
+                            {
                                 @using (Html.BeginForm("UnlockUser", "User", new { userId = userList.Id }, FormMethod.Post))
                                 {
-                                    <input type="submit" name="unlockUser" class="btn btn-default" id="unlockUser" value="Odblokuj" />
+                                    <td><input type="submit" name="unlockUser" class="btn btn-default" id="unlockUser" value="Odblokuj" /></td>
                                 }
-                            </td>
-                        }
-                        else
-                        {
-                            <td>
+                            }
+                            else
+                            {
                                 @using (Html.BeginForm("LockUser", "User", new { userId = userList.Id }, FormMethod.Post))
                                 {
-                                    <input type="submit" class="btn btn-default" id="lockUser" value="Zablokuj" />
+                                    <td><input type="submit" class="btn btn-default" id="lockUser" value="Zablokuj" /></td>
                                 }
-                            </td>
-                        }
-                    </tr>
+                            }
+                        </tr>
                         i++;
                     }
                 </tbody>
