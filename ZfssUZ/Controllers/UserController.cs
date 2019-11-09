@@ -55,5 +55,19 @@ namespace ZfssUZ.Controllers
             userService.LockUser(userId);
             return RedirectToAction("Index");
         }
+
+        [HttpPost]
+        public ActionResult DeleteUser(string userId)
+        {
+            try
+            {
+                userService.DeleteUser(userId);
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
     }
 }

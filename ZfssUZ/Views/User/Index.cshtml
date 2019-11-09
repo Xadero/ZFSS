@@ -1,12 +1,11 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿@using Microsoft.AspNetCore.Identity
+@using ZfssUZData.Models.Users
+@inject UserManager<ApplicationUser> UserManager
+@model ZfssUZ.Models.Users.UserListModel
+<!DOCTYPE html>
+<html>
 <head>
-    <title>Bootstrap Example</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 </head>
 <body>
     <h3>Lista użytkowników</h3>
@@ -14,7 +13,7 @@
         <div>
             <input class="form-control" id="myInput" type="text" placeholder="Search..">
             <br>
-            <table class="table table-bordered table-sm table-responsive " id="submissionIndexTable">
+            <table class="table table-bordered table-sm table-responsive " id="userIndexTable">
                 <thead>
                     <tr>
                         <th clss="th-sm">Nazwa użytkownika</th>
@@ -33,43 +32,40 @@
                     </tr>
                 </thead>
                 <tbody id="myTable">
-                   @{int i = 0;}
-                   @foreach (var userList in Model.UserList)
-                    {
-                        <tr id="userList@(i)">
-                            <td>@userList.Username</td>
-                            <td>@userList.Firstname</td>
-                            <td>@userList.LastName</td>
-                            <td>@userList.EmailAddress</td>
-                            <td>@userList.PhoneNumber</td>
-                            <td>@userList.Address</td>
-                            <td>@userList.PostCode</td>
-                            <td>@userList.City</td>
-                            <td>@userList.UserGroup</td>
-                            <td><input type="submit" class="btn btn-default" id="sendSubmission" value="wyświetl" /></td>
-                            <td><input type="submit" class="btn btn-default" id="sendSubmission" value="Edytuj" /></td>
-                            @using (Html.BeginForm("DeleteUser", "User", new { userId = userList.Id }, FormMethod.Post))
-                            {
-                                <td><input type="submit" class="btn btn-default" id="sendSubmission" value="Usuń" /></td>
-                            }
+                    @{int i = 0;}
+                    @foreach (var userList in Model.UserList)
+                     {
+                     <tr id="userList@(i)">
+                        <td name="username">@userList.Username</td>
+                        <td>@userList.Firstname</td>
+                        <td>@userList.LastName</td>
+                        <td>@userList.EmailAddress</td>
+                        <td>@userList.PhoneNumber</td>
+                        <td>@userList.Address</td>
+                        <td>@userList.PostCode</td>
+                        <td>@userList.City</td>
+                        <td>@userList.UserGroup</td>
+                        <td><input type="submit" class="btn btn-default" id="showUserData" value="wyświetl" /></td>
+                        <td><input type="submit" class="btn btn-default" id="editUserData" value="Edytuj" /></td>
+                        <td><input type="submit" class="btn btn-default" id="deleteUser@(i)" value="Usuń" onclick="confirmDelete('@userList.Id.ToString()')" /></td>
 
-                            @if (userList.IsLocked)
-                            {
-                                @using (Html.BeginForm("UnlockUser", "User", new { userId = userList.Id }, FormMethod.Post))
-                                {
-                                    <td><input type="submit" name="unlockUser" class="btn btn-default" id="unlockUser" value="Odblokuj" /></td>
-                                }
-                            }
-                            else
-                            {
-                                @using (Html.BeginForm("LockUser", "User", new { userId = userList.Id }, FormMethod.Post))
-                                {
-                                    <td><input type="submit" class="btn btn-default" id="lockUser" value="Zablokuj" /></td>
-                                }
-                            }
-                        </tr>
+                        @if (userList.IsLocked)
+                         {
+                            @using (Html.BeginForm("UnlockUser", "User", new { userId = userList.Id }, FormMethod.Post))
+                             {
+                                <td><input type="submit" name="unlockUser" class="btn btn-default" id="unlockUser" value="Odblokuj" /></td>
+                             }
+                        }
+                        else
+                        {
+                            @using (Html.BeginForm("LockUser", "User", new { userId = userList.Id }, FormMethod.Post))
+                             {
+                                <td><input type="submit" class="btn btn-default" id="lockUser@(i)" value="Zablokuj" onclick="selectLockedUser(userList@(i))" /></td>
+                             }
+                        }
+                    </tr>
                         i++;
-                    }
+                        }
                 </tbody>
             </table>
         </div>
@@ -87,7 +83,16 @@
             var unlockButton = document.getElementsByName("unlockUser");
             if (unlockButton !== undefined) {
                 for (var i = 0; i < unlockButton.length; i++)
-                    selectLockedUser(unlockButton[i].parentElement.parentElement.parentElement.id);
+                    selectLockedUser(unlockButton[i].parentElement.parentElement.id);
+            }
+
+            var userNames = document.getElementsByName("username");
+            var loggedUser = "@UserManager.GetUserAsync(User).Result.UserName";
+            for (var i = 0; i < userNames.length; i++) {
+                if (userNames[i].innerHTML == loggedUser) {
+                    $("#lockUser" + i).prop("disabled", true);
+                    $("#deleteUser" + i).prop("disabled", true);
+                }
             }
         });
 
@@ -95,6 +100,29 @@
             $("#" + rowIndex).css("background-color", "red");
         }
 
+        function confirmDelete(value) {
+            var r = confirm("Czy chces usunąć to cudowne konto?");
+            if (r) {
+                $.ajax({
+                    url: '@Url.Action("DeleteUser", "User")',
+                    type: 'POST',    
+                    dataType: 'json',
+                    data: { userId: value },
+                    success: function (data) {
+                        if (data.success) {
+                            alert("Konto zostało usunięte");
+                            location.reload();
+                        }
+                        else {
+                            alert('Wystąpił błąd podczas usuwania konta! Skontaktuj się z administratorem!');
+                        }
+                    },
+                    error: function () {
+                        alert('Wystąpił błąd podczas usuwania konta! Skontaktuj się z administratorem!');
+                    }
+                });
+            }
+        }
     </script>
 </body>
 </html>

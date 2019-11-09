@@ -14,5 +14,7 @@ namespace ZfssUZData.Interfaces
         void LockUser(string id);
 
         void UnlockUser(string id);
+
+        void DeleteUser(string id);
     }
 }

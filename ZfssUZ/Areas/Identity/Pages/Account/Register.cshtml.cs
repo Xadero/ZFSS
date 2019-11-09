@@ -41,7 +41,6 @@ namespace ZfssUZ.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-
             [Required]
             [Display(Name = "Username")]
             public string Username { get; set; }
@@ -133,7 +132,15 @@ namespace ZfssUZ.Areas.Identity.Pages.Account
 
                     //await _signInManager.SignInAsync(user, isPersistent: false);
                     ViewData["ModelIsValid"] = true;
-                    return LocalRedirect(returnUrl);
+                    if (_userManager.Options.SignIn.RequireConfirmedAccount)
+                    {
+                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email });
+                    }
+                    else
+                    {
+                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        return LocalRedirect(returnUrl);
+                    }
                 }
                 foreach (var error in result.Errors)
                 {

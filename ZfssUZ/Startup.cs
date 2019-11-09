@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Http;
 using System;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace ZfssUZ
 {
@@ -51,8 +52,9 @@ namespace ZfssUZ
                 options.UseSqlServer(
                     Configuration.GetConnectionString("ZFSSConnection"), x => x.MigrationsAssembly("ZfssUZData")));
 
-            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddDefaultIdentity<ApplicationUser>(options => {
+                options.SignIn.RequireConfirmedAccount = true;
+            }).AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddScoped<IUserService, UserService>();
 

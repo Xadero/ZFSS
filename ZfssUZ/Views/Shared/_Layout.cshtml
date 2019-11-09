@@ -1,10 +1,11 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - ZfssUZ</title>
-
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
@@ -26,13 +27,28 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">ZfssUZ</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">@Localizer["BenefitsList"]</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="About">@Localizer["CompanySocialBenefitsFund"]</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">@Localizer["Contact"]</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="collapse" role="button">
+                            @Localizer["AddBenefitApplication"]
+                            <span class="caret"></span>
+                        </a>
+
+                        <ul class="dropdown-menu" role="menu">
+                            <li role="presentation">
+                                <a asp-area="" asp-controller="SocialServiceBenefit" asp-action="Index">@Localizer["SocialServiceBenefit"]</a>
+                            </li>
+
+                            <li role="presentation">
+                                <a asp-area="" asp-controller="HomeLoanBenefit" asp-action="Index">@Localizer["HomeLoadBenefit"]</a>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
                 <partial name="_LoginPartial" />
             </div>
