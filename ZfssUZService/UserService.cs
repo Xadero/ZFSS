@@ -43,5 +43,10 @@ namespace ZfssUZService
             applicationDbContext.Users.Remove(userToDelete);
             applicationDbContext.SaveChanges();
         }
+
+        public ApplicationUser GetUserById(string id)
+        {
+            return applicationDbContext.Users.Where(x => x.Id == id).First();
+        }
     }
 }

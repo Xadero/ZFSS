@@ -42,6 +42,29 @@ namespace ZfssUZ.Controllers
             return View(model);
         }
 
+        public ActionResult Edit (string userId)
+        {
+            var user = userService.GetUserById(userId);
+            var model = new UserModel
+            {
+                Firstname = user.FirstName,
+                LastName = user.LastName,
+                EmailAddress = user.Email,
+                City = user.City,
+                Address = user.Address,
+                PostCode = user.PostCode,
+                PhoneNumber = user.PhoneNumber,
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult UpdateUserData(UserModel model)
+        {
+            return RedirectToAction("Index");
+        }
+
         [HttpPost]
         public ActionResult UnlockUser (string userId)
         {
@@ -54,6 +77,26 @@ namespace ZfssUZ.Controllers
         {
             userService.LockUser(userId);
             return RedirectToAction("Index");
+        }
+
+        public ActionResult Show(string userId)
+        {
+            var user = userService.GetUserById(userId);
+            var model = new UserModel
+            {
+                Username = user.UserName,
+                Firstname = user.FirstName,
+                LastName = user.LastName,
+                EmailAddress = user.Email,
+                City = user.City,
+                Address = user.Address,
+                PostCode = user.PostCode,
+                PhoneNumber = user.PhoneNumber,
+                UserGroup = userService.GetUserGroupById(user.UserGroupId).GroupName,
+                IsLocked = user.LockoutEnd != null ? true : false,
+            };
+
+            return PartialView("ShowUser", model);
         }
 
         [HttpPost]

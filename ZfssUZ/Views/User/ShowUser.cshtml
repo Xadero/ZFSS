@@ -1,0 +1,69 @@
+﻿@model ZfssUZ.Models.Users.UserModel
+@{
+    ViewData["Title"] = "Show";
+}
+
+@{
+    object displayMode = new { disabled = "disabled", style = "form-control"};
+}
+
+<div class="container">
+    <div class="row">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Informacje o użytkowniku</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-sm table-responsive " id="userIndexTable" border="0">
+                        <tbody id="userTable">
+                            <tr>
+                                <td>@Html.LabelFor(x => x.Username)</td>
+                                <td>@Html.TextBoxFor(x => x.Username, string.Empty, displayMode)</td>
+                            </tr>
+                            <tr>
+                                <td>@Html.LabelFor(x => x.Firstname)</td>
+                                <td>@Html.TextBoxFor(x => x.Firstname, string.Empty, displayMode)</td>
+                            </tr>
+                            <tr>
+                                <td>@Html.LabelFor(x => x.LastName)</td>
+                                <td>@Html.TextBoxFor(x => x.LastName, string.Empty, displayMode)</td>
+                            </tr>
+                            <tr>
+                                <td>@Html.LabelFor(x => x.Address)</td>
+                                <td>@Html.TextBoxFor(x => x.Address, string.Empty, displayMode)</td>
+                            </tr>
+                            <tr>
+                                <td>@Html.LabelFor(x => x.PostCode)</td>
+                                <td>@Html.TextBoxFor(x => x.PostCode, string.Empty, displayMode)</td>
+                            </tr>
+                            <tr>
+                                <td>@Html.LabelFor(x => x.City)</td>
+                                <td>@Html.TextBoxFor(x => x.City, string.Empty, displayMode)</td>
+                            </tr>
+                            <tr>
+                                <td>@Html.LabelFor(x => x.EmailAddress)</td>
+                                <td>@Html.TextBoxFor(x => x.EmailAddress, string.Empty, displayMode)</td>
+                            </tr>
+                            <tr>
+                                <td>@Html.LabelFor(x => x.PhoneNumber)</td>
+                                <td>@Html.TextBoxFor(x => x.PhoneNumber, string.Empty, displayMode)</td>
+                            </tr>
+                            <tr>
+                                <td>@Html.LabelFor(x => x.UserGroup)</td>
+                                <td>@Html.TextBoxFor(x => x.UserGroup, string.Empty, displayMode)</td>
+                            </tr>
+                            <tr>
+                                <td>@Html.LabelFor(x => x.IsLocked)</td>
+                                <td>@Html.CheckBoxFor(x => x.IsLocked, displayMode)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
