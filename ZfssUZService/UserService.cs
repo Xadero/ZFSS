@@ -20,6 +20,11 @@ namespace ZfssUZService
             return applicationDbContext.Users;
         }
 
+        public IEnumerable<UserGroup> GetUserGroups()
+        {
+            return applicationDbContext.UserGroups;
+        }
+
         public UserGroup GetUserGroupById(decimal id)
         {
             return applicationDbContext.UserGroups.Where(x => x.Id == id).First();
@@ -47,6 +52,24 @@ namespace ZfssUZService
         public ApplicationUser GetUserById(string id)
         {
             return applicationDbContext.Users.Where(x => x.Id == id).First();
+        }
+
+        public void UpdateUserData(ApplicationUser user)
+        {
+            var userToUpdate = GetUserById(user.Id);
+
+            userToUpdate.FirstName = user.FirstName;
+            userToUpdate.LastName = user.LastName;
+            userToUpdate.PhoneNumber = user.PhoneNumber;
+            userToUpdate.Email = user.Email;
+            userToUpdate.Address = user.Address;
+            userToUpdate.City = user.City;
+            userToUpdate.UserName = user.UserName;
+            userToUpdate.PostCode = user.PostCode;
+            userToUpdate.UserGroupId = user.UserGroupId;
+
+            applicationDbContext.Entry(userToUpdate).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            applicationDbContext.SaveChanges();
         }
     }
 }

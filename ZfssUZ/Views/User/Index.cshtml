@@ -8,7 +8,13 @@
 @{
     ViewData["Title"] = Localizer["UserList"];
 }
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+@*<script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>*@
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js "></script>
 
 <h3>@Localizer["UserList"]</h3>
 <div class="modal fade" id="exampleModal" role="dialog" data-url='@Url.Action("Show", "User")'></div>
@@ -16,7 +22,7 @@
     <div>
         <input class="form-control" id="myInput" type="text" style="width:50%;align-items:center" placeholder="@Localizer["Search"]">
         <br>
-        <table class="table table-bordered table-sm table-responsive" style="width:50%;" id="userIndexTable">
+        <table class="table table-striped table-bordered dt-responsive nowrap" style="width:100%;" id="userIndexTable" cellspacing="0">
             <thead>
                 <tr>
                     <th clss="th-sm" style="display:none">@Localizer["Username"]</th>
@@ -35,12 +41,8 @@
                         <td name="username" style="display:none">@userList.Username</td>
                         <td><b>@userList.Firstname @userList.LastName</b></td>
                         <td><input type="submit" class="btn btn-default" id="showUserData" value="@Localizer["Show"]" onclick="showUser('@userList.Id.ToString()')" /></td>
-                        @using (Html.BeginForm("Edit", "User", new { userId = userList.Id }))
-                        {
-                            <td><input type="submit" class="btn btn-default" id="editUserData" value="@Localizer["Edit"]" /></td>
-                        }
+                        <td>@Html.ActionLink(@Localizer["Edit"].Value, "Edit", "User", new { userId = userList.Id }, new { @class = "btn btn-default" })</td>
                         <td><input type="submit" class="btn btn-default" id="deleteUser@(i)" value="@Localizer["Delete"]" onclick="confirmDelete('@userList.Id.ToString()')" /></td>
-
                         @if (userList.IsLocked)
                         {
                             @using (Html.BeginForm("UnlockUser", "User", new { userId = userList.Id }, FormMethod.Post))
@@ -62,9 +64,18 @@
         </table>
     </div>
 </div>
-
-<script>
+@section Scripts {
+    <script>
     $(document).ready(function () {
+        $("#userIndexTable").DataTable({
+            "dom": '<"top"i>rt<"bottom"flp><"clear">',
+            searching: false,
+                    dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+        });
+
         $("#myInput").on("keyup", function () {
             var value = $(this).val().toLowerCase();
             $("#myTable tr").filter(function () {
@@ -130,4 +141,5 @@
             });
         }
     }
-</script>
+    </script>
+}

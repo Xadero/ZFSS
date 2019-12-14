@@ -1,5 +1,5 @@
 ﻿@model ZfssUZ.Models.Users.UserModel
-
+@using ZfssUZ.Enums
 @{
     ViewData["Title"] = "Edit";
 }
@@ -57,10 +57,14 @@
                 <input asp-for="City" class="form-control" />
                 <span asp-validation-for="City" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 <label asp-for="UserGroup" class="control-label"></label>
                 <input asp-for="UserGroup" class="form-control" />
                 <span asp-validation-for="UserGroup" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <label asp-for="UserGroup" class="control-label"></label>
+                @Html.DropDownListFor(x => x.UserGroupId, Model.CategoryList, new { @class = "form-control" })
             </div>
             <div class="form-group">
                 <div class="checkbox">
@@ -70,11 +74,7 @@
                 </div>
             </div>
             <div class="form-group">
-                @using (Html.BeginForm("UpdateUserData", "User", new { model = Model}, FormMethod.Post))
-                {
-
                     <input type="submit" value="Save" class="btn btn-default" />
-                }
             </div>
         </form>
     </div>

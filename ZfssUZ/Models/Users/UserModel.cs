@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ZfssUZ.Models.Users
 {
@@ -35,5 +37,9 @@ namespace ZfssUZ.Models.Users
 
         [Display(Name = "IsLocked")]
         public bool IsLocked { get; set; }
+
+        public decimal UserGroupId { get; set; }
+
+        public IEnumerable<SelectListItem> CategoryList { get; set; }
     }
 }

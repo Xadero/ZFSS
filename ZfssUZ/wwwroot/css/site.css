@@ -128,7 +128,7 @@ div.dataTables_wrapper div.dataTables_paginate {
     }
 }
 
-.bs-select select {
+/*.bs-select select {
     display: inline-block !important
 }
 
@@ -203,5 +203,5 @@ table.dataTable thead .sorting_desc_disabled {
     table.dataTable thead .sorting_asc_disabled:before,
     table.dataTable thead .sorting_desc_disabled:after {
         opacity: 0
-    }
+    }*/
 

@@ -18,5 +18,9 @@ namespace ZfssUZData.Interfaces
         void DeleteUser(string id);
 
         ApplicationUser GetUserById(string id);
+
+        void UpdateUserData(ApplicationUser user);
+
+        IEnumerable<UserGroup> GetUserGroups();
     }
 }

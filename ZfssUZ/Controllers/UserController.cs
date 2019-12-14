@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using ZfssUZ.Models.Users;
 using ZfssUZData.Interfaces;
+using ZfssUZData.Models.Users;
 
 namespace ZfssUZ.Controllers
 {
@@ -33,7 +35,8 @@ namespace ZfssUZ.Controllers
                 Address = result.Address,
                 PostCode = result.PostCode,
                 City = result.City,
-                UserGroup = userService.GetUserGroupById(result.UserGroupId).GroupName
+                UserGroup = userService.GetUserGroupById(result.UserGroupId).GroupName,
+                UserGroupId = result.UserGroupId
             });
 
             var model = new UserListModel();
@@ -47,6 +50,8 @@ namespace ZfssUZ.Controllers
             var user = userService.GetUserById(userId);
             var model = new UserModel
             {
+                Username = user.UserName,
+                Id = user.Id,
                 Firstname = user.FirstName,
                 LastName = user.LastName,
                 EmailAddress = user.Email,
@@ -54,14 +59,32 @@ namespace ZfssUZ.Controllers
                 Address = user.Address,
                 PostCode = user.PostCode,
                 PhoneNumber = user.PhoneNumber,
+                UserGroup = userService.GetUserGroupById(user.UserGroupId).GroupName,
+                UserGroupId = user.UserGroupId,
+                CategoryList = new SelectList(userService.GetUserGroups(), "Id", "GroupName")
             };
 
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult UpdateUserData(UserModel model)
+        public ActionResult Edit(UserModel model)
         {
+            var userToUpdate = new ApplicationUser
+            {
+                FirstName = model.Firstname,
+                LastName = model.LastName,
+                Email = model.EmailAddress,
+                PhoneNumber = model.PhoneNumber,
+                Id = model.Id,
+                Address = model.Address,
+                City = model.Address,
+                PostCode = model.PostCode,
+                UserName = model.Username,
+                UserGroupId = model.UserGroupId
+            };
+
+            userService.UpdateUserData(userToUpdate);
             return RedirectToAction("Index");
         }
 
