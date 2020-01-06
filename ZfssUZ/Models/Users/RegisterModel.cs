@@ -1,19 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace ZfssUZ.Models.Users
 {
-    public class UserModel
+    public class RegisterModel
     {
-        public string Id {get;set;}
+        public string Id { get; set; }
 
         [Display(Name = "Username")]
         [Required(ErrorMessage = "ValidateUsername")]
         public string Username { get; set; }
 
         [Display(Name = "Firstname")]
-        [Required(ErrorMessage = "ValidateFistname")]
+        [Required(ErrorMessage = "ValidateFirstname")]
         public string Firstname { get; set; }
 
         [Display(Name = "Lastname")]
@@ -23,6 +24,21 @@ namespace ZfssUZ.Models.Users
         [Display(Name = "PhoneNumber")]
         [Required(ErrorMessage = "ValidatePhoneNumber")]
         public string PhoneNumber { get; set; }
+
+        [Required(ErrorMessage = "ValidatePassword")]
+        [StringLength(100, ErrorMessage = "ValidatePasswordLength", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "Password")]
+        public string Password { get; set; }
+
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirm password")]
+        [Compare("Password", ErrorMessage = "ValidateConfirmPassword")]
+        public string ConfirmPassword { get; set; }
+
+        [Display(Name = "DateOfBirth")]
+        [Required(ErrorMessage = "ValidateDateOfBirth")]
+        public DateTime DateOfBirth { get; set; }
 
         [EmailAddress]
         [Display(Name = "Email")]
@@ -43,9 +59,6 @@ namespace ZfssUZ.Models.Users
 
         [Display(Name = "UserGroup")]
         public string UserGroup { get; set; }
-
-        [Display(Name = "IsLocked")]
-        public bool IsLocked { get; set; }
 
         [Required(ErrorMessage = "ValidateUserGroup")]
         public decimal UserGroupId { get; set; }

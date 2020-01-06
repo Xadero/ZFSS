@@ -24,7 +24,7 @@
                         </li>
 
                         <li role="presentation">
-                            <a asp-area="Identity" asp-page="/Account/Register">@Localizer["Add user"]</a>
+                            <a>@Html.ActionLink(@Localizer["Add user"].Value, "Register", "User")</a>
                         </li>
                     </ul>
                 </li>

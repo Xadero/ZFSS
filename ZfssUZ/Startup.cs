@@ -53,7 +53,7 @@ namespace ZfssUZ
                     Configuration.GetConnectionString("ZFSSConnection"), x => x.MigrationsAssembly("ZfssUZData")));
 
             services.AddDefaultIdentity<ApplicationUser>(options => {
-                options.SignIn.RequireConfirmedAccount = true;
+                options.SignIn.RequireConfirmedAccount = false;
             }).AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddScoped<IUserService, UserService>();

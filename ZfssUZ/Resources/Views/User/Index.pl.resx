@@ -124,4 +124,19 @@
   <data name="Delete" xml:space="preserve">
     <value>Usuń</value>
   </data>
+  <data name="Next" xml:space="preserve">
+    <value>Następna</value>
+  </data>
+  <data name="Previous" xml:space="preserve">
+    <value>Poprzednia</value>
+  </data>
+  <data name="NoResults" xml:space="preserve">
+    <value>Brak wyników</value>
+  </data>
+  <data name="EntriesInfo" xml:space="preserve">
+    <value>Wyświetlono _PAGE_ stronę z _PAGES_</value>
+  </data>
+  <data name="RecordsPerPage" xml:space="preserve">
+    <value>Ilość wierszy na stronie _MENU_</value>
+  </data>
 </root>

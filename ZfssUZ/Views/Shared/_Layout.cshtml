@@ -10,9 +10,7 @@
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
         <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
-
-        @*<link href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />*@
-        <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+        <link href="~/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
@@ -42,12 +40,10 @@
                             @Localizer["AddBenefitApplication"]
                             <span class="caret"></span>
                         </a>
-
                         <ul class="dropdown-menu" role="menu">
                             <li role="presentation">
                                 <a asp-area="" asp-controller="SocialServiceBenefit" asp-action="Index">@Localizer["SocialServiceBenefit"]</a>
                             </li>
-
                             <li role="presentation">
                                 <a asp-area="" asp-controller="HomeLoanBenefit" asp-action="Index">@Localizer["HomeLoadBenefit"]</a>
                             </li>
@@ -73,8 +69,7 @@
     </div>
 
     <environment include="Development">
-        @*<script src="~/lib/jquery/dist/jquery.js"></script>*@
-        @*<script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>*@
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
     <environment exclude="Development">

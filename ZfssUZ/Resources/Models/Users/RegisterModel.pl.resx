@@ -97,46 +97,76 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="UserList" xml:space="preserve">
-    <value>User list</value>
+  <data name="Address" xml:space="preserve">
+    <value>Adres</value>
   </data>
-  <data name="Search" xml:space="preserve">
-    <value>Search...</value>
+  <data name="City" xml:space="preserve">
+    <value>Miasto</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>E-mail</value>
+  </data>
+  <data name="Firstname" xml:space="preserve">
+    <value>Imię</value>
+  </data>
+  <data name="IsLocked" xml:space="preserve">
+    <value>Czy użytkownik zablokowany?</value>
+  </data>
+  <data name="Lastname" xml:space="preserve">
+    <value>Nazwisko</value>
+  </data>
+  <data name="PhoneNumber" xml:space="preserve">
+    <value>Numer telefonu</value>
+  </data>
+  <data name="Postcode" xml:space="preserve">
+    <value>Kod pocztowy</value>
+  </data>
+  <data name="UserGroup" xml:space="preserve">
+    <value>Grupa użytkowników</value>
   </data>
   <data name="Username" xml:space="preserve">
-    <value>Usermane</value>
+    <value>Nazwa użytkownika</value>
   </data>
-  <data name="Fullname" xml:space="preserve">
-    <value>Fullname</value>
+  <data name="DateOfBirth" xml:space="preserve">
+    <value>Data urodzenia</value>
   </data>
-  <data name="Show" xml:space="preserve">
-    <value>Show</value>
+  <data name="ValidateUserGroup" xml:space="preserve">
+    <value>Pole 'Grupa użytkowników' jest wymagane.</value>
   </data>
-  <data name="Edit" xml:space="preserve">
-    <value>Edit</value>
+  <data name="ValidateFirstname" xml:space="preserve">
+    <value>Pole 'Imię' jest wymagane.</value>
   </data>
-  <data name="Lock" xml:space="preserve">
-    <value>Lock</value>
+  <data name="ValidatePhoneNumber" xml:space="preserve">
+    <value>Pole 'Numer telefonu' jest wymagane.</value>
   </data>
-  <data name="Unlock" xml:space="preserve">
-    <value>Unlock</value>
+  <data name="ValidateUsername" xml:space="preserve">
+    <value>Pole 'Nazwa użytkownika' jest wymagane.</value>
   </data>
-  <data name="Delete" xml:space="preserve">
-    <value>Delete</value>
+  <data name="ValidateEmail" xml:space="preserve">
+    <value>Pole 'E-mail' jest wymagane.</value>
   </data>
-  <data name="Next" xml:space="preserve">
-    <value>Next</value>
+  <data name="ValidateCity" xml:space="preserve">
+    <value>Pole 'Miejscowość' jest wymagane.</value>
   </data>
-  <data name="Previous" xml:space="preserve">
-    <value>Previous</value>
+  <data name="ValidateAddress" xml:space="preserve">
+    <value>Pole 'Adres' jest wymagane.</value>
   </data>
-  <data name="NoResults" xml:space="preserve">
-    <value>No results</value>
+  <data name="ValidatePostCode" xml:space="preserve">
+    <value>Pole 'Kod pocztowy' jest wymagane.</value>
   </data>
-  <data name="EntriesInfo" xml:space="preserve">
-    <value>Showing page _PAGE_ of _PAGES_</value>
+  <data name="ValidateBirthOfBirth" xml:space="preserve">
+    <value>Pole 'Data urodzenia' jest wymagane.</value>
   </data>
-  <data name="RecordsPerPage" xml:space="preserve">
-    <value>Records per page _MENU_</value>
+  <data name="ValidateConfirmPassword" xml:space="preserve">
+    <value>Podane hasła są różne.</value>
+  </data>
+  <data name="ValidatePasswordLength" xml:space="preserve">
+    <value>Pole {0}' musi posiadać {2} do {1} znaków.</value>
+  </data>
+  <data name="ValidateLastname" xml:space="preserve">
+    <value>Pole 'Nazwisko' jest wymagane.</value>
+  </data>
+  <data name="ValidatePassword" xml:space="preserve">
+    <value>Pole 'Hasło' jest wymagane.</value>
   </data>
 </root>
