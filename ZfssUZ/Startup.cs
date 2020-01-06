@@ -16,7 +16,6 @@ using Microsoft.AspNetCore.Http;
 using System;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
-using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace ZfssUZ
 {
@@ -54,6 +53,7 @@ namespace ZfssUZ
 
             services.AddDefaultIdentity<ApplicationUser>(options => {
                 options.SignIn.RequireConfirmedAccount = false;
+                options.User.RequireUniqueEmail = true;
             }).AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddScoped<IUserService, UserService>();

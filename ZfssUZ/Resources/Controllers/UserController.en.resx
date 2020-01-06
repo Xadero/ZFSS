@@ -97,16 +97,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="UserGroup" xml:space="preserve">
-    <value>Grupa użytkowników</value>
+  <data name="DuplicateEmail" xml:space="preserve">
+    <value>Email '{0}' is already taken.</value>
   </data>
-  <data name="DateOfBirth" xml:space="preserve">
-    <value>Data urodzenia</value>
-  </data>
-  <data name="Firstname" xml:space="preserve">
-    <value>Imię</value>
-  </data>
-  <data name="Lastname" xml:space="preserve">
-    <value>Nazwisko</value>
+  <data name="DuplicateUsername" xml:space="preserve">
+    <value>User name '{0}' is already taken.</value>
   </data>
 </root>

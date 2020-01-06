@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using ZfssUZ.Models.Users;
 using ZfssUZData.Interfaces;
 using ZfssUZData.Models.Users;
+using Microsoft.Extensions.Localization;
 
 namespace ZfssUZ.Controllers
 {
@@ -15,10 +16,12 @@ namespace ZfssUZ.Controllers
     {
         private IUserService userService;
         private UserManager<ApplicationUser> _userManager;
-        public UserController(IUserService service, UserManager<ApplicationUser> userManager)
+        private readonly IStringLocalizer<UserController> _localizer;
+        public UserController(IUserService service, UserManager<ApplicationUser> userManager, IStringLocalizer<UserController> localizer)
         {
             userService = service;
             _userManager = userManager;
+            _localizer = localizer;
         }
 
         public static string idUser = string.Empty;
@@ -77,18 +80,27 @@ namespace ZfssUZ.Controllers
                     Password = model.Password,
                     PostCode = model.PostCode,
                     UserGroupId = model.UserGroupId,
+                    EmailConfirmed = true
                 };
 
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
-                {
                     return RedirectToAction("Index");
+
+                foreach (var error in result.Errors)
+                {
+                    if (error.Code == "DuplicateUserName")
+                        ModelState.AddModelError(string.Empty, string.Format(_localizer["DuplicateUsername"], user.UserName));
+
+                    if (error.Code == "DuplicateEmail")
+                        ModelState.AddModelError(string.Empty, string.Format(_localizer["DuplicateEmail"], user.Email));
                 }
+                if (result.Errors.Any())
+                    return View(model);
             }
             else
-            {
                 return View(model);
-            }
+
             return RedirectToAction("Index");
         }
 
@@ -140,9 +152,7 @@ namespace ZfssUZ.Controllers
                 return RedirectToAction("Index");
             }
             else
-            {
                 return View(model);
-            }
         }
 
         [HttpPost]

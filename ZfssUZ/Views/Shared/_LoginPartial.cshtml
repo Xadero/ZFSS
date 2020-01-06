@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using ZfssUZData.Models.Users
 @using Microsoft.AspNetCore.Mvc.Localization
+@using ZfssUZ.Enums
 
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
@@ -10,7 +11,7 @@
 {
     <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm" class="navbar-right">
         <ul class="nav navbar-nav navbar-right">
-            @if (UserManager.GetUserAsync(User).Result.UserGroupId == 1)
+            @if (UserManager.GetUserAsync(User).Result.UserGroupId == (int)eUserGroup.Administration)
             {
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="collapse" role="button">
