@@ -139,4 +139,7 @@
   <data name="RecordsPerPage" xml:space="preserve">
     <value>Records per page _MENU_</value>
   </data>
+  <data name="NotAuthorized" xml:space="preserve">
+    <value>You are not authorized to see this page!</value>
+  </data>
 </root>

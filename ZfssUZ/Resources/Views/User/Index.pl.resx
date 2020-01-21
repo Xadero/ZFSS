@@ -139,4 +139,7 @@
   <data name="RecordsPerPage" xml:space="preserve">
     <value>Ilość wierszy na stronie _MENU_</value>
   </data>
+  <data name="NotAuthorized" xml:space="preserve">
+    <value>Brak uprawnień do wyświetlenie tej strony!</value>
+  </data>
 </root>

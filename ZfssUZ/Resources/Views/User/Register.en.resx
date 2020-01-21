@@ -106,4 +106,7 @@
   <data name="Back" xml:space="preserve">
     <value>Back</value>
   </data>
+  <data name="NoAuthrized" xml:space="preserve">
+    <value>You are not authorized to see this page!</value>
+  </data>
 </root>
