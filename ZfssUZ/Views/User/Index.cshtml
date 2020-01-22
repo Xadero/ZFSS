@@ -17,8 +17,8 @@
 <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js "></script>
 
 <script>
-    if (@UserManager.GetUserAsync(User).Result.UserGroupId != @((int)eUserGroup.Administration)){
-        alert("Brak uprawnień do wyświetlenia tej strony");
+    if (@((int)UserManager.GetUserAsync(User).Result.UserGroupId) != @((int)eUserGroup.Administration)){
+        alert("@Localizer["NotAuthorized"]");
         window.location = "@Url.Action("Index", "Home")";
     }
 </script>

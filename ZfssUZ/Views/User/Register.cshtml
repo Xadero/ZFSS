@@ -16,8 +16,8 @@
 <hr />
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script>
-    if (@UserManager.GetUserAsync(User).Result.UserGroupId != @((int)eUserGroup.Administration)){
-        alert(@Localizer["NotAuthorized"]);
+    if (@((int)UserManager.GetUserAsync(User).Result.UserGroupId) != @((int)eUserGroup.Administration)){
+        alert("@Localizer["NotAuthorized"]");
         window.location = "@Url.Action("Index", "Home")";
     }
 </script>

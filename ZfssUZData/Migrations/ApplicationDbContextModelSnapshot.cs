@@ -152,24 +152,25 @@ namespace ZfssUZData.Migrations
 
             modelBuilder.Entity("ZfssUZData.Models.Benefits.BenefitStatus", b =>
                 {
-                    b.Property<decimal>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("decimal(18,2)")
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Value")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("BenefitStatus");
+                    b.ToTable("BenefitStatuses");
                 });
 
             modelBuilder.Entity("ZfssUZData.Models.Benefits.HomeLoanBenefit", b =>
                 {
-                    b.Property<decimal>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("decimal(18,2)")
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime?>("AcceptingDate")
@@ -181,11 +182,11 @@ namespace ZfssUZData.Migrations
                     b.Property<long>("BenefitNumber")
                         .HasColumnType("bigint");
 
-                    b.Property<decimal>("BenefitStatusId")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int?>("BenefitStatusId")
+                        .HasColumnType("int");
 
-                    b.Property<decimal>("BenefitTypeId")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int?>("BenefitTypeId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Instalment")
                         .HasColumnType("int");
@@ -194,6 +195,7 @@ namespace ZfssUZData.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("LoanPurpose")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Months")
@@ -204,6 +206,9 @@ namespace ZfssUZData.Migrations
 
                     b.Property<string>("RejectingUserId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("RejectionReason")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("SubmittingDate")
                         .HasColumnType("datetime2");
@@ -223,46 +228,46 @@ namespace ZfssUZData.Migrations
 
                     b.HasIndex("SubmittingUserId");
 
-                    b.ToTable("HomeLoanBenefit");
+                    b.ToTable("HomeLoanBenefits");
                 });
 
             modelBuilder.Entity("ZfssUZData.Models.Benefits.Relatives", b =>
                 {
-                    b.Property<decimal>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("decimal(18,2)")
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ApplicationUsersId")
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DegreeOfRelationship")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Notes")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RelativeFullName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("SocialServiceBenefitId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUsersId");
+                    b.HasIndex("SocialServiceBenefitId");
 
                     b.ToTable("Relatives");
                 });
 
             modelBuilder.Entity("ZfssUZData.Models.Benefits.SocialServiceBenefit", b =>
                 {
-                    b.Property<decimal>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("decimal(18,2)")
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime?>("AcceptingDate")
@@ -271,14 +276,23 @@ namespace ZfssUZData.Migrations
                     b.Property<string>("AcceptingUserId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("AdditionInformation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("AvreageIncome")
+                        .HasColumnType("real");
+
                     b.Property<long>("BenefitNumber")
                         .HasColumnType("bigint");
 
-                    b.Property<decimal>("BenefitStatusId")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int?>("BenefitStatusId")
+                        .HasColumnType("int");
 
-                    b.Property<decimal>("BenefitTypeId")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int?>("BenefitTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("OtherSocialServiceKind")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("RejectingDate")
                         .HasColumnType("datetime2");
@@ -286,14 +300,17 @@ namespace ZfssUZData.Migrations
                     b.Property<string>("RejectingUserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<decimal>("RelativesId")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int?>("SocialServiceKindId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("SubmittingDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("UserId")
+                    b.Property<string>("SubmittingUserId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -305,21 +322,38 @@ namespace ZfssUZData.Migrations
 
                     b.HasIndex("RejectingUserId");
 
-                    b.HasIndex("RelativesId");
+                    b.HasIndex("SocialServiceKindId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("SubmittingUserId");
 
-                    b.ToTable("SocialServiceBenefit");
+                    b.ToTable("SocialServiceBenefits");
+                });
+
+            modelBuilder.Entity("ZfssUZData.Models.Benefits.SocialServiceKind", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SocialServiceKinds");
                 });
 
             modelBuilder.Entity("ZfssUZData.Models.Submissions.BenefitType", b =>
                 {
-                    b.Property<decimal>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("decimal(18,2)")
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Value")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -492,16 +526,12 @@ namespace ZfssUZData.Migrations
                         .HasForeignKey("AcceptingUserId");
 
                     b.HasOne("ZfssUZData.Models.Benefits.BenefitStatus", "BenefitStatus")
-                        .WithMany("HomeLoanBenefits")
-                        .HasForeignKey("BenefitStatusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("BenefitStatusId");
 
                     b.HasOne("ZfssUZData.Models.Submissions.BenefitType", "BenefitType")
-                        .WithMany("HomeLoanBenefits")
-                        .HasForeignKey("BenefitTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("BenefitTypeId");
 
                     b.HasOne("ZfssUZData.Models.Users.ApplicationUser", "RejectingUser")
                         .WithMany()
@@ -514,9 +544,9 @@ namespace ZfssUZData.Migrations
 
             modelBuilder.Entity("ZfssUZData.Models.Benefits.Relatives", b =>
                 {
-                    b.HasOne("ZfssUZData.Models.Users.ApplicationUser", "ApplicationUsers")
+                    b.HasOne("ZfssUZData.Models.Benefits.SocialServiceBenefit", "SocialServiceBenefits")
                         .WithMany()
-                        .HasForeignKey("ApplicationUsersId");
+                        .HasForeignKey("SocialServiceBenefitId");
                 });
 
             modelBuilder.Entity("ZfssUZData.Models.Benefits.SocialServiceBenefit", b =>
@@ -526,30 +556,24 @@ namespace ZfssUZData.Migrations
                         .HasForeignKey("AcceptingUserId");
 
                     b.HasOne("ZfssUZData.Models.Benefits.BenefitStatus", "BenefitStatus")
-                        .WithMany("SocialServiceBenefits")
-                        .HasForeignKey("BenefitStatusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("BenefitStatusId");
 
                     b.HasOne("ZfssUZData.Models.Submissions.BenefitType", "BenefitType")
-                        .WithMany("SocialServiceBenefits")
-                        .HasForeignKey("BenefitTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("BenefitTypeId");
 
                     b.HasOne("ZfssUZData.Models.Users.ApplicationUser", "RejectingUser")
                         .WithMany()
                         .HasForeignKey("RejectingUserId");
 
-                    b.HasOne("ZfssUZData.Models.Benefits.Relatives", "Relatives")
-                        .WithMany("SocialServiceBenefits")
-                        .HasForeignKey("RelativesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ZfssUZData.Models.Users.ApplicationUser", "User")
+                    b.HasOne("ZfssUZData.Models.Benefits.SocialServiceKind", "SocialServiceKind")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("SocialServiceKindId");
+
+                    b.HasOne("ZfssUZData.Models.Users.ApplicationUser", "SubmittingUser")
+                        .WithMany()
+                        .HasForeignKey("SubmittingUserId");
                 });
 #pragma warning restore 612, 618
         }

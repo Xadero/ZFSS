@@ -1,14 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using ZfssUZData.Models.Benefits;
 
 namespace ZfssUZData.Models.Submissions
 {
     public class BenefitType
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
+        [Required]
         public string Value { get; set; }
     }
 }
