@@ -1,10 +1,13 @@
-﻿@using Microsoft.AspNetCore.Identity
+﻿@model ZfssUZ.Models.Users.UserListModel
+
+@using Microsoft.AspNetCore.Identity
 @using ZfssUZData.Models.Users
 @using Microsoft.AspNetCore.Mvc.Localization
+@using ZfssUZ.Enums
 
 @inject UserManager<ApplicationUser> UserManager
 @inject IViewLocalizer Localizer
-@model ZfssUZ.Models.Users.UserListModel
+
 @{
     ViewData["Title"] = Localizer["UserList"];
 }
@@ -12,6 +15,13 @@
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js "></script>
+
+<script>
+    if (@((int)UserManager.GetUserAsync(User).Result.UserGroupId) != @((int)eUserGroup.Administration)){
+        alert("@Localizer["NotAuthorized"]");
+        window.location = "@Url.Action("Index", "Home")";
+    }
+</script>
 
 <h3>@Localizer["UserList"]</h3>
 <div class="modal fade" id="exampleModal" role="dialog" data-url='@Url.Action("Show", "User")'></div>
