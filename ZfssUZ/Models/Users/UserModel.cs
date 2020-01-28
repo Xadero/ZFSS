@@ -42,13 +42,10 @@ namespace ZfssUZ.Models.Users
         public string City { get; set; }
 
         [Display(Name = "UserGroup")]
-        public string UserGroup { get; set; }
+        public UserGroupModel UserGroup { get; set; }
 
         [Display(Name = "IsLocked")]
         public bool IsLocked { get; set; }
-
-        [Required(ErrorMessage = "ValidateUserGroup")]
-        public decimal UserGroupId { get; set; }
 
         public IEnumerable<SelectListItem> CategoryList { get; set; }
     }

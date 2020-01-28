@@ -13,7 +13,7 @@ namespace ZfssUZData
         public new DbSet<ApplicationUser> Users { get; set; }
 
         public DbSet<UserGroup> UserGroups { get; set; }
-        
+
         public DbSet<BenefitType> BenefitType { get; set; }
 
         public DbSet<HomeLoanBenefit> HomeLoanBenefits { get; set; }
@@ -25,5 +25,11 @@ namespace ZfssUZData
         public DbSet<BenefitStatus> BenefitStatuses { get; set; }
 
         public DbSet<Relatives> Relatives { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+        }
     }
 }

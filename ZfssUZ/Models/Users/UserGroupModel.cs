@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace ZfssUZ.Models.Users
+﻿namespace ZfssUZ.Models.Users
 {
-    public class UserGroup
+    public class UserGroupModel
     {
-        public string Id { get; set; }
+        public decimal Id { get; set; }
 
         public string GroupName { get; set; }
     }

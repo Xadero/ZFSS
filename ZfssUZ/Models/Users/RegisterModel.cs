@@ -32,7 +32,7 @@ namespace ZfssUZ.Models.Users
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
+        [Display(Name = "ConfirmPassword")]
         [Compare("Password", ErrorMessage = "ValidateConfirmPassword")]
         public string ConfirmPassword { get; set; }
 
@@ -58,10 +58,7 @@ namespace ZfssUZ.Models.Users
         public string City { get; set; }
 
         [Display(Name = "UserGroup")]
-        public string UserGroup { get; set; }
-
-        [Required(ErrorMessage = "ValidateUserGroup")]
-        public decimal UserGroupId { get; set; }
+        public UserGroupModel UserGroup { get; set; }
 
         public IEnumerable<SelectListItem> CategoryList { get; set; }
     }

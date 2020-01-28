@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
@@ -9,28 +8,31 @@ using ZfssUZ.Models.Users;
 using ZfssUZData.Interfaces;
 using ZfssUZData.Models.Users;
 using Microsoft.Extensions.Localization;
+using AutoMapper;
 
 namespace ZfssUZ.Controllers
 {
     public class UserController : Controller
     {
-        private IUserService userService;
-        private UserManager<ApplicationUser> _userManager;
-        private readonly IStringLocalizer<UserController> _localizer;
-        public UserController(IUserService service, UserManager<ApplicationUser> userManager, IStringLocalizer<UserController> localizer)
-        {
-            userService = service;
-            _userManager = userManager;
-            _localizer = localizer;
-        }
-
         public static string idUser = string.Empty;
+        private readonly IMapper mapper;
+        private IUserService userService;
+        private IDictionaryService dictionaryService;
+        private UserManager<ApplicationUser> userManager;
+        private readonly IStringLocalizer<UserController> localizer;
+        public UserController(IUserService userService, UserManager<ApplicationUser> userManager, IStringLocalizer<UserController> localizer, IDictionaryService dictionaryService, IMapper mapper)
+        {
+            this.userService = userService;
+            this.dictionaryService = dictionaryService;
+            this.userManager = userManager;
+            this.localizer = localizer;
+            this.mapper = mapper;
+        }
 
         [HttpGet]
         public IActionResult Index()
         {
             var users = userService.GetAllUsers().ToList();
-
             var userList = users.Select(result => new UserModel
             {
                 Id = result.Id,
@@ -43,8 +45,7 @@ namespace ZfssUZ.Controllers
                 Address = result.Address,
                 PostCode = result.PostCode,
                 City = result.City,
-                UserGroup = userService.GetUserGroupById(result.UserGroupId).GroupName,
-                UserGroupId = result.UserGroupId
+                UserGroup = mapper.Map<UserGroupModel>(userService.GetUserGroupById(result.UserGroupId))
             });
 
             var model = new UserListModel();
@@ -79,21 +80,21 @@ namespace ZfssUZ.Controllers
                     DateOfBirth = model.DateOfBirth,
                     Password = model.Password,
                     PostCode = model.PostCode,
-                    UserGroupId = model.UserGroupId,
+                    UserGroupId = model.UserGroup.Id,
                     EmailConfirmed = true
                 };
 
-                var result = await _userManager.CreateAsync(user, model.Password);
+                var result = await userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                     return RedirectToAction("Index");
 
                 foreach (var error in result.Errors)
                 {
                     if (error.Code == "DuplicateUserName")
-                        ModelState.AddModelError(string.Empty, string.Format(_localizer["DuplicateUsername"], user.UserName));
+                        ModelState.AddModelError(string.Empty, string.Format(localizer["DuplicateUsername"], user.UserName));
 
                     if (error.Code == "DuplicateEmail")
-                        ModelState.AddModelError(string.Empty, string.Format(_localizer["DuplicateEmail"], user.Email));
+                        ModelState.AddModelError(string.Empty, string.Format(localizer["DuplicateEmail"], user.Email));
                 }
                 if (result.Errors.Any())
                     return View(model);
@@ -119,8 +120,7 @@ namespace ZfssUZ.Controllers
                 Address = user.Address,
                 PostCode = user.PostCode,
                 PhoneNumber = user.PhoneNumber,
-                UserGroup = userService.GetUserGroupById(user.UserGroupId).GroupName,
-                UserGroupId = user.UserGroupId,
+                UserGroup = mapper.Map<UserGroupModel>(userService.GetUserGroupById(user.UserGroupId)),
                 CategoryList = new SelectList(userService.GetUserGroups(), "Id", "GroupName")
             };
 
@@ -145,7 +145,7 @@ namespace ZfssUZ.Controllers
                     City = model.Address,
                     PostCode = model.PostCode,
                     UserName = model.Username,
-                    UserGroupId = model.UserGroupId
+                    UserGroupId = model.UserGroup.Id
                 };
 
                 userService.UpdateUserData(userToUpdate);
@@ -182,8 +182,8 @@ namespace ZfssUZ.Controllers
                 Address = user.Address,
                 PostCode = user.PostCode,
                 PhoneNumber = user.PhoneNumber,
-                UserGroup = userService.GetUserGroupById(user.UserGroupId).GroupName,
-                IsLocked = user.LockoutEnd != null ? true : false,
+                UserGroup = mapper.Map<UserGroupModel>(userService.GetUserGroupById(user.UserGroupId)),
+                IsLocked = user.LockoutEnd != null
             };
 
             return PartialView("ShowUser", model);

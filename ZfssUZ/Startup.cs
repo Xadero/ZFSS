@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Http;
 using System;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using AutoMapper;
 
 namespace ZfssUZ
 {
@@ -47,9 +48,7 @@ namespace ZfssUZ
                 options.SlidingExpiration = true;
             });
 
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("ZFSSConnection"), x => x.MigrationsAssembly("ZfssUZData")));
+            services.AddDbContext<ApplicationDbContext>(options =>options.UseSqlServer(Configuration.GetConnectionString("ZFSSConnection"), x => x.MigrationsAssembly("ZfssUZData")));
 
             services.AddDefaultIdentity<ApplicationUser>(options => {
                 options.SignIn.RequireConfirmedAccount = false;
@@ -57,6 +56,7 @@ namespace ZfssUZ
             }).AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IDictionaryService, DictionaryService>();
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");
 
@@ -85,6 +85,7 @@ namespace ZfssUZ
                 config.Filters.Add(new AuthorizeFilter(policy));
             });
 
+            services.AddAutoMapper(typeof(Startup));
             services.AddControllersWithViews();
             services.AddRazorPages();
         }

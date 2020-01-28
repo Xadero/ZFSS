@@ -169,4 +169,10 @@
   <data name="ValidatePassword" xml:space="preserve">
     <value>Pole 'Hasło' jest wymagane.</value>
   </data>
+  <data name="Password" xml:space="preserve">
+    <value>Hasło</value>
+  </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>Potwierdź hasło</value>
+  </data>
 </root>
