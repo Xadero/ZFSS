@@ -6,6 +6,6 @@ namespace ZfssUZData.Interfaces
 {
     public interface IDictionaryService
     {
-        dynamic Get<T>(int id);
+        T Get<T>(int id) where T : class;
     }
 }

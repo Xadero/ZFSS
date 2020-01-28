@@ -12,17 +12,17 @@ namespace ZfssUZData
 
         public new DbSet<ApplicationUser> Users { get; set; }
 
-        public DbSet<UserGroup> UserGroups { get; set; }
+        public DbSet<UserGroup> UserGroup { get; set; }
 
         public DbSet<BenefitType> BenefitType { get; set; }
 
-        public DbSet<HomeLoanBenefit> HomeLoanBenefits { get; set; }
+        public DbSet<HomeLoanBenefit> HomeLoanBenefit { get; set; }
 
-        public DbSet<SocialServiceBenefit> SocialServiceBenefits { get; set; }
+        public DbSet<SocialServiceBenefit> SocialServiceBenefit { get; set; }
 
-        public DbSet<SocialServiceKind> SocialServiceKinds { get; set; }
+        public DbSet<SocialServiceKind> SocialServiceKind { get; set; }
 
-        public DbSet<BenefitStatus> BenefitStatuses { get; set; }
+        public DbSet<BenefitStatus> BenefitStatus { get; set; }
 
         public DbSet<Relatives> Relatives { get; set; }
 
@@ -30,6 +30,8 @@ namespace ZfssUZData
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.HasSequence("SEQ_SocialServiceNumber").StartsAt(1).IncrementsBy(1);
+            modelBuilder.HasSequence("SEQ_HomeLoanNumber").StartsAt(1).IncrementsBy(1);
         }
     }
 }

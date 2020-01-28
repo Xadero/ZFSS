@@ -45,7 +45,7 @@ namespace ZfssUZ.Controllers
                 Address = result.Address,
                 PostCode = result.PostCode,
                 City = result.City,
-                UserGroup = mapper.Map<UserGroupModel>(userService.GetUserGroupById(result.UserGroupId))
+                UserGroup = mapper.Map<UserGroupModel>(dictionaryService.Get<UserGroup>(result.UserGroupId))
             });
 
             var model = new UserListModel();
@@ -120,7 +120,7 @@ namespace ZfssUZ.Controllers
                 Address = user.Address,
                 PostCode = user.PostCode,
                 PhoneNumber = user.PhoneNumber,
-                UserGroup = mapper.Map<UserGroupModel>(userService.GetUserGroupById(user.UserGroupId)),
+                UserGroup = mapper.Map<UserGroupModel>(dictionaryService.Get<UserGroup>(user.UserGroupId)),
                 CategoryList = new SelectList(userService.GetUserGroups(), "Id", "GroupName")
             };
 
@@ -182,7 +182,7 @@ namespace ZfssUZ.Controllers
                 Address = user.Address,
                 PostCode = user.PostCode,
                 PhoneNumber = user.PhoneNumber,
-                UserGroup = mapper.Map<UserGroupModel>(userService.GetUserGroupById(user.UserGroupId)),
+                UserGroup = mapper.Map<UserGroupModel>(dictionaryService.Get<UserGroup>(user.UserGroupId)),
                 IsLocked = user.LockoutEnd != null
             };
 

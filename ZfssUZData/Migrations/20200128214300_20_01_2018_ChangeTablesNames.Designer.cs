@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ZfssUZData;
 
 namespace ZfssUZData.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200128214300_20_01_2018_ChangeTablesNames")]
+    partial class _20_01_2018_ChangeTablesNames
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -230,7 +232,7 @@ namespace ZfssUZData.Migrations
 
                     b.HasIndex("SubmittingUserId");
 
-                    b.ToTable("HomeLoanBenefit");
+                    b.ToTable("HomeLoanBenefits");
                 });
 
             modelBuilder.Entity("ZfssUZData.Models.Benefits.Relatives", b =>
@@ -328,7 +330,7 @@ namespace ZfssUZData.Migrations
 
                     b.HasIndex("SubmittingUserId");
 
-                    b.ToTable("SocialServiceBenefit");
+                    b.ToTable("SocialServiceBenefits");
                 });
 
             modelBuilder.Entity("ZfssUZData.Models.Benefits.SocialServiceKind", b =>

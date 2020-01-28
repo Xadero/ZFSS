@@ -11,20 +11,14 @@ namespace ZfssUZService
     {
         private ApplicationDbContext applicationDbContext;
 
-        public dynamic Get<TEntity>(int id)
+        public DictionaryService(ApplicationDbContext context)
         {
-            var entity = typeof(TEntity);
-            var type = Assembly.GetExecutingAssembly().GetTypes().FirstOrDefault(t => t.Name == entity.Name);
-            var yxxx = typeof(TEntity).GetType();
-            var x = applicationDbContext.Find(yxxx);
-             
-            Type targetType = Type.GetType(entity.GetType().Name);
-            var model = GetType().GetRuntimeProperties().Where(o =>
-                o.PropertyType.IsGenericType &&
-                o.PropertyType.GetGenericTypeDefinition() == typeof(DbSet<>) &&
-                o.PropertyType.GenericTypeArguments.Contains(targetType)).FirstOrDefault();
+            applicationDbContext = context;
+        }
 
-            return model.GetValue(this);
+        public T Get<T>(int id) where T : class
+        {
+            return applicationDbContext.Set<T>().Find(id);
         }
     }
 }

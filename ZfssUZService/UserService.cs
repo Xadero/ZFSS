@@ -22,12 +22,12 @@ namespace ZfssUZService
 
         public IEnumerable<UserGroup> GetUserGroups()
         {
-            return applicationDbContext.UserGroups;
+            return applicationDbContext.UserGroup;
         }
 
         public UserGroup GetUserGroupById(decimal id)
         {
-            return applicationDbContext.UserGroups.Where(x => x.Id == id).First();
+            return applicationDbContext.UserGroup.Where(x => x.Id == id).First();
         }
 
         public void LockUser(string id)

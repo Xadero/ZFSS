@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ZfssUZData;
 
 namespace ZfssUZData.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200128211126_20_01_2018_Add_Tables_And_Sequences")]
+    partial class _20_01_2018_Add_Tables_And_Sequences
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -165,7 +167,7 @@ namespace ZfssUZData.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BenefitStatus");
+                    b.ToTable("BenefitStatuses");
                 });
 
             modelBuilder.Entity("ZfssUZData.Models.Benefits.HomeLoanBenefit", b =>
@@ -230,7 +232,7 @@ namespace ZfssUZData.Migrations
 
                     b.HasIndex("SubmittingUserId");
 
-                    b.ToTable("HomeLoanBenefit");
+                    b.ToTable("HomeLoanBenefits");
                 });
 
             modelBuilder.Entity("ZfssUZData.Models.Benefits.Relatives", b =>
@@ -328,7 +330,7 @@ namespace ZfssUZData.Migrations
 
                     b.HasIndex("SubmittingUserId");
 
-                    b.ToTable("SocialServiceBenefit");
+                    b.ToTable("SocialServiceBenefits");
                 });
 
             modelBuilder.Entity("ZfssUZData.Models.Benefits.SocialServiceKind", b =>
@@ -344,7 +346,7 @@ namespace ZfssUZData.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SocialServiceKind");
+                    b.ToTable("SocialServiceKinds");
                 });
 
             modelBuilder.Entity("ZfssUZData.Models.Submissions.BenefitType", b =>
@@ -469,7 +471,7 @@ namespace ZfssUZData.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserGroup");
+                    b.ToTable("UserGroups");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

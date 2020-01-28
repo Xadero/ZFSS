@@ -26,6 +26,6 @@ namespace ZfssUZData.Models.Users
         public string City { get; set; }
         public string Address { get; set; }
         [ForeignKey("UserGroup")]
-        public decimal UserGroupId { get; set; }
+        public int UserGroupId { get; set; }
     }
 }

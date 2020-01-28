@@ -2,7 +2,7 @@
 {
     public class UserGroup
     {
-        public decimal Id { get; set; }
+        public int Id { get; set; }
 
         public string GroupName { get; set; }
     }
