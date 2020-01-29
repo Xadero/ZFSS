@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ZfssUZData.Models.Benefits;
-using ZfssUZData.Models.Submissions;
 using ZfssUZData.Models.Users;
 
 namespace ZfssUZData

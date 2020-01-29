@@ -58,7 +58,7 @@ namespace ZfssUZ.Controllers
         {
             var model = new RegisterModel()
             {
-                CategoryList = new SelectList(userService.GetUserGroups(), "Id", "GroupName")
+                UserGroupList = new SelectList(userService.GetUserGroups(), "Id", "GroupName")
             };
             return View(model);
         }
@@ -66,7 +66,7 @@ namespace ZfssUZ.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterModel model)
         {
-            model.CategoryList = new SelectList(userService.GetUserGroups(), "Id", "GroupName");
+            model.UserGroupList = new SelectList(userService.GetUserGroups(), "Id", "GroupName");
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser
@@ -121,7 +121,7 @@ namespace ZfssUZ.Controllers
                 PostCode = user.PostCode,
                 PhoneNumber = user.PhoneNumber,
                 UserGroup = mapper.Map<UserGroupModel>(dictionaryService.Get<UserGroup>(user.UserGroupId)),
-                CategoryList = new SelectList(userService.GetUserGroups(), "Id", "GroupName")
+                UserGroupList = new SelectList(userService.GetUserGroups(), "Id", "GroupName")
             };
 
             return View(model);
@@ -131,7 +131,7 @@ namespace ZfssUZ.Controllers
         public async Task<IActionResult> Edit(UserModel model)
         {
             model.Id = idUser;
-            model.CategoryList = new SelectList(userService.GetUserGroups(), "Id", "GroupName");
+            model.UserGroupList = new SelectList(userService.GetUserGroups(), "Id", "GroupName");
             if (ModelState.IsValid)
             {
                 var userToUpdate = new ApplicationUser

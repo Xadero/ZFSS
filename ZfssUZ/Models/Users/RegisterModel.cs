@@ -60,6 +60,6 @@ namespace ZfssUZ.Models.Users
         [Display(Name = "UserGroup")]
         public UserGroupModel UserGroup { get; set; }
 
-        public IEnumerable<SelectListItem> CategoryList { get; set; }
+        public IEnumerable<SelectListItem> UserGroupList { get; set; }
     }
 }

@@ -47,6 +47,6 @@ namespace ZfssUZ.Models.Users
         [Display(Name = "IsLocked")]
         public bool IsLocked { get; set; }
 
-        public IEnumerable<SelectListItem> CategoryList { get; set; }
+        public IEnumerable<SelectListItem> UserGroupList { get; set; }
     }
 }

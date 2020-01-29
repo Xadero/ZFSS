@@ -42,10 +42,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\User\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Update="Resources\Models\Users\UserModel.en.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

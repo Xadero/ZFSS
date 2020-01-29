@@ -1,13 +1,13 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using ZfssUZData.Models.Submissions;
 using ZfssUZData.Models.Users;
 
 namespace ZfssUZData.Models.Benefits
 {
     public class HomeLoanBenefit
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         [Required]
@@ -48,10 +48,5 @@ namespace ZfssUZData.Models.Benefits
 
         [ForeignKey("BenefitTypeId")]
         public BenefitType BenefitType { get; set; }
-
-
-
-
-
     }
 }

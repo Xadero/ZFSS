@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ZfssUZData.Models.Submissions
+namespace ZfssUZData.Models.Benefits
 {
     public class BenefitType
     {

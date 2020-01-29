@@ -1,12 +1,10 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ZfssUZData.Models.Benefits
+namespace ZfssUZ.Models.Benefit
 {
-    public class Relatives
+    public class RelativesModel
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         [Required]
@@ -21,7 +19,6 @@ namespace ZfssUZData.Models.Benefits
         [Required]
         public string Notes { get; set; }
 
-        [ForeignKey("SocialServiceBenefitId")]
-        public SocialServiceBenefit SocialServiceBenefits { get; set; }
+        public SocialServiceBenefitModel SocialServiceBenefits { get; set; }
     }
 }
