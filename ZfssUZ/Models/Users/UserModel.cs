@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -19,6 +20,10 @@ namespace ZfssUZ.Models.Users
         [Display(Name = "Lastname")]
         [Required(ErrorMessage = "ValidateLastname")]
         public string LastName { get; set; }
+
+        [Display(Name = "DateOfBirth")]
+        [Required(ErrorMessage = "ValidateDateOfBirth")]
+        public DateTime DateOfBirth { get; set; }
 
         [Display(Name = "PhoneNumber")]
         [Required(ErrorMessage = "ValidatePhoneNumber")]

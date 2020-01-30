@@ -33,6 +33,10 @@
                                 <td>@Html.TextBoxFor(x => x.LastName, string.Empty, displayMode)</td>
                             </tr>
                             <tr>
+                                <td>@Html.LabelFor(x => x.DateOfBirth)</td>
+                                <td>@Html.TextBoxFor(x => x.DateOfBirth, "{0:dd.mm.yyyy}", displayMode)</td>
+                            </tr>
+                            <tr>
                                 <td>@Html.LabelFor(x => x.Address)</td>
                                 <td>@Html.TextBoxFor(x => x.Address, string.Empty, displayMode)</td>
                             </tr>

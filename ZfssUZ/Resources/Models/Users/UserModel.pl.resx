@@ -174,4 +174,10 @@
   <data name="ValidateUseGroup" xml:space="preserve">
     <value>Pole 'Grupa użytkowników' jest wymagane.</value>
   </data>
+  <data name="DateOfBirth" xml:space="preserve">
+    <value>Data urodzenia</value>
+  </data>
+  <data name="ValidateDateOfBirth" xml:space="preserve">
+    <value>Pole 'Data urodzenia' jest wymagane.</value>
+  </data>
 </root>

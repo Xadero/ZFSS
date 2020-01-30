@@ -11,6 +11,15 @@ namespace ZfssUZData.Models.Benefits
         public int Id { get; set; }
 
         [Required]
+        public string BeneficiaryName { get; set; }
+
+        [Required]
+        public string BeneficiaryAddress { get; set; }
+
+        [Required]
+        public string BeneficiaryPhoneNumber { get; set; }
+
+        [Required]
         public long BenefitNumber { get; set; }
 
         [ForeignKey("BenefitStatusId")]
@@ -25,7 +34,7 @@ namespace ZfssUZData.Models.Benefits
         public int Year { get; set; }
 
         [Required]
-        public float AvreageIncome { get; set; }
+        public decimal AvreageIncome { get; set; }
 
         public string AdditionInformation { get; set; }
 

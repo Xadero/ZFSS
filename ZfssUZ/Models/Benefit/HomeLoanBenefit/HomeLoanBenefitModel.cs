@@ -17,7 +17,7 @@ namespace ZfssUZ.Models.Benefit.HomeLoanBenefit
         public long LoanCost { get; set; }
 
         [Required]
-        public int Instalment { get; set; }
+        public decimal Instalment { get; set; }
 
         [Required]
         public int Months { get; set; }

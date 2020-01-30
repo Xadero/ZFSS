@@ -36,20 +36,15 @@ namespace ZfssUZ.Controllers
             var userList = users.Select(result => new UserModel
             {
                 Id = result.Id,
-                IsLocked = result.LockoutEnd != null ? true : false,
                 Username = result.UserName,
                 Firstname = result.FirstName,
                 LastName = result.LastName,
-                EmailAddress = result.Email,
-                PhoneNumber = result.PhoneNumber,
-                Address = result.Address,
-                PostCode = result.PostCode,
-                City = result.City,
-                UserGroup = mapper.Map<UserGroupModel>(dictionaryService.Get<UserGroup>(result.UserGroupId))
             });
 
-            var model = new UserListModel();
-            model.UserList = userList;
+            var model = new UserListModel()
+            {
+                UserList = userList
+            };
 
             return View(model);
         }
@@ -116,6 +111,7 @@ namespace ZfssUZ.Controllers
                 Firstname = user.FirstName,
                 LastName = user.LastName,
                 EmailAddress = user.Email,
+                DateOfBirth = user.DateOfBirth,
                 City = user.City,
                 Address = user.Address,
                 PostCode = user.PostCode,
@@ -141,6 +137,7 @@ namespace ZfssUZ.Controllers
                     Email = model.EmailAddress,
                     PhoneNumber = model.PhoneNumber,
                     Id = model.Id,
+                    DateOfBirth = model.DateOfBirth,
                     Address = model.Address,
                     City = model.Address,
                     PostCode = model.PostCode,
@@ -177,6 +174,7 @@ namespace ZfssUZ.Controllers
                 Username = user.UserName,
                 Firstname = user.FirstName,
                 LastName = user.LastName,
+                DateOfBirth = user.DateOfBirth,
                 EmailAddress = user.Email,
                 City = user.City,
                 Address = user.Address,

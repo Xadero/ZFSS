@@ -11,13 +11,22 @@ namespace ZfssUZ.Models.Benefit.HomeLoanBenefit
         public int Id { get; set; }
 
         [Required]
+        public string BeneficiaryName { get; set; }
+
+        [Required]
+        public string BeneficiaryAddress { get; set; }
+
+        [Required]
+        public string BeneficiaryPhoneNumber { get; set; }
+
+        [Required]
         public long BenefitNumber { get; set; }
 
         [Required]
         public long LoanCost { get; set; }
 
         [Required]
-        public int Instalment { get; set; }
+        public decimal Instalment { get; set; }
 
         [Required]
         public int Months { get; set; }

@@ -23,7 +23,7 @@ namespace ZfssUZ.Models.Benefit
         public int Year { get; set; }
 
         [Required]
-        public float AvreageIncome { get; set; }
+        public decimal AvreageIncome { get; set; }
 
         public string AdditionInformation { get; set; }
 
