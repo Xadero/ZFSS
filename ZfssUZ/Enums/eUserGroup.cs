@@ -1,20 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
 namespace ZfssUZ.Enums
 {
     public enum eUserGroup
     {
-        [Description("Administracja")]
+        /// <summary>
+        /// Administracja
+        /// </summary>
         Administration = 1,
 
-        [Description("Dział socjalny")]
+        /// <summary>
+        /// Dział socjalny
+        /// </summary>
         SocialService = 2,
 
-        [Description("Pracownik UZ")]
+        /// <summary>
+        /// Pracownik UZ
+        /// </summary>
         UzEmpoloyee = 3,
 
     }

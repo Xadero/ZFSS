@@ -9,6 +9,7 @@
 
 @{
     object style = new { style = "form-control" };
+    ViewData["Title"] = @Localizer["Title"];
 }
 
 <script src="~/lib/jquery/dist/jquery.js"></script>
@@ -54,9 +55,13 @@
                 @Html.TextBoxFor(x => x.Instalment, string.Empty, new { @class = "form-control", @readonly = "readonly" })
                 @Html.ValidationMessageFor(x => x.Instalment, string.Empty, new { @class = "text-danger" })
             </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.BenefitType)
+                @Html.DropDownListFor(x => x.BenefitType.Id, Model.BenefitTypeList, new { @class = "form-control", @disabled = "disabled" })
+            </div>
 
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Create" class="btn btn-default" onclick="createBenefit()"/>
                 <a asp-action="Index" asp-controller="Home" class="btn btn-default">@Localizer["Back"]</a>
             </div>
         </form>
@@ -72,12 +77,8 @@
     });
 
     function getUserData() {
-
-        @*$("#BeneficiaryName").val("@Html.Raw(UserManager.GetUserAsync(User).Result.FirstName + " " + UserManager.GetUserAsync(User).Result.LastName)");
-        $("#BeneficiaryAddress").val("@Html.Raw(UserManager.GetUserAsync(User).Result.Address + ", " + @UserManager.GetUserAsync(User).Result.PostCode + " " + UserManager.GetUserAsync(User).Result.City)");
-        $("#BeneficiaryPhoneNumber").val(@UserManager.GetUserAsync(User).Result.PhoneNumber);*@
-        $("#BeneficiaryName").val("@UserManager.GetUserAsync(User).Result.FirstName @UserManager.GetUserAsync(User).Result.LastName");
-        $("#BeneficiaryAddress").val("@UserManager.GetUserAsync(User).Result.Address " + "@UserManager.GetUserAsync(User).Result.PostCode " + "@UserManager.GetUserAsync(User).Result.City");
+        $("#BeneficiaryName").val("@UserManager.GetUserAsync(User).Result.FirstName " +  "@UserManager.GetUserAsync(User).Result.LastName");
+        $("#BeneficiaryAddress").val("@UserManager.GetUserAsync(User).Result.Address, " + "@UserManager.GetUserAsync(User).Result.PostCode " + "@UserManager.GetUserAsync(User).Result.City");
         $("#BeneficiaryPhoneNumber").val(@UserManager.GetUserAsync(User).Result.PhoneNumber);
     }
 
@@ -88,6 +89,12 @@
         if (months.value > 0 && loanCost.value > 0) {
             document.getElementById("Instalment").value = (loanCost.value / months.value).toFixed(2);
         }
+    }
+
+    
+
+    function createBenefit() {
+        alert("Wniosek zosta³ z³o¿ony nr wniuoskiu:" + @Model.BenefitNumber);
     }
 </script>
 

@@ -17,6 +17,9 @@ using System;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using AutoMapper;
+using Microsoft.Extensions.WebEncoders;
+using System.Text.Encodings.Web;
+using System.Text.Unicode;
 
 namespace ZfssUZ
 {
@@ -57,6 +60,9 @@ namespace ZfssUZ
 
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IDictionaryService, DictionaryService>();
+            services.AddScoped<IBenefitService, BenefitService>();
+            services.AddScoped<IHomeLoanBenefitService, HomeLoanBenefitService>();
+            services.AddScoped<ISocialServiceBenefitService, SocialServiceBenefitService>();
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");
 
@@ -77,11 +83,14 @@ namespace ZfssUZ
                 options.SupportedUICultures = supportedCultures;
             });
 
+            services.Configure<WebEncoderOptions>(options =>
+            {
+                options.TextEncoderSettings = new TextEncoderSettings(UnicodeRanges.All);
+            });
+
             services.AddMvc(config =>
             {
-                var policy = new AuthorizationPolicyBuilder()
-                                 .RequireAuthenticatedUser()
-                                 .Build();
+                var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
                 config.Filters.Add(new AuthorizeFilter(policy));
             });
 
