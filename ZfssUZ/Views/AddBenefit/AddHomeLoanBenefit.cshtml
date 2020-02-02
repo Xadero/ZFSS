@@ -91,11 +91,11 @@
         }
     }
 
-    
-
-    function createBenefit() {
-        alert("Wniosek zosta³ z³o¿ony nr wniuoskiu:" + @Model.BenefitNumber);
-    }
+    $(document).ready(function () {
+        if ("@TempData["BenefitAddError"]" != null && "@TempData["BenefitAddError"]" != "" && "@TempData["BenefitAddError"]" != "Error") {
+            alert("Wyst¹pi³ b³¹d podczas tworzenia wniosku." + "@TempData["BenefitAddError"]");
+        }
+    });
 </script>
 
 

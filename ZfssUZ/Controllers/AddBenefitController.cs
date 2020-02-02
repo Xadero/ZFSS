@@ -36,6 +36,8 @@ namespace ZfssUZ.Controllers
         [HttpGet]
         public IActionResult AddHomeLoanBenefit()
         {
+            TempData["BenefitAddError"] = "Error";
+            TempData["BenefitAddSuccess"] = "Success";
             var model = new AddHomeLoanBenefitModel()
             {
                 BenefitTypeList = new SelectList(benefitService.GetBenefitsTypes(), "Id", "Value", 1)
@@ -66,10 +68,12 @@ namespace ZfssUZ.Controllers
             try
             {
                 homeLoanBenefitService.CreateBenefit(newBenefit);
-                return Json(new { success = true });
+                TempData["BenefitAddSuccess"] = newBenefit.BenefitNumber.ToString();
+                return RedirectToAction("Index", "Home");
             }
             catch(Exception ex)
             {
+                TempData["BenefitAddError"] = ex.Message;
                 return View(model);
             }
         }
