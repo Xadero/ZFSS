@@ -62,40 +62,38 @@ namespace ZfssUZ.Controllers
         public async Task<IActionResult> Register(RegisterModel model)
         {
             model.UserGroupList = new SelectList(userService.GetUserGroups(), "Id", "GroupName");
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var user = new ApplicationUser
             {
-                var user = new ApplicationUser
-                {
-                    UserName = model.Username,
-                    Email = model.EmailAddress,
-                    FirstName = model.Firstname,
-                    LastName = model.LastName,
-                    City = model.City,
-                    Address = model.Address,
-                    DateOfBirth = model.DateOfBirth,
-                    Password = model.Password,
-                    PostCode = model.PostCode,
-                    UserGroupId = model.UserGroup.Id,
-                    EmailConfirmed = true
-                };
+                UserName = model.Username,
+                Email = model.EmailAddress,
+                FirstName = model.Firstname,
+                LastName = model.LastName,
+                City = model.City,
+                Address = model.Address,
+                DateOfBirth = model.DateOfBirth,
+                Password = model.Password,
+                PostCode = model.PostCode,
+                UserGroupId = model.UserGroup.Id,
+                EmailConfirmed = true
+            };
 
-                var result = await userManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                    return RedirectToAction("Index");
+            var result = await userManager.CreateAsync(user, model.Password);
+            if (result.Succeeded)
+                return RedirectToAction("Index");
 
-                foreach (var error in result.Errors)
-                {
-                    if (error.Code == "DuplicateUserName")
-                        ModelState.AddModelError(string.Empty, string.Format(localizer["DuplicateUsername"], user.UserName));
+            foreach (var error in result.Errors)
+            {
+                if (error.Code == "DuplicateUserName")
+                    ModelState.AddModelError(string.Empty, string.Format(localizer["DuplicateUsername"], user.UserName));
 
-                    if (error.Code == "DuplicateEmail")
-                        ModelState.AddModelError(string.Empty, string.Format(localizer["DuplicateEmail"], user.Email));
-                }
+                if (error.Code == "DuplicateEmail")
+                    ModelState.AddModelError(string.Empty, string.Format(localizer["DuplicateEmail"], user.Email));
                 if (result.Errors.Any())
                     return View(model);
             }
-            else
-                return View(model);
 
             return RedirectToAction("Index");
         }
@@ -128,28 +126,26 @@ namespace ZfssUZ.Controllers
         {
             model.Id = idUser;
             model.UserGroupList = new SelectList(userService.GetUserGroups(), "Id", "GroupName");
-            if (ModelState.IsValid)
-            {
-                var userToUpdate = new ApplicationUser
-                {
-                    FirstName = model.Firstname,
-                    LastName = model.LastName,
-                    Email = model.EmailAddress,
-                    PhoneNumber = model.PhoneNumber,
-                    Id = model.Id,
-                    DateOfBirth = model.DateOfBirth,
-                    Address = model.Address,
-                    City = model.Address,
-                    PostCode = model.PostCode,
-                    UserName = model.Username,
-                    UserGroupId = model.UserGroup.Id
-                };
-
-                userService.UpdateUserData(userToUpdate);
-                return RedirectToAction("Index");
-            }
-            else
+            if (!ModelState.IsValid)
                 return View(model);
+
+            var userToUpdate = new ApplicationUser
+            {
+                FirstName = model.Firstname,
+                LastName = model.LastName,
+                Email = model.EmailAddress,
+                PhoneNumber = model.PhoneNumber,
+                Id = model.Id,
+                DateOfBirth = model.DateOfBirth,
+                Address = model.Address,
+                City = model.Address,
+                PostCode = model.PostCode,
+                UserName = model.Username,
+                UserGroupId = model.UserGroup.Id
+            };
+
+            userService.UpdateUserData(userToUpdate);
+            return RedirectToAction("Index");
         }
 
         [HttpPost]

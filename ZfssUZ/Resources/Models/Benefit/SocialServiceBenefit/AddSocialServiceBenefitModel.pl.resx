@@ -97,19 +97,67 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AddHomeLoanBenefitTitle" xml:space="preserve">
-    <value>Nowy wniosek o pożyczkę mieszkaniową</value>
+  <data name="ValidatePosition" xml:space="preserve">
+    <value>Pole 'Stanowisko' jest wymagane.</value>
   </data>
-  <data name="Create" xml:space="preserve">
-    <value>Złóż wniosek</value>
+  <data name="AdditionInformation" xml:space="preserve">
+    <value>Informacje dodatkowe</value>
   </data>
-  <data name="Back" xml:space="preserve">
-    <value>Powrót do listy wniosków</value>
+  <data name="AverageIncome" xml:space="preserve">
+    <value>Średnia dochodu netto na osobę</value>
   </data>
-  <data name="AddHomeLoanBenefitError" xml:space="preserve">
-    <value>Błąd podczas tworzenia wniosku. </value>
+  <data name="BeneficiaryAddress" xml:space="preserve">
+    <value>Adres zamieszkania wnioskodawcy</value>
   </data>
-  <data name="GetUserData" xml:space="preserve">
-    <value>Pobierz dane swojego użytkownika</value>
+  <data name="BeneficiaryName" xml:space="preserve">
+    <value>Imię i nazwisko wnioskodawcy</value>
+  </data>
+  <data name="BeneficiaryPhoneNumber" xml:space="preserve">
+    <value>Numer telefonu wnioskodawcy</value>
+  </data>
+  <data name="BenefitType" xml:space="preserve">
+    <value>Rodzaj świadczenia</value>
+  </data>
+  <data name="DateOfEmployment" xml:space="preserve">
+    <value>Data zatrudnienia</value>
+  </data>
+  <data name="ValidateAdditionInformation" xml:space="preserve">
+    <value>Pole 'Dodatkowe informacje' jest wymagane.</value>
+  </data>
+  <data name="ValidateAverageIncome" xml:space="preserve">
+    <value>Pole 'Średnia dochodu netto na osobę' jest wymagane.</value>
+  </data>
+  <data name="ValidateBenefitType" xml:space="preserve">
+    <value>Pole 'Rodzaj świadczenia' jest wymagane.</value>
+  </data>
+  <data name="ValidateBeneficiaryAddress" xml:space="preserve">
+    <value>Pole 'Adres zamieszkania wnioskodawcy' jest wymagane.</value>
+  </data>
+  <data name="ValidateBeneficiaryName" xml:space="preserve">
+    <value>Pole 'Imię i nazwisko wnioskodawcy' jest wymagane.</value>
+  </data>
+  <data name="ValidateBeneficiaryPhoneNumber" xml:space="preserve">
+    <value>Pole 'Numer telefonu wnioskodawcy' jest wymagane.</value>
+  </data>
+  <data name="ValidateDateOfEmployment" xml:space="preserve">
+    <value>Pole 'Data zatrudnienia' jest wymagane.</value>
+  </data>
+  <data name="ValidateSocialServiceKind" xml:space="preserve">
+    <value>Pole 'Rodzaj świadczenia socjalnego' jest wymagane.</value>
+  </data>
+  <data name="ValidateYear" xml:space="preserve">
+    <value>Pole 'Rok' jest wymagane.</value>
+  </data>
+  <data name="OtherSocialServiceKind" xml:space="preserve">
+    <value>Inne świadczenie</value>
+  </data>
+  <data name="Position" xml:space="preserve">
+    <value>Stanowisko</value>
+  </data>
+  <data name="SocialServiceKind" xml:space="preserve">
+    <value>Rodzaj świadczenia socjalnego</value>
+  </data>
+  <data name="Year" xml:space="preserve">
+    <value>Rok</value>
   </data>
 </root>

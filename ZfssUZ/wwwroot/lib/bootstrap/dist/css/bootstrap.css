@@ -1734,6 +1734,7 @@ a.text-warning:focus {
 
 .text-danger {
     color: #a94442;
+    font-weight: bold;
 }
 
 a.text-danger:hover,

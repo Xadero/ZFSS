@@ -20,6 +20,13 @@ namespace ZfssUZData.Models.Benefits
         public string BeneficiaryPhoneNumber { get; set; }
 
         [Required]
+        public string Position { get; set; }
+
+        [Required]
+
+        public DateTime DateOfEmployment { get; set; }
+
+        [Required]
         public long BenefitNumber { get; set; }
 
         [ForeignKey("BenefitStatusId")]

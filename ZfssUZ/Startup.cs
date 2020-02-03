@@ -128,7 +128,7 @@ namespace ZfssUZ
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Benefit}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
         }

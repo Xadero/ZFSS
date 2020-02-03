@@ -10,8 +10,8 @@
         /// <summary>
         /// świadczenie świąteczne
         /// </summary>
-        
         HolidayBenefit = 2,
+
         /// <summary>
         /// inne świadczenie
         /// </summary>

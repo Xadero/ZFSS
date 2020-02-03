@@ -4,22 +4,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using ZfssUZ.Enums;
-using ZfssUZ.Models.Benefit;
 using ZfssUZ.Models.Benefit.HomeLoanBenefit;
+using ZfssUZ.Models.Benefit.SocialServiceBenefit;
 using ZfssUZData.Interfaces;
 using ZfssUZData.Models.Benefits;
 using ZfssUZData.Models.Users;
 
 namespace ZfssUZ.Controllers
 {
-    public class AddBenefitController : Controller
+    public class BenefitController : Controller
     {
         private readonly IMapper mapper;
         private IBenefitService benefitService;
         private IHomeLoanBenefitService homeLoanBenefitService;
         private IDictionaryService dictionaryService;
         private UserManager<ApplicationUser> userManager;
-        public AddBenefitController (IBenefitService benefitService, IDictionaryService dictionaryService, IHomeLoanBenefitService homeLoanBenefitService, IMapper mapper, UserManager<ApplicationUser> userManager)
+        public BenefitController (IBenefitService benefitService, IDictionaryService dictionaryService, IHomeLoanBenefitService homeLoanBenefitService, IMapper mapper, UserManager<ApplicationUser> userManager)
         {
             this.benefitService = benefitService;
             this.dictionaryService = dictionaryService;
@@ -27,9 +27,28 @@ namespace ZfssUZ.Controllers
             this.mapper = mapper;
             this.userManager = userManager;
         }
+
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        [HttpGet]
         public IActionResult AddSocialServiceBenefit()
         {
-            var model = new AddSocialServiceBenefitModel();
+            TempData["BenefitAddError"] = "Error";
+            TempData["BenefitAddSuccess"] = "Success";
+            var model = new AddSocialServiceBenefitModel()
+            {
+                BenefitTypeList = new SelectList(benefitService.GetBenefitsTypes(), "Id", "Value", 2),
+                SocialServiceKindList = new SelectList(benefitService.GetSocialServiceKinds(), "Id", "Value")
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult AddSocialServiceBenefit(AddSocialServiceBenefitModel model)
+        {
             return View(model);
         }
 
@@ -49,6 +68,9 @@ namespace ZfssUZ.Controllers
         public ActionResult AddHomeLoanBenefit(AddHomeLoanBenefitModel model)
         {
             model.BenefitTypeList = new SelectList(benefitService.GetBenefitsTypes(), "Id", "Value", 1);
+            if (!ModelState.IsValid)
+                return View(model);
+
             var newBenefit = new HomeLoanBenefit()
             {
                 BeneficiaryName = model.BeneficiaryName,
@@ -69,7 +91,7 @@ namespace ZfssUZ.Controllers
             {
                 homeLoanBenefitService.CreateBenefit(newBenefit);
                 TempData["BenefitAddSuccess"] = newBenefit.BenefitNumber.ToString();
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index");
             }
             catch(Exception ex)
             {

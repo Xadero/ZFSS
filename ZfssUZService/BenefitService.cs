@@ -21,5 +21,10 @@ namespace ZfssUZService
         {
             return applicationDbContext.BenefitType;
         }
+
+        public IEnumerable<SocialServiceKind> GetSocialServiceKinds()
+        {
+            return applicationDbContext.SocialServiceKind;
+        }
     }
 }

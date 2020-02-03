@@ -97,19 +97,67 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AddHomeLoanBenefitTitle" xml:space="preserve">
-    <value>Nowy wniosek o pożyczkę mieszkaniową</value>
+  <data name="ValidatePosition" xml:space="preserve">
+    <value>Field 'Position' is required.</value>
   </data>
-  <data name="Create" xml:space="preserve">
-    <value>Złóż wniosek</value>
+  <data name="AdditionInformation" xml:space="preserve">
+    <value>Addition information</value>
   </data>
-  <data name="Back" xml:space="preserve">
-    <value>Powrót do listy wniosków</value>
+  <data name="AverageIncome" xml:space="preserve">
+    <value>Average income per person</value>
   </data>
-  <data name="AddHomeLoanBenefitError" xml:space="preserve">
-    <value>Błąd podczas tworzenia wniosku. </value>
+  <data name="BeneficiaryAddress" xml:space="preserve">
+    <value>Beneficiary address</value>
   </data>
-  <data name="GetUserData" xml:space="preserve">
-    <value>Pobierz dane swojego użytkownika</value>
+  <data name="BeneficiaryName" xml:space="preserve">
+    <value>Beneficiary name</value>
+  </data>
+  <data name="BeneficiaryPhoneNumber" xml:space="preserve">
+    <value>Beneficiary phone number</value>
+  </data>
+  <data name="BenefitType" xml:space="preserve">
+    <value>Benefit type</value>
+  </data>
+  <data name="DateOfEmployment" xml:space="preserve">
+    <value>Date of employment</value>
+  </data>
+  <data name="ValidateAdditionInformation" xml:space="preserve">
+    <value>Field 'AdditionInformation' is required.</value>
+  </data>
+  <data name="ValidateAverageIncome" xml:space="preserve">
+    <value>Field 'Average income per person' is required'.</value>
+  </data>
+  <data name="ValidateBenefitType" xml:space="preserve">
+    <value>Field 'Benefit type' is required.</value>
+  </data>
+  <data name="ValidateBeneficiaryAddress" xml:space="preserve">
+    <value>Field 'Benficiary address' is required.</value>
+  </data>
+  <data name="ValidateBeneficiaryName" xml:space="preserve">
+    <value>Field 'Benficiary name' is required.</value>
+  </data>
+  <data name="ValidateBeneficiaryPhoneNumber" xml:space="preserve">
+    <value>Field 'Benficiary phone number' is required.</value>
+  </data>
+  <data name="ValidateDateOfEmployment" xml:space="preserve">
+    <value>Field 'Date of employment' is required.</value>
+  </data>
+  <data name="ValidateSocialServiceKind" xml:space="preserve">
+    <value>Field 'Social service kind' is required.</value>
+  </data>
+  <data name="ValidateYear" xml:space="preserve">
+    <value>Field 'Year' is required.</value>
+  </data>
+  <data name="OtherSocialServiceKind" xml:space="preserve">
+    <value>Other social service kind</value>
+  </data>
+  <data name="Position" xml:space="preserve">
+    <value>Position</value>
+  </data>
+  <data name="SocialServiceKind" xml:space="preserve">
+    <value>Social service kind</value>
+  </data>
+  <data name="Year" xml:space="preserve">
+    <value>Year</value>
   </data>
 </root>
