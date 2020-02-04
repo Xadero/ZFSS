@@ -112,4 +112,7 @@
   <data name="GetUserData" xml:space="preserve">
     <value>Pobierz dane swojego użytkownika</value>
   </data>
+  <data name="Clause" xml:space="preserve">
+    <value>Klauzula ZFSŚ</value>
+  </data>
 </root>

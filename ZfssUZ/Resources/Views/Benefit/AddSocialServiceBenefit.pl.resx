@@ -112,4 +112,7 @@
   <data name="AddSocialServiceBenefitError" xml:space="preserve">
     <value>Błąd podczas tworzenia wniosku. </value>
   </data>
+  <data name="Clause" xml:space="preserve">
+    <value>Klauzula ZFSŚ</value>
+  </data>
 </root>

@@ -3,13 +3,14 @@
 @using Microsoft.AspNetCore.Identity
 @using ZfssUZData.Models.Users
 @using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.Extensions.Localization
 @using ZfssUZ.Enums
 
 @inject UserManager<ApplicationUser> UserManager
 @inject IViewLocalizer Localizer
 
 @{
-    ViewData["Title"] = Localizer["UserList"];
+    Context.Items["Title"] = Localizer["UserList"].Value;
 }
 
 <script src="~/lib/jquery/dist/jquery.js"></script>

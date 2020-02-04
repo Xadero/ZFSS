@@ -1,17 +1,86 @@
-﻿@{
-    ViewData["Title"] = "Contact";
+﻿@model ZfssUZ.Models.Home.ContactModel
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@using ZfssUZ.Enums
+@using Microsoft.AspNetCore.Identity
+
+@inject IViewLocalizer Localizer
+
+@{
+    object formLabel = "form-label";
+    object formControl = "form-control";
+    Context.Items["Title"] = Localizer["Title"];
 }
+<script src="~/lib/jquery/dist/jquery.js"></script>
 <h2>@ViewData["Title"]</h2>
-<h3>@ViewData["Message"]</h3>
-
 <address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
+    Ośrodek wypoczynkowy<br />
+    ul. Wypoczynkowa 9<br />
+    99-000 Miasto <br />
 </address>
-
 <address>
-    <strong>Support:</strong> <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
+    <strong>Telefon:</strong> +48 123 456 789<br />
+    <strong>E-Mail:</strong> <a href="mailto:OsrodekWypoczynkowy@gmail.com">OsrodekWypoczynkowy@gmail.com</a>
 </address>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AddHomeLoanBenefit">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.ContantForm, new { @class = formLabel })
+
+            </div>
+            <div class="form-group">
+                @Html.RadioButtonFor(m => m.ContantForm, (int)eMessageType.EmailAddress, new { @class = formLabel }) @Localizer["EmailAddress"]
+                @Html.RadioButtonFor(m => m.ContantForm, (int)eMessageType.PhoneNumber, new { @class = formLabel }) @Localizer["PhoneNumber"]
+            </div>
+            <div class="form-group" id="emailAddressForm">
+                @Html.LabelFor(x => x.EmailAddress, new { @class = formLabel })
+                @Html.TextBoxFor(x => x.EmailAddress, new { @class = formControl })
+            </div>
+            <div class="form-group" id="phoneNumberForm" hidden>
+                @Html.LabelFor(x => x.PhoneNumber, new { @class = formLabel })
+                @Html.TextBoxFor(x => x.PhoneNumber, new { @class = formControl })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.MessageContent, new { @class = formLabel })
+                @Html.TextAreaFor(x => x.MessageContent, new { @class = formControl })
+            </div>
+            <div class="form-group">
+                <input type="submit" value="@Localizer["Create"]" class="btn btn-default" onclick="createBenefit()" />
+                <a asp-action="Index" asp-controller="Benefit" class="btn btn-default">@Localizer["Back"]</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $("input[type=radio][name=ContantForm]").change(function () {
+        $("#EmailAddress").val("");
+        $("#PhoneNumber").val("");
+        if ($("#ContantForm:checked").val() == @((int)eMessageType.EmailAddress)) {
+            $("#emailAddressForm").show();
+            $("#phoneNumberForm").hide();
+        } else {
+            $("#emailAddressForm").hide();
+            $("#phoneNumberForm").show();
+        }
+    });
+
+    function getMail() {
+        document.getElementById("contact").setAttribute("type", "text");
+        document.getElementById("contact").value = '';
+    };
+    function getPhone() {
+        document.getElementById("contact").setAttribute("type", "number");
+        document.getElementById("contact").value = '';
+    };
+    function sendMessage() {
+        if (document.getElementById("contact").innerHTML != "" && document.getElementById("message").innerHTML != "") {
+            alert("Wiadomość została wysłana do obsługi klienta");
+            location.reload();
+        } else {
+            alert("Proszę uzupełnić wartości w polach: E-mail/Telefon oraz Treść wiadomości!");
+        }
+    }
+</script>

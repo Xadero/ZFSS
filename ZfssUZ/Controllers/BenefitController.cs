@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using ZfssUZ.Enums;
 using ZfssUZ.Models.Benefit.HomeLoanBenefit;
 using ZfssUZ.Models.Benefit.SocialServiceBenefit;
@@ -43,11 +45,12 @@ namespace ZfssUZ.Controllers
                 BenefitTypeList = new SelectList(benefitService.GetBenefitsTypes(), "Id", "Value", 2),
                 SocialServiceKindList = new SelectList(benefitService.GetSocialServiceKinds(), "Id", "Value")
             };
+            
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult AddSocialServiceBenefit(AddSocialServiceBenefitModel model)
+        public IActionResult AddSocialServiceBenefit(AddSocialServiceBenefitModel model)
         {
             return View(model);
         }
@@ -65,7 +68,7 @@ namespace ZfssUZ.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddHomeLoanBenefit(AddHomeLoanBenefitModel model)
+        public IActionResult AddHomeLoanBenefit(AddHomeLoanBenefitModel model)
         {
             model.BenefitTypeList = new SelectList(benefitService.GetBenefitsTypes(), "Id", "Value", 1);
             if (!ModelState.IsValid)
@@ -98,6 +101,11 @@ namespace ZfssUZ.Controllers
                 TempData["BenefitAddError"] = ex.Message;
                 return View(model);
             }
+        }
+
+        public IActionResult ShowClause()
+        {
+            return PartialView("BenefitsClauseInfo");
         }
     }
 }

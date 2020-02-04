@@ -40,9 +40,9 @@ namespace ZfssUZ.Models.Benefit.SocialServiceBenefit
         [Required(ErrorMessage = "ValidateYear")]
         public int Year { get; set; }
 
-        [Display(Name = "AvreageIncome")]
-        [Required(ErrorMessage = "ValidateAvreageIncome")]
-        public decimal AvreageIncome { get; set; }
+        [Display(Name = "AverageIncome")]
+        [Required(ErrorMessage = "ValidateAverageIncome")]
+        public decimal AverageIncome { get; set; }
 
         [Display(Name = "AdditionInformation")]
         [Required(ErrorMessage = "ValidateAdditionInformation")]

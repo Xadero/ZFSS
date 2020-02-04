@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ZfssUZ.Models.Benefit;
+using ZfssUZ.Models.Benefit.SocialServiceBenefit;
 using ZfssUZData.Models.Benefits;
 
 namespace ZfssUZ.Profiles

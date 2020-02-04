@@ -112,4 +112,7 @@
   <data name="AddSocialServiceBenefitError" xml:space="preserve">
     <value>Error occured while creating new benefit. </value>
   </data>
+  <data name="Clause" xml:space="preserve">
+    <value>Benefit clause</value>
+  </data>
 </root>

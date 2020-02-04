@@ -10,18 +10,20 @@
 @{
     object formLabel = new { style = "form-label" };
     object formControl = new { style = "form-control" };
-    ViewData["Title"] = @Localizer["Title"];
+    Context.Items["Title"] = Localizer["AddHomeLoanBenefitTitle"];
 }
 
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <h3>@Localizer["AddHomeLoanBenefitTitle"]</h3>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-5">
         <form asp-action="AddHomeLoanBenefit">
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
                 <input type="button" class="btn btn-default" id="GetUserData" value="@Localizer["GetUserData"]" onclick="getUserData()" />
+                <input type="button" class="btn btn-default" id="showClause" value="@Localizer["Clause"]" />
+                <div class="modal fade" id="clauseModal" role="dialog" data-url='@Url.Action("ShowClause", "Benefit")'></div>
             </div>
             <div class="form-group">
                 @Html.LabelFor(x => x.BeneficiaryName, formLabel)
@@ -64,6 +66,12 @@
     </div>
 </div>
 <script type="text/javascript" charset="utf-8">
+    $(document).ready(function () {
+        if ("@TempData["BenefitAddError"]" != null && "@TempData["BenefitAddError"]" != "" && "@TempData["BenefitAddError"]" != "Error") {
+            alert("@Localizer["AddHomeLoanBenefitError"]" + "@TempData["BenefitAddError"]");
+        }
+    });
+
     $("#LoanCost").on("change paste keyup", function () {
         copyText();
     });
@@ -87,10 +95,12 @@
         }
     }
 
-    $(document).ready(function () {
-        if ("@TempData["BenefitAddError"]" != null && "@TempData["BenefitAddError"]" != "" && "@TempData["BenefitAddError"]" != "Error") {
-            alert("@Localizer["AddHomeLoanBenefitError"]" + "@TempData["BenefitAddError"]");
-        }
+    $('#showClause').click(function () {
+        var url = $('#clauseModal').data('url');
+        $.get(url, function (data) {
+            $("#clauseModal").html(data);
+            $("#clauseModal").modal('show');
+        });
     });
 </script>
 

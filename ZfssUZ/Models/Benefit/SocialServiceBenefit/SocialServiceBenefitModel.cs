@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using ZfssUZ.Models.Benefit.SocialServiceBenefit;
 using ZfssUZ.Models.Users;
 
 namespace ZfssUZ.Models.Benefit

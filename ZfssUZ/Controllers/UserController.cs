@@ -39,6 +39,7 @@ namespace ZfssUZ.Controllers
                 Username = result.UserName,
                 Firstname = result.FirstName,
                 LastName = result.LastName,
+                IsLocked = result.LockoutEnd != null
             });
 
             var model = new UserListModel()
@@ -49,7 +50,7 @@ namespace ZfssUZ.Controllers
             return View(model);
         }
 
-        public ActionResult Register()
+        public IActionResult Register()
         {
             var model = new RegisterModel()
             {
@@ -98,7 +99,7 @@ namespace ZfssUZ.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Edit (string userId)
+        public IActionResult Edit (string userId)
         {
             idUser = userId;
             var user = userService.GetUserById(userId);
@@ -149,20 +150,20 @@ namespace ZfssUZ.Controllers
         }
 
         [HttpPost]
-        public ActionResult UnlockUser (string userId)
+        public IActionResult UnlockUser (string userId)
         {
             userService.UnlockUser(userId);
             return RedirectToAction("Index");
         }
 
         [HttpPost]
-        public ActionResult LockUser(string userId)
+        public IActionResult LockUser(string userId)
         {
             userService.LockUser(userId);
             return RedirectToAction("Index");
         }
 
-        public ActionResult Show(string userId)
+        public IActionResult Show(string userId)
         {
             var user = userService.GetUserById(userId);
             var model = new UserModel
@@ -184,7 +185,7 @@ namespace ZfssUZ.Controllers
         }
 
         [HttpPost]
-        public ActionResult DeleteUser(string userId)
+        public IActionResult DeleteUser(string userId)
         {
             try
             {

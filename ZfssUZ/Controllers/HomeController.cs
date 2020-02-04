@@ -3,7 +3,9 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
+using ZfssUZ.Enums;
 using ZfssUZ.Models;
+using ZfssUZ.Models.Home;
 
 namespace ZfssUZ.Controllers
 {
@@ -23,9 +25,12 @@ namespace ZfssUZ.Controllers
 
         public IActionResult Contact()
         {
-            ViewData["Message"] = "Your contact page.";
+            var model = new ContactModel
+            {
+                ContantForm = (int)eMessageType.EmailAddress
+            };
 
-            return View();
+            return View(model);
         }
 
         public IActionResult Privacy()

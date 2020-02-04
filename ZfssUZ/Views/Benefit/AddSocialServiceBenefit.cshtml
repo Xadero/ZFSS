@@ -11,18 +11,20 @@
 @{
     object formLabel = "form-label";
     object formControl = "form-control";
-    ViewData["Title"] = @Localizer["Title"];
+    Context.Items["Title"] = Localizer["AddSocialServiceBenefitTitle"];
 }
 
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <h3>@Localizer["AddSocialServiceBenefitTitle"]</h3>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-5">
         <form asp-action="AddSocialServiceBenefit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <input type="button" class="btn btn-default" id="GetUserData" value="@Localizer["GetUserData"]" onclick="getUserData()" />
+                <input type="button" class="btn btn-default" id="showClause" value="@Localizer["Clause"]" />
+                <div class="modal fade" id="clauseModal" role="dialog" data-url='@Url.Action("ShowClause", "Benefit")'></div>
             </div>
             <div class="form-group">
                 @Html.LabelFor(x => x.BeneficiaryName, new { @class = formLabel })
@@ -62,8 +64,8 @@
                 @Html.TextBoxFor(x => x.Year, string.Empty, new { @class = formControl })
             </div>
             <div class="form-group">
-                @Html.LabelFor(x => x.AvreageIncome, new { @class = formLabel })
-                @Html.TextBoxFor(x => x.AvreageIncome, string.Empty, new { @class = formControl })
+                @Html.LabelFor(x => x.AverageIncome, new { @class = formLabel })
+                @Html.TextBoxFor(x => x.AverageIncome, string.Empty, new { @class = formControl })
             </div>
             <div class="form-group">
                 @Html.LabelFor(x => x.AdditionInformation, new { @class = formLabel })
@@ -81,6 +83,12 @@
     </div>
 </div>
 <script type="text/javascript" charset="utf-8">
+    $(document).ready(function () {
+        $("#otherSocialService").hide();
+        if ("@TempData["BenefitAddError"]" != null && "@TempData["BenefitAddError"]" != "" && "@TempData["BenefitAddError"]" != "Error") {
+            alert("@Localizer["AddHomeLoanBenefitError"]" + "@TempData["BenefitAddError"]");
+        }
+    });
     function getUserData() {
         $("#BeneficiaryName").val("@UserManager.GetUserAsync(User).Result.FirstName " +  "@UserManager.GetUserAsync(User).Result.LastName");
         $("#BeneficiaryAddress").val("@UserManager.GetUserAsync(User).Result.Address, " + "@UserManager.GetUserAsync(User).Result.PostCode " + "@UserManager.GetUserAsync(User).Result.City");
@@ -98,11 +106,12 @@
         }
     });
 
-    $(document).ready(function () {
-        $("#otherSocialService").hide();
-        if ("@TempData["BenefitAddError"]" != null && "@TempData["BenefitAddError"]" != "" && "@TempData["BenefitAddError"]" != "Error") {
-            alert("@Localizer["AddHomeLoanBenefitError"]" + "@TempData["BenefitAddError"]");
-        }
+    $('#showClause').click(function () {
+        var url = $('#clauseModal').data('url');
+        $.get(url, function (data) {
+            $("#clauseModal").html(data);
+            $("#clauseModal").modal('show');
+        });
     });
 </script>
 
