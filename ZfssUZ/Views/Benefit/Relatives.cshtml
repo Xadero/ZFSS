@@ -1,0 +1,136 @@
+﻿@model IEnumerable<ZfssUZ.Models.Benefit.SocialServiceBenefit.RelativesModel>
+
+@{
+    Context.Items["Title"] = "Show";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Członkowie rodziny</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <input type="button" class="btn btn-default" id="btnSave" value="Save" />
+                        <input type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close" value="Cancel">
+                    </div>
+                    <table id="relativesGrid" class="table" cellpadding="0" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th style="width:200px">Imię i nazwisko</th>
+                                <th style="width:200px">Data urodzenia</th>
+                                <th style="width:200px">Stopień pokrewieństwa</th>
+                                <th style="width:200px">Uwagi</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.Any())
+                            {
+                                @foreach (var customer in Model)
+                                {
+                                    <tr>
+                                        <td>@customer.RelativeFullName</td>
+                                        <td>@customer.DateOfBirth</td>
+                                        <td>@customer.DegreeOfRelationship</td>
+                                        <td>@customer.Notes</td>
+                                        <td><input type="button" class="btn btn-default" value="Remove" onclick="Remove(this)" /></td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td><input type="text" class="form-control" id="fullName" /></td>
+                                <td><input type="date" class="form-control" id="dateOfBirth" /></td>
+                                <td><input type="text" class="form-control" id="degreeOfRelationship" /></td>
+                                <td><input type="text" class="form-control" id="notes" /></td>
+                                <td><input type="button" class="btn btn-default" id="btnAdd" value="Add" /></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $("#btnAdd").click(function () {
+        debugger;
+        var fullname = $("#fullName");
+        var dateOfBirth = $("#dateOfBirth");
+        var degreeOfRelationship = $("#degreeOfRelationship");
+        var notes = $("#notes");
+
+        if (fullname.val() == "" || dateOfBirth.val() == "" || degreeOfRelationship.val() == "" || notes.val() == "") {
+            alert("uzupełnij dane");
+            return;
+        }
+
+        var tBody = $("#relativesGrid > TBODY")[0];
+        var row = tBody.insertRow(-1);
+        var cell = $(row.insertCell(-1));
+        cell.html(fullname.val());
+
+        cell = $(row.insertCell(-1));
+        cell.html(dateOfBirth.val());
+
+        cell = $(row.insertCell(-1));
+        cell.html(degreeOfRelationship.val());
+
+        cell = $(row.insertCell(-1));
+        cell.html(notes.val());
+
+        cell = $(row.insertCell(-1));
+        var btnRemove = $("<input />");
+        btnRemove.attr("type", "button");
+        btnRemove.attr("onclick", "Remove(this);");
+        btnRemove.attr("class", "btn btn-default");
+        btnRemove.val("Remove");
+        cell.append(btnRemove);
+
+        fullname.val("");
+        dateOfBirth.val("");
+        degreeOfRelationship.val("");
+        notes.val("");
+    });
+
+    function Remove(button) {
+        var row = $(button).closest("TR");
+        var name = $("TD", row).eq(0).html();
+        if (confirm("Do you want to delete: " + name)) {
+            var table = $("#relativesGrid")[0];
+            table.deleteRow(row[0].rowIndex);
+        }
+    };
+
+    $("#btnSave").click(function () {
+        var relatives = new Array();
+        $("#relativesGrid TBODY TR").each(function () {
+            var row = $(this);
+            var RelativesModel = {};
+            RelativesModel.RelativeFullName = row.find("TD").eq(0).html();
+            RelativesModel.DateOfBirth = row.find("TD").eq(1).html();
+            RelativesModel.DegreeOfRelationship = row.find("TD").eq(2).html();
+            RelativesModel.Notes = row.find("TD").eq(3).html();
+            relatives.push(RelativesModel);
+        });
+
+        $.ajax({
+            type: "post",
+            url: "@Url.Action("SaveRelatives", "Benefit")",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(relatives),
+            dataType: "json",
+            success: function (r) {
+                alert(r + " record(s) inserted.");
+            }
+        });
+    });
+</script>

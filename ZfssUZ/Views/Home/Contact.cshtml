@@ -14,25 +14,25 @@
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <h2>@Context.Items["Title"]</h2>
 <address>
-    Ośrodek wypoczynkowy<br />
-    ul. Wypoczynkowa 9<br />
-    99-000 Miasto <br />
+    @Localizer["UniversityOfZielonaGora"]<br />
+    ul. Licealna 9/9<br />
+    65-417 Zielona Góra <br />
 </address>
 <address>
-    <strong>Telefon:</strong> +48 123 456 789<br />
-    <strong>E-Mail:</strong> <a href="mailto:OsrodekWypoczynkowy@gmail.com">OsrodekWypoczynkowy@gmail.com</a>
+    <strong>@Localizer["EmailAddress"]:</strong> +48 123 456 789<br />
+    <strong>@Localizer["PhoneNumber"]:</strong> <a href="mailto:prac.uz@gmail.com">OsrodekWypoczynkowy@gmail.com</a>
 </address>
 <div class="row">
     <div class="col-md-4">
         <form asp-action="AddHomeLoanBenefit">
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
-                @Html.LabelFor(x => x.ContantForm, new { @class = formLabel })
+                @Html.LabelFor(x => x.ContactForm, new { @class = formLabel })
 
             </div>
             <div class="form-group">
-                @Html.RadioButtonFor(m => m.ContantForm, (int)eMessageType.EmailAddress, new { @class = formLabel }) @Localizer["EmailAddress"]
-                @Html.RadioButtonFor(m => m.ContantForm, (int)eMessageType.PhoneNumber, new { @class = formLabel }) @Localizer["PhoneNumber"]
+                @Html.RadioButtonFor(m => m.ContactForm, (int)eMessageType.EmailAddress, new { @class = formLabel }) @Localizer["EmailAddress"]
+                @Html.RadioButtonFor(m => m.ContactForm, (int)eMessageType.PhoneNumber, new { @class = formLabel }) @Localizer["PhoneNumber"]
             </div>
             <div class="form-group" id="emailAddressForm">
                 @Html.LabelFor(x => x.EmailAddress, new { @class = formLabel })
@@ -47,7 +47,7 @@
                 @Html.TextAreaFor(x => x.MessageContent, new { @class = formControl })
             </div>
             <div class="form-group">
-                <input type="submit" value="@Localizer["Create"]" class="btn btn-default" onclick="createBenefit()" />
+                <input type="submit" value="@Localizer["Send"]" class="btn btn-default" onclick="createBenefit()" />
                 <a asp-action="Index" asp-controller="Benefit" class="btn btn-default">@Localizer["Back"]</a>
             </div>
         </form>

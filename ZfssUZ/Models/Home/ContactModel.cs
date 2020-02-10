@@ -4,17 +4,15 @@ namespace ZfssUZ.Models.Home
 {
     public class ContactModel
     {
-        [Display(Name = "ContantForm")]
+        [Display(Name = "ContactForm")]
         [Required(ErrorMessage = "ValidateContantForm")]
-        public int ContantForm { get; set; }
+        public int ContactForm { get; set; }
 
         [Display(Name = "PhoneNumber")]
-        [Required(ErrorMessage = "ValidatePhoneNumber")]
         [Phone]
         public int PhoneNumber { get; set; }
 
         [Display(Name = "EmailAddress")]
-        [Required(ErrorMessage = "ValidateEmailAddress")]
         [EmailAddress]
         public string EmailAddress { get; set; }
 

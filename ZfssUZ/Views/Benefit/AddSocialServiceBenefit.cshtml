@@ -25,6 +25,7 @@
                 <input type="button" class="btn btn-default" id="GetUserData" value="@Localizer["GetUserData"]" onclick="getUserData()" />
                 <input type="button" class="btn btn-default" id="showClause" value="@Localizer["Clause"]" />
                 <div class="modal fade" id="clauseModal" role="dialog" data-url='@Url.Action("ShowClause", "Benefit")'></div>
+                <div class="modal fade" id="relativesModal" role="dialog" data-url='@Url.Action("AddRelatives", "Benefit", Model)'></div>
             </div>
             <div class="form-group">
                 @Html.LabelFor(x => x.BeneficiaryName, new { @class = formLabel })
@@ -48,7 +49,7 @@
             </div>
 
             <div class="form-group">
-                Tutaj bêd¹ ludzie!
+                <input type="button" class="btn btn-default" id="addRelatives" value="@Localizer["AddPeople"]" />
             </div>
 
             <div class="form-group">
@@ -111,6 +112,14 @@
         $.get(url, function (data) {
             $("#clauseModal").html(data);
             $("#clauseModal").modal('show');
+        });
+    });
+
+    $('#addRelatives').click(function () {
+        var url = $('#relativesModal').data('url');
+        $.get(url, function (data) {
+            $("#relativesModal").html(data);
+            $("#relativesModal").modal('show');
         });
     });
 </script>

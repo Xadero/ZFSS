@@ -25,7 +25,7 @@ namespace ZfssUZ.Controllers
         {
             var model = new ContactModel
             {
-                ContantForm = (int)eMessageType.EmailAddress
+                ContactForm = (int)eMessageType.EmailAddress
             };
 
             return View(model);

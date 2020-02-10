@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace ZfssUZ.Models.Benefit
+namespace ZfssUZ.Models.Benefit.SocialServiceBenefit
 {
     public class RelativesModel
     {

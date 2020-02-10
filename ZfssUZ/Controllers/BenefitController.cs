@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ZfssUZ.Enums;
+using ZfssUZ.Models.Benefit;
 using ZfssUZ.Models.Benefit.HomeLoanBenefit;
 using ZfssUZ.Models.Benefit.SocialServiceBenefit;
 using ZfssUZData.Interfaces;
@@ -43,7 +44,8 @@ namespace ZfssUZ.Controllers
             var model = new AddSocialServiceBenefitModel()
             {
                 BenefitTypeList = new SelectList(benefitService.GetBenefitsTypes(), "Id", "Value", 2),
-                SocialServiceKindList = new SelectList(benefitService.GetSocialServiceKinds(), "Id", "Value")
+                SocialServiceKindList = new SelectList(benefitService.GetSocialServiceKinds(), "Id", "Value"),
+                Relatives = new List<RelativesModel>()
             };
             
             return View(model);
@@ -103,9 +105,23 @@ namespace ZfssUZ.Controllers
             }
         }
 
+        [HttpGet]
         public IActionResult ShowClause()
         {
             return PartialView("BenefitsClauseInfo");
+        }
+
+        [HttpGet]
+        public IActionResult AddRelatives(AddSocialServiceBenefitModel model)
+        {
+            if (model.Relatives == null)
+                model.Relatives = new List<RelativesModel>();
+            return PartialView("Relatives", model.Relatives);
+        }
+
+        public JsonResult SaveRelatives(List<RelativesModel> relatives)
+        {
+            return Json(relatives);
         }
     }
 }
