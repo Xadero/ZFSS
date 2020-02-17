@@ -54,7 +54,7 @@
 
             <div class="form-group">
                 @Html.LabelFor(x => x.SocialServiceKind, new { @class = formLabel })
-                @Html.DropDownListFor(x => x.SocialServiceKind, Model.SocialServiceKindList, new { @class = formControl })
+                @Html.DropDownListFor(x => x.SocialServiceKind.Id, Model.SocialServiceKindList, new { @class = formControl })
             </div>
             <div class="form-group" id="otherSocialService">
                 @Html.LabelFor(x => x.OtherSocialServiceKind, new { @class = formLabel })

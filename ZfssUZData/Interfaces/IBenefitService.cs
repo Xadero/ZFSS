@@ -8,5 +8,7 @@ namespace ZfssUZData.Interfaces
         IEnumerable<BenefitType> GetBenefitsTypes();
 
         IEnumerable<SocialServiceKind> GetSocialServiceKinds();
+
+        long GenerateBenefitNumber(int benefitType);
     }
 }

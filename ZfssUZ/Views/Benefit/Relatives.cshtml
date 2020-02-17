@@ -1,9 +1,9 @@
-﻿@model IEnumerable<ZfssUZ.Models.Benefit.SocialServiceBenefit.RelativesModel>
+﻿@model List<ZfssUZ.Models.Benefit.SocialServiceBenefit.RelativesModel>
 
 @{
     Context.Items["Title"] = "Show";
 }
-
+<script type="text/javascript" src="https://ajax.cdnjs.com/ajax/libs/json2/20110223/json2.js"></script>
 <div class="container">
     <div class="row">
         <div class="modal-dialog modal-lg">
@@ -36,7 +36,7 @@
                                 {
                                     <tr>
                                         <td>@customer.RelativeFullName</td>
-                                        <td>@customer.DateOfBirth</td>
+                                        <td>@customer.DateOfBirth.ToString("dd.mm.yyyy")</td>
                                         <td>@customer.DegreeOfRelationship</td>
                                         <td>@customer.Notes</td>
                                         <td><input type="button" class="btn btn-default" value="Remove" onclick="Remove(this)" /></td>
@@ -62,7 +62,6 @@
 
 <script type="text/javascript">
     $("#btnAdd").click(function () {
-        debugger;
         var fullname = $("#fullName");
         var dateOfBirth = $("#dateOfBirth");
         var degreeOfRelationship = $("#degreeOfRelationship");
@@ -124,12 +123,15 @@
 
         $.ajax({
             type: "post",
-            url: "@Url.Action("SaveRelatives", "Benefit")",
+            url: "@Url.Action("SaveRelatives", "Benefit")?relatives=" + JSON.stringify(relatives),
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(relatives),
             dataType: "json",
-            success: function (r) {
-                alert(r + " record(s) inserted.");
+            success: function() {
+                $("#relativesModal").modal("toggle");
+            },
+            error: function () {
+                alert("Błąd podczas dodawania członków rodziny");
             }
         });
     });

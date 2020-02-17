@@ -39,7 +39,6 @@ namespace ZfssUZ.Models.Benefit.HomeLoanBenefit
         public string LoanPurpose { get; set; }
 
         [Display(Name = "BenefitType")]
-        [Required(ErrorMessage = "ValidateBenefitType")]
         public BenefitTypeModel BenefitType { get; set; }
 
         public IEnumerable<SelectListItem> BenefitTypeList { get; set; }

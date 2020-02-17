@@ -8,7 +8,5 @@ namespace ZfssUZData.Interfaces
     public interface IHomeLoanBenefitService
     {
         void CreateBenefit(HomeLoanBenefit benefit);
-
-        long GenerateBenefitNumber();
     }
 }

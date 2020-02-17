@@ -28,7 +28,6 @@ namespace ZfssUZ.Models.Benefit.SocialServiceBenefit
         public DateTime DateOfEmployment { get; set; }
 
         [Display(Name = "SocialServiceKind")]
-        [Required(ErrorMessage = "ValidateOtherSocialServiceKind")]
         public SocialServiceKindModel SocialServiceKind { get; set; }
 
         public IEnumerable<SelectListItem> SocialServiceKindList { get; set; }
@@ -49,7 +48,6 @@ namespace ZfssUZ.Models.Benefit.SocialServiceBenefit
         public string AdditionInformation { get; set; }
 
         [Display(Name = "BenefitType")]
-        [Required(ErrorMessage = "ValidateBenefitType")]
         public BenefitTypeModel BenefitType { get; set; }
 
         public IEnumerable<SelectListItem> BenefitTypeList { get; set; }

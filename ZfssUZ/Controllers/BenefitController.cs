@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,13 +21,16 @@ namespace ZfssUZ.Controllers
         private readonly IMapper mapper;
         private IBenefitService benefitService;
         private IHomeLoanBenefitService homeLoanBenefitService;
+        private ISocialServiceBenefitService socialServiceBenefitService;
         private IDictionaryService dictionaryService;
         private UserManager<ApplicationUser> userManager;
-        public BenefitController (IBenefitService benefitService, IDictionaryService dictionaryService, IHomeLoanBenefitService homeLoanBenefitService, IMapper mapper, UserManager<ApplicationUser> userManager)
+        private static List<RelativesModel> relativesModel = new List<RelativesModel>();
+        public BenefitController (IBenefitService benefitService, IDictionaryService dictionaryService, IHomeLoanBenefitService homeLoanBenefitService,ISocialServiceBenefitService socialServiceBenefitService, IMapper mapper, UserManager<ApplicationUser> userManager)
         {
             this.benefitService = benefitService;
             this.dictionaryService = dictionaryService;
             this.homeLoanBenefitService = homeLoanBenefitService;
+            this.socialServiceBenefitService = socialServiceBenefitService;
             this.mapper = mapper;
             this.userManager = userManager;
         }
@@ -41,11 +45,11 @@ namespace ZfssUZ.Controllers
         {
             TempData["BenefitAddError"] = "Error";
             TempData["BenefitAddSuccess"] = "Success";
+            relativesModel.Clear();
             var model = new AddSocialServiceBenefitModel()
             {
                 BenefitTypeList = new SelectList(benefitService.GetBenefitsTypes(), "Id", "Value", 2),
                 SocialServiceKindList = new SelectList(benefitService.GetSocialServiceKinds(), "Id", "Value"),
-                Relatives = new List<RelativesModel>()
             };
             
             return View(model);
@@ -54,6 +58,33 @@ namespace ZfssUZ.Controllers
         [HttpPost]
         public IActionResult AddSocialServiceBenefit(AddSocialServiceBenefitModel model)
         {
+            model.SocialServiceKindList = new SelectList(benefitService.GetSocialServiceKinds(), "Id", "Value");
+            model.BenefitTypeList = new SelectList(benefitService.GetBenefitsTypes(), "Id", "Value", 2);
+
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var newBenefit = new SocialServiceBenefit()
+            {
+                AdditionInformation = model.AdditionInformation,
+                BeneficiaryAddress = model.BeneficiaryAddress,
+                BeneficiaryName = model.BeneficiaryName,
+                BeneficiaryPhoneNumber = model.BeneficiaryPhoneNumber,
+                AvreageIncome = model.AverageIncome,
+                BenefitStatus = dictionaryService.Get<BenefitStatus>((int)eBenefitStatus.Passed),
+                BenefitType = dictionaryService.Get<BenefitType>((int)eBenefitType.SocialServiceBenefit),
+                DateOfEmployment = model.DateOfEmployment,
+                OtherSocialServiceKind = model.OtherSocialServiceKind,
+                Position = model.Position,
+                SocialServiceKind = dictionaryService.Get<SocialServiceKind>(model.SocialServiceKind.Id),
+                SubmittingDate = DateTime.Now,
+                SubmittingUser = userManager.GetUserAsync(User).Result,
+                BenefitNumber = benefitService.GenerateBenefitNumber((int)eBenefitType.SocialServiceBenefit),
+                Year = model.Year
+            };
+
+            socialServiceBenefitService.CreateBenefit(newBenefit);
+
             return View(model);
         }
 
@@ -89,7 +120,7 @@ namespace ZfssUZ.Controllers
                 Months = model.Months,
                 SubmittingDate = DateTime.Now,
                 SubmittingUser = userManager.GetUserAsync(User).Result,
-                BenefitNumber = homeLoanBenefitService.GenerateBenefitNumber()
+                BenefitNumber = benefitService.GenerateBenefitNumber((int)eBenefitType.HomeLoanBenefit)
             };
 
             try
@@ -112,15 +143,16 @@ namespace ZfssUZ.Controllers
         }
 
         [HttpGet]
-        public IActionResult AddRelatives(AddSocialServiceBenefitModel model)
+        public IActionResult AddRelatives(List<RelativesModel> model)
         {
-            if (model.Relatives == null)
-                model.Relatives = new List<RelativesModel>();
-            return PartialView("Relatives", model.Relatives);
+            model.AddRange(relativesModel);
+            return PartialView("Relatives", model);
         }
 
-        public JsonResult SaveRelatives(List<RelativesModel> relatives)
+        public virtual JsonResult SaveRelatives(string relatives)
         {
+            var y = new AddSocialServiceBenefitModel();
+            relativesModel.AddRange(JsonConvert.DeserializeObject<List<RelativesModel>>(relatives));
             return Json(relatives);
         }
     }
