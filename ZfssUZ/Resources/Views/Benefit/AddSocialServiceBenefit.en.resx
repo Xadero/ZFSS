@@ -115,4 +115,7 @@
   <data name="Clause" xml:space="preserve">
     <value>Benefit clause</value>
   </data>
+  <data name="AddRelatives" xml:space="preserve">
+    <value>Add relatives</value>
+  </data>
 </root>

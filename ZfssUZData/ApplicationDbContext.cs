@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using ZfssUZ.Data.Models.Benefits;
 using ZfssUZData.Models.Benefits;
 using ZfssUZData.Models.Users;
 
@@ -31,6 +32,7 @@ namespace ZfssUZData
 
             modelBuilder.HasSequence("SEQ_SocialServiceNumber").StartsAt(1).IncrementsBy(1);
             modelBuilder.HasSequence("SEQ_HomeLoanNumber").StartsAt(1).IncrementsBy(1);
+            modelBuilder.Entity<BenefitsView>(e => e.ToView("BenefitsView").HasNoKey());
         }
     }
 }

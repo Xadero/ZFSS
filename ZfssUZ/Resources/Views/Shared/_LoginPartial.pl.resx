@@ -129,4 +129,7 @@
   <data name="Logout" xml:space="preserve">
     <value>Wyloguj</value>
   </data>
+  <data name="ShowProfile" xml:space="preserve">
+    <value>Pokaż profil</value>
+  </data>
 </root>

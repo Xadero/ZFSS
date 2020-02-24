@@ -160,4 +160,7 @@
   <data name="Year" xml:space="preserve">
     <value>Rok</value>
   </data>
+  <data name="Relatives" xml:space="preserve">
+    <value>Członkowie rodziny</value>
+  </data>
 </root>

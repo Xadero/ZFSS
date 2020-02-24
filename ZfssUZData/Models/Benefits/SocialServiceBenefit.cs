@@ -61,6 +61,8 @@ namespace ZfssUZData.Models.Benefits
         [ForeignKey("RejectingUserId")]
         public ApplicationUser RejectingUser { get; set; }
 
+        public string RejectionReason { get; set; }
+
         [ForeignKey("BenefitTypeId")]
         public BenefitType BenefitType { get; set; }
     }

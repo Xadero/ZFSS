@@ -52,6 +52,7 @@ namespace ZfssUZ.Models.Benefit.SocialServiceBenefit
 
         public IEnumerable<SelectListItem> BenefitTypeList { get; set; }
 
+        [Display(Name = "Relatives")]
         public List<RelativesModel> Relatives { get; set; }
     }
 }

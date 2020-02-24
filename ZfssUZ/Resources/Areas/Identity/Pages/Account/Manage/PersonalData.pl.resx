@@ -97,67 +97,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Username" xml:space="preserve">
-    <value>Username</value>
+  <data name="PersonalDataTitle" xml:space="preserve">
+    <value>Dane osobiste</value>
   </data>
-  <data name="Firstname" xml:space="preserve">
-    <value>Firstname</value>
+  <data name="Download" xml:space="preserve">
+    <value>Pobierz</value>
   </data>
-  <data name="Lastname" xml:space="preserve">
-    <value>Lastname</value>
+  <data name="Delete" xml:space="preserve">
+    <value>Usuń</value>
   </data>
-  <data name="Address" xml:space="preserve">
-    <value>Address</value>
+  <data name="InfoAboutData" xml:space="preserve">
+    <value>Twoje konto zawiera dane osobiste, które nam podałeś. Ta strona pozwoli ci na pobranie lub usunięcie tych danych.</value>
   </data>
-  <data name="City" xml:space="preserve">
-    <value>City</value>
-  </data>
-  <data name="Postcode" xml:space="preserve">
-    <value>Postcode</value>
-  </data>
-  <data name="Email" xml:space="preserve">
-    <value>Email Address</value>
-  </data>
-  <data name="PhoneNumber" xml:space="preserve">
-    <value>Phone number</value>
-  </data>
-  <data name="UserGroup" xml:space="preserve">
-    <value>User group</value>
-  </data>
-  <data name="IsLocked" xml:space="preserve">
-    <value>Is user locked?</value>
-  </data>
-  <data name="ValidateLastname" xml:space="preserve">
-    <value>Field 'Lastname' is required.</value>
-  </data>
-  <data name="ValidateFirstname" xml:space="preserve">
-    <value>Field 'Firstname' is required.</value>
-  </data>
-  <data name="ValidateUsername" xml:space="preserve">
-    <value>Field 'Username' is required.</value>
-  </data>
-  <data name="ValidateEmail" xml:space="preserve">
-    <value>Field 'Email Address' is required.</value>
-  </data>
-  <data name="ValidateCity" xml:space="preserve">
-    <value>Field 'City' is required.</value>
-  </data>
-  <data name="ValidateAddress" xml:space="preserve">
-    <value>Field 'Address' is required.</value>
-  </data>
-  <data name="ValidatePostCode" xml:space="preserve">
-    <value>Field 'Postcode' is required.</value>
-  </data>
-  <data name="ValidatePhoneNumber" xml:space="preserve">
-    <value>Field 'Phone number' is required.</value>
-  </data>
-  <data name="ValidateUseGroup" xml:space="preserve">
-    <value>Field 'User group' is required.</value>
-  </data>
-  <data name="DateOfBirth" xml:space="preserve">
-    <value>Date of birth</value>
-  </data>
-  <data name="ValidateDateOfBirth" xml:space="preserve">
-    <value>Field 'Date of birth' is required.</value>
+  <data name="WarningAboutData" xml:space="preserve">
+    <value>Usunięcie tych danych usunie całkowicie twoje konto, bez możliwości przywrócenia.</value>
   </data>
 </root>

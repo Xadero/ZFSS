@@ -33,21 +33,42 @@ namespace ZfssUZ.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
+
+            [Display(Name = "FirstName")]
+            public string FirstName { get; set; }
+
+            [Display(Name = "LastName")]
+            public string LastName { get; set; }
+
             [Phone]
-            [Display(Name = "Phone number")]
+            [Display(Name = "PhoneNumber")]
             public string PhoneNumber { get; set; }
+
+            [Display(Name = "City")]
+            public string City { get; set; }
+
+            [Display(Name = "Address")]
+            public string Address { get; set; }
+
+            [Display(Name = "PostCode")]
+            public string PostCode { get; set; }
+
+            [Display(Name = "DateOfBirth")]
+            public DateTime DateOfBirth { get; set; }
         }
 
         private async Task LoadAsync(ApplicationUser user)
         {
-            var userName = await _userManager.GetUserNameAsync(user);
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-
-            Username = userName;
-
+            Username = user.UserName;
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                PhoneNumber = user.PhoneNumber,
+                Address = user.Address,
+                City = user.City,
+                DateOfBirth = user.DateOfBirth,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                PostCode = user.PostCode
             };
         }
 

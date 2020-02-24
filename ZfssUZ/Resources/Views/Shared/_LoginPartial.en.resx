@@ -129,4 +129,7 @@
   <data name="Logout" xml:space="preserve">
     <value>Logout</value>
   </data>
+  <data name="ShowProfile" xml:space="preserve">
+    <value>Show profile</value>
+  </data>
 </root>

@@ -20,15 +20,15 @@
 </address>
 <address>
     <strong>@Localizer["EmailAddress"]:</strong> +48 123 456 789<br />
-    <strong>@Localizer["PhoneNumber"]:</strong> <a href="mailto:prac.uz@gmail.com">OsrodekWypoczynkowy@gmail.com</a>
+    <strong>@Localizer["PhoneNumber"]:</strong> <a href="mailto:prac.uz@gmail.com">zfss@uz.zgora.pl</a>
 </address>
+<img src="~/images/call-center-1015274_640.jpg" width="600" height="400" align="right" />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="AddHomeLoanBenefit">
+        <form asp-action="Contact">
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
                 @Html.LabelFor(x => x.ContactForm, new { @class = formLabel })
-
             </div>
             <div class="form-group">
                 @Html.RadioButtonFor(m => m.ContactForm, (int)eMessageType.EmailAddress, new { @class = formLabel }) @Localizer["EmailAddress"]

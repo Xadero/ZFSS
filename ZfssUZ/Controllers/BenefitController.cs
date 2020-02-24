@@ -64,6 +64,9 @@ namespace ZfssUZ.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
+            model.Relatives = relativesModel;
+            relativesModel.Clear();
+
             var newBenefit = new SocialServiceBenefit()
             {
                 AdditionInformation = model.AdditionInformation,
@@ -83,9 +86,25 @@ namespace ZfssUZ.Controllers
                 Year = model.Year
             };
 
-            socialServiceBenefitService.CreateBenefit(newBenefit);
+            try
+            {
+                socialServiceBenefitService.CreateBenefit(newBenefit);
 
-            return View(model);
+                if (model.Relatives.Any())
+                {
+                    var relatives = mapper.Map<List<RelativesModel>, List<Relatives>>(model.Relatives);
+                    relatives.ForEach(x => x.SocialServiceBenefits = newBenefit);
+                    socialServiceBenefitService.AddRelatives(relatives);
+                }
+                   
+                TempData["BenefitAddSuccess"] = newBenefit.BenefitNumber.ToString();
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                TempData["BenefitAddError"] = ex.Message;
+                return View(model);
+            }
         }
 
         [HttpGet]
@@ -151,7 +170,6 @@ namespace ZfssUZ.Controllers
 
         public virtual JsonResult SaveRelatives(string relatives)
         {
-            var y = new AddSocialServiceBenefitModel();
             relativesModel.AddRange(JsonConvert.DeserializeObject<List<RelativesModel>>(relatives));
             return Json(relatives);
         }

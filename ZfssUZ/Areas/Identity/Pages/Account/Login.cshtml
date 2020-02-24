@@ -50,14 +50,10 @@
                     <input asp-for="Input.Password" class="form-control" placeholder="Wprowadź hasło" id="myInput" required />
                 </div>
                 <div class="form-group">
-                    <div class="checkbox">
-                        <label asp-for="Input.RememberMe">
-                            <input asp-for="Input.RememberMe" />
-                            @Html.DisplayNameFor(m => m.Input.RememberMe)
-                        </label>
-                        <input id="check3" name="check3" type="checkbox" value="Pokaż hasło" onclick="myFunction()">
-                        <label class="check" id="showPassword" for="check3" style="font-size:24px">Pokaż hasło</label>
-                    </div>
+                    <input type="checkbox" asp-for="Input.RememberMe" /> 
+                    <label class="check" style="font-size:24px; margin-right:10px">Zapamiętać hasło?</label>
+                    <input id="check3" name="check3" type="checkbox" value="Pokaż hasło" onclick="myFunction()"> 
+                    <label class="check" id="showPassword" for="check3" style="font-size:24px">Pokaż hasło</label>
                 </div>
                 <div class="agile_label">
 

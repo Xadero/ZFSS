@@ -1,31 +1,31 @@
 ﻿@model List<ZfssUZ.Models.Benefit.SocialServiceBenefit.RelativesModel>
+@using Microsoft.AspNetCore.Mvc.Localization
 
-@{
-    Context.Items["Title"] = "Show";
-}
+@inject IViewLocalizer Localizer
+
 <script type="text/javascript" src="https://ajax.cdnjs.com/ajax/libs/json2/20110223/json2.js"></script>
 <div class="container">
     <div class="row">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Członkowie rodziny</h4>
+                    <h4 class="modal-title">@Localizer["Relatives"]</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div>
-                        <input type="button" class="btn btn-default" id="btnSave" value="Save" />
-                        <input type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close" value="Cancel">
+                        <input type="button" class="btn btn-default" id="btnSave" value="@Localizer["Save"]" />
+                        <input type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close" value="@Localizer["Cancel"]">
                     </div>
                     <table id="relativesGrid" class="table" cellpadding="0" cellspacing="0">
                         <thead>
                             <tr>
-                                <th style="width:200px">Imię i nazwisko</th>
-                                <th style="width:200px">Data urodzenia</th>
-                                <th style="width:200px">Stopień pokrewieństwa</th>
-                                <th style="width:200px">Uwagi</th>
+                                <th style="width:200px">@Localizer["Fullname"]</th>
+                                <th style="width:200px">@Localizer["DateOfBirth"]</th>
+                                <th style="width:200px">@Localizer["DegreeOfRelationship"]</th>
+                                <th style="width:200px">@Localizer["Notes"]</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -39,7 +39,7 @@
                                         <td>@customer.DateOfBirth.ToString("dd.mm.yyyy")</td>
                                         <td>@customer.DegreeOfRelationship</td>
                                         <td>@customer.Notes</td>
-                                        <td><input type="button" class="btn btn-default" value="Remove" onclick="Remove(this)" /></td>
+                                        <td><input type="button" class="btn btn-default" value="@Localizer["Remove"]" onclick="Remove(this)" /></td>
                                     </tr>
                                 }
                             }
@@ -50,7 +50,7 @@
                                 <td><input type="date" class="form-control" id="dateOfBirth" /></td>
                                 <td><input type="text" class="form-control" id="degreeOfRelationship" /></td>
                                 <td><input type="text" class="form-control" id="notes" /></td>
-                                <td><input type="button" class="btn btn-default" id="btnAdd" value="Add" /></td>
+                                <td><input type="button" class="btn btn-default" id="btnAdd" value="@Localizer["Add"]" /></td>
                             </tr>
                         </tfoot>
                     </table>
@@ -68,7 +68,7 @@
         var notes = $("#notes");
 
         if (fullname.val() == "" || dateOfBirth.val() == "" || degreeOfRelationship.val() == "" || notes.val() == "") {
-            alert("uzupełnij dane");
+            alert("@Localizer["CompleteData"]");
             return;
         }
 
@@ -91,7 +91,7 @@
         btnRemove.attr("type", "button");
         btnRemove.attr("onclick", "Remove(this);");
         btnRemove.attr("class", "btn btn-default");
-        btnRemove.val("Remove");
+        btnRemove.val("@Localizer["Remove"]");
         cell.append(btnRemove);
 
         fullname.val("");
@@ -111,6 +111,10 @@
 
     $("#btnSave").click(function () {
         var relatives = new Array();
+        if ($('#relativesGrid TBODY TR').length <= 0) {
+            alert("@Localizer["NoDataToSave"]");
+            return;
+        }
         $("#relativesGrid TBODY TR").each(function () {
             var row = $(this);
             var RelativesModel = {};
@@ -131,7 +135,7 @@
                 $("#relativesModal").modal("toggle");
             },
             error: function () {
-                alert("Błąd podczas dodawania członków rodziny");
+                alert("@Localizer["AddRelativesError"]");
             }
         });
     });
