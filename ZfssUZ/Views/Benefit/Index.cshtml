@@ -10,9 +10,9 @@
 <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js "></script>
 
 <h3>@Localizer["BenefitList"]</h3>
-<div id="idx"class="container" style="width:165% !important">
+<div id="idx" class="container" style="width:165% !important">
     <div>
-        <input class="form-control" id="myInput" type="text" style="width:100%;align-items:center" placeholder="@Localizer["Search"]">
+        <input class="form-control" id="myInput" type="text" style="width:50%;align-items:center" placeholder="@Localizer["Search"]">
         <br>
         <table class="table table-striped table-bordered dt-responsive nowrap" style="width:100%;" id="benefitTable" cellspacing="0">
             <thead>
@@ -72,8 +72,8 @@
 @section Scripts {
     <script>
     $(document).ready(function () {
-        $("div").css("margin-right", "0px");
-        $("div").css("margin-left", "0px");
+        $(".container").css("margin-left", "0px");
+        $(".container").css("margin-right", "0px");
         if ("@TempData["BenefitAddSuccess"]" != null && "@TempData["BenefitAddSuccess"]" != "" && "@TempData["BenefitAddSuccess"]" != "Success") {
             alert("Utworzono wniosek o numerze: " + "@TempData["BenefitAddSuccess"]");
         }
@@ -93,8 +93,6 @@
                 }
             }
         });
-
-        $("div.container").css("Width", "165% !important");
 
         $("#myInput").on("keyup", function () {
             var value = $(this).val().toLowerCase();
