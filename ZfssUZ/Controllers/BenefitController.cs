@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ZfssUZ.Data.Models.Benefits;
 using ZfssUZ.Enums;
 using ZfssUZ.Models.Benefit;
 using ZfssUZ.Models.Benefit.HomeLoanBenefit;
@@ -37,7 +38,15 @@ namespace ZfssUZ.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var benefits = benefitService.GetBenefits(userManager.GetUserAsync(User).Result).ToList();
+            var benefitsList = mapper.Map<List<BenefitsView>, List<BenefitsViewModel>>(benefits);
+
+            var model = new BenefitViewListModel()
+            {
+                BenefitsViewList = benefitsList
+            };
+
+            return View(model);
         }
 
         [HttpGet]

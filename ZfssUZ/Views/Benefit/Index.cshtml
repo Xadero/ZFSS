@@ -1,13 +1,117 @@
-﻿@{
+﻿@model ZfssUZ.Models.Benefit.BenefitViewListModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@{
     Context.Items["Title"] = "Lista wniosków";
 }
 
 <script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js "></script>
 
-<script>
+<h3>@Localizer["BenefitList"]</h3>
+<div id="idx"class="container" style="width:165% !important">
+    <div>
+        <input class="form-control" id="myInput" type="text" style="width:100%;align-items:center" placeholder="@Localizer["Search"]">
+        <br>
+        <table class="table table-striped table-bordered dt-responsive nowrap" style="width:100%;" id="benefitTable" cellspacing="0">
+            <thead>
+                <tr>
+                    <th clss="th-sm"></th>
+                    <th clss="th-sm"></th>
+                    <th clss="th-sm"></th>
+                    <th clss="th-sm"></th>
+                    <th clss="th-sm"></th>
+                    <th clss="th-sm"></th>
+                    <th clss="th-sm">@Localizer["BenefitNumber"]</th>
+                    <th clss="th-sm">@Localizer["BeneficiaryName"]</th>
+                    <th clss="th-sm">@Localizer["BeneficiaryAddress"]</th>
+                    <th clss="th-sm">@Localizer["BeneficiaryPhoneNumber"]</th>
+                    <th clss="th-sm">@Localizer["BenefitType"]</th>
+                    <th clss="th-sm">@Localizer["BenefitStatusId"]</th>
+                    <th clss="th-sm">@Localizer["SubmittingUser"]</th>
+                    <th clss="th-sm">@Localizer["SubmittingDate"]</th>
+                    <th clss="th-sm">@Localizer["AcceptingUser"]</th>
+                    <th clss="th-sm">@Localizer["AcceptingDate"]</th>
+                    <th clss="th-sm">@Localizer["RejectingUser"]</th>
+                    <th clss="th-sm">@Localizer["RejectingDate"]</th>
+                    <th clss="th-sm">@Localizer["RejectionReason"]</th>
+                </tr>
+            </thead>
+            <tbody id="myTable">
+                @{int i = 0;}
+                @foreach (var benefitList in Model.BenefitsViewList)
+                {
+                    <tr id="userList@(i)">
+                        <td>@Html.ActionLink(@Localizer["Show"].Value, "Show", "Benefit", new { userId = benefitList.Id }, new { @class = "btn btn-default" })</td>
+                        <td>@Html.ActionLink(@Localizer["Edit"].Value, "Edit", "Benefit", new { userId = benefitList.Id }, new { @class = "btn btn-default" })</td>
+                        <td>@Html.ActionLink(@Localizer["Delete"].Value, "Delete", "Benefit", new { userId = benefitList.Id }, new { @class = "btn btn-default" })</td>
+                        <td>@Html.ActionLink(@Localizer["Verify"].Value, "Verify", "Benefit", new { userId = benefitList.Id }, new { @class = "btn btn-default" })</td>
+                        <td>@Html.ActionLink(@Localizer["Accept"].Value, "Accept", "Benefit", new { userId = benefitList.Id }, new { @class = "btn btn-default" })</td>
+                        <td>@Html.ActionLink(@Localizer["Reject"].Value, "Reject", "Benefit", new { userId = benefitList.Id }, new { @class = "btn btn-default" })</td>
+                        <td>@benefitList.BenefitNumber</td>
+                        <td>@benefitList.BeneficiaryName</td>
+                        <td>@benefitList.BeneficiaryAddress</td>
+                        <td>@benefitList.BeneficiaryPhoneNumber</td>
+                        <td>@benefitList.BenefitTypeId</td>
+                        <td>@benefitList.BenefitStatusId</td>
+                        <td>@benefitList.SubmittingUserId</td>
+                        <td>@benefitList.SubmittingDate</td>
+                        <td>@benefitList.AcceptingUserId</td>
+                        <td>@benefitList.AcceptingDate</td>
+                        <td>@benefitList.RejectingUserId</td>
+                        <td>@benefitList.RejectingDate</td>
+                        <td>@benefitList.RejectionReason</td>
+                    </tr>
+                    i++;
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@section Scripts {
+    <script>
     $(document).ready(function () {
+        $("div").css("margin-right", "0px");
+        $("div").css("margin-left", "0px");
         if ("@TempData["BenefitAddSuccess"]" != null && "@TempData["BenefitAddSuccess"]" != "" && "@TempData["BenefitAddSuccess"]" != "Success") {
             alert("Utworzono wniosek o numerze: " + "@TempData["BenefitAddSuccess"]");
         }
+
+        $("#benefitTable").DataTable({
+            dom: '<"top"i>rt<"bottom"flp><"clear">',
+            "scrollX": true,
+            "autoWidth": true,
+            searching: false,
+            language: {
+                info: "@Localizer["EntriesInfo"]",
+                lengthMenu: "@Localizer["RecordsPerPage"]",
+                paginate: {
+                    previous: "@Localizer["Previous"]",
+                    next: "@Localizer["Next"]",
+                    zeroRecords: "@Localizer["NoResults"]"
+                }
+            }
+        });
+
+        $("div.container").css("Width", "165% !important");
+
+        $("#myInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+
+        $('#benefitTable tbody').on('click', 'tr', function () {
+            if ($(this).hasClass('selected')) {
+                $(this).removeClass('selected');
+            }
+            else {
+                $("#benefitTable").DataTable().$('tr.selected').removeClass('selected');
+                $(this).addClass('selected');
+            }
+        });
     });
-</script>
+    </script>
+}

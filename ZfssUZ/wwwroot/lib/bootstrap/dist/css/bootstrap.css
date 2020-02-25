@@ -1998,8 +1998,21 @@ pre {
     margin-left: auto;
 }
 
+.container2 {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
 @media (min-width: 768px) {
     .container {
+        width: 750px;
+    }
+}
+
+@media (min-width: 768px) {
+    .container2 {
         width: 750px;
     }
 }
@@ -2010,8 +2023,20 @@ pre {
     }
 }
 
+@media (min-width: 992px) {
+    .container2 {
+        width: 970px;
+    }
+}
+
 @media (min-width: 1200px) {
     .container {
+        width: 1170px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container2 {
         width: 1170px;
     }
 }
@@ -8190,5 +8215,12 @@ button.close {
     .hidden-print {
         display: none !important;
     }
+}
+
+mainContainer {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: 0px !important;
+    margin-left: unset !important;
 }
 /*# sourceMappingURL=bootstrap.css.map */

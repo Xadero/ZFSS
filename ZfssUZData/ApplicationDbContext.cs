@@ -26,13 +26,15 @@ namespace ZfssUZData
 
         public DbSet<Relatives> Relatives { get; set; }
 
+        public DbSet<BenefitsView> BenefitsView { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.HasSequence("SEQ_SocialServiceNumber").StartsAt(1).IncrementsBy(1);
             modelBuilder.HasSequence("SEQ_HomeLoanNumber").StartsAt(1).IncrementsBy(1);
-            modelBuilder.Entity<BenefitsView>(e => e.ToView("BenefitsView").HasNoKey());
+            modelBuilder.Entity<BenefitsView>().ToView("BenefitsView").HasNoKey();
         }
     }
 }

@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace ZfssUZ.Data.Models.Benefits
+namespace ZfssUZ.Models.Benefit
 {
-    public class BenefitsView
+    public class BenefitsViewModel
     {
         public int Id { get; set; }
 

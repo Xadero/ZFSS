@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using System.Collections.Generic;
+using ZfssUZ.Data.Models.Benefits;
 using ZfssUZ.Models.Benefit;
 using ZfssUZ.Models.Benefit.SocialServiceBenefit;
 using ZfssUZData.Models.Benefits;
@@ -16,6 +16,8 @@ namespace ZfssUZ.Profiles
             CreateMap<Relatives, RelativesModel>();
             CreateMap<RelativesModel, Relatives>();
             CreateMap<SocialServiceBenefit, SocialServiceBenefitModel>();
+            CreateMap<BenefitsViewModel, BenefitsView>();
+            CreateMap<BenefitsView, BenefitsViewModel>();
         }
     }
 }

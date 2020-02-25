@@ -1,12 +1,15 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using ZfssUZ.Data.Models.Benefits;
 using ZfssUZ.Service.Enums;
 using ZfssUZData;
 using ZfssUZData.Interfaces;
 using ZfssUZData.Models.Benefits;
+using ZfssUZData.Models.Users;
 
 namespace ZfssUZService
 {
@@ -14,13 +17,25 @@ namespace ZfssUZService
     {
         private ApplicationDbContext applicationDbContext;
 
-        public BenefitService(ApplicationDbContext applicationDbContext)
+        public BenefitService(ApplicationDbContext applicationDbContext, UserManager<ApplicationUser> userManager)
         {
             this.applicationDbContext = applicationDbContext;
         }
         public IEnumerable<BenefitType> GetBenefitsTypes()
         {
             return applicationDbContext.BenefitType;
+        }
+
+        public IEnumerable<BenefitsView> GetBenefits(ApplicationUser user)
+        {
+            if (user.UserGroupId == (int)eUserGroup.Administration)
+            {
+                return applicationDbContext.BenefitsView.ToList();
+            }
+            else
+            {
+                return applicationDbContext.BenefitsView.Where(x => x.SubmittingUserId.ToString() == user.Id).ToList();
+            }
         }
 
         public IEnumerable<SocialServiceKind> GetSocialServiceKinds()
