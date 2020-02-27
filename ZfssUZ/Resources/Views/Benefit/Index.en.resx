@@ -127,4 +127,52 @@
   <data name="BenefitList" xml:space="preserve">
     <value>Benefit list</value>
   </data>
+  <data name="Verify" xml:space="preserve">
+    <value>Verify benefit</value>
+  </data>
+  <data name="Accept" xml:space="preserve">
+    <value>Accept benefit</value>
+  </data>
+  <data name="Reject" xml:space="preserve">
+    <value>Reject benefit</value>
+  </data>
+  <data name="BenefitType" xml:space="preserve">
+    <value>Benefit type</value>
+  </data>
+  <data name="BeneficiaryPhoneNumber" xml:space="preserve">
+    <value>Beneficiary phone number</value>
+  </data>
+  <data name="BeneficiaryName" xml:space="preserve">
+    <value>Beneficiary name</value>
+  </data>
+  <data name="BeneficiaryAddress" xml:space="preserve">
+    <value>Beneficiary address</value>
+  </data>
+  <data name="BenefitNumber" xml:space="preserve">
+    <value>Benefit number</value>
+  </data>
+  <data name="BenefitStatus" xml:space="preserve">
+    <value>Benefit status</value>
+  </data>
+  <data name="SubmittingUser" xml:space="preserve">
+    <value>Submitting user</value>
+  </data>
+  <data name="SubmittingDate" xml:space="preserve">
+    <value>Date of submitting benefit</value>
+  </data>
+  <data name="AcceptingUser" xml:space="preserve">
+    <value>Accepted by</value>
+  </data>
+  <data name="AcceptingDate" xml:space="preserve">
+    <value>Date of accepting benefit</value>
+  </data>
+  <data name="RejectingUser" xml:space="preserve">
+    <value>Rejected by</value>
+  </data>
+  <data name="RejectingDate" xml:space="preserve">
+    <value>Date of rejecting benefit wniosku</value>
+  </data>
+  <data name="RejectionReason" xml:space="preserve">
+    <value>Rejection reason</value>
+  </data>
 </root>

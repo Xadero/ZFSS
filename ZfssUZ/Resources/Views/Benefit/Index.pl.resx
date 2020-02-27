@@ -127,4 +127,52 @@
   <data name="BenefitList" xml:space="preserve">
     <value>Lista wniosków</value>
   </data>
+  <data name="Verify" xml:space="preserve">
+    <value>Przyjmij do weryfikacji</value>
+  </data>
+  <data name="Accept" xml:space="preserve">
+    <value>Zatwierdź wniosek</value>
+  </data>
+  <data name="Reject" xml:space="preserve">
+    <value>Odrzuć wniosek</value>
+  </data>
+  <data name="BenefitType" xml:space="preserve">
+    <value>Rodzaj wniosku</value>
+  </data>
+  <data name="BeneficiaryPhoneNumber" xml:space="preserve">
+    <value>Numer telefonu wnioskodawcy</value>
+  </data>
+  <data name="BeneficiaryName" xml:space="preserve">
+    <value>Imię i nazwisko wnioskodawcy</value>
+  </data>
+  <data name="BeneficiaryAddress" xml:space="preserve">
+    <value>Adres zamieszkania wnioskodawcy</value>
+  </data>
+  <data name="BenefitNumber" xml:space="preserve">
+    <value>Numer wniosku</value>
+  </data>
+  <data name="BenefitStatus" xml:space="preserve">
+    <value>Status wniosku</value>
+  </data>
+  <data name="SubmittingUser" xml:space="preserve">
+    <value>Utworzono przez</value>
+  </data>
+  <data name="SubmittingDate" xml:space="preserve">
+    <value>Data złożenia wniosku</value>
+  </data>
+  <data name="AcceptingUser" xml:space="preserve">
+    <value>Zaakceptowano przez</value>
+  </data>
+  <data name="AcceptingDate" xml:space="preserve">
+    <value>Data akceptacji wniosku</value>
+  </data>
+  <data name="RejectingDate" xml:space="preserve">
+    <value>Data odrzucenia wniosku</value>
+  </data>
+  <data name="RejectingUser" xml:space="preserve">
+    <value>Odrzucony przez</value>
+  </data>
+  <data name="RejectionReason" xml:space="preserve">
+    <value>Przyczyna odrzucenia wniosku</value>
+  </data>
 </root>

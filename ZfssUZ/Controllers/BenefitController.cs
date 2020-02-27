@@ -11,6 +11,7 @@ using ZfssUZ.Enums;
 using ZfssUZ.Models.Benefit;
 using ZfssUZ.Models.Benefit.HomeLoanBenefit;
 using ZfssUZ.Models.Benefit.SocialServiceBenefit;
+using ZfssUZ.Models.Users;
 using ZfssUZData.Interfaces;
 using ZfssUZData.Models.Benefits;
 using ZfssUZData.Models.Users;
@@ -24,22 +25,49 @@ namespace ZfssUZ.Controllers
         private IHomeLoanBenefitService homeLoanBenefitService;
         private ISocialServiceBenefitService socialServiceBenefitService;
         private IDictionaryService dictionaryService;
+        private IUserService userService;
         private UserManager<ApplicationUser> userManager;
         private static List<RelativesModel> relativesModel = new List<RelativesModel>();
-        public BenefitController (IBenefitService benefitService, IDictionaryService dictionaryService, IHomeLoanBenefitService homeLoanBenefitService,ISocialServiceBenefitService socialServiceBenefitService, IMapper mapper, UserManager<ApplicationUser> userManager)
+        public BenefitController (IBenefitService benefitService, IUserService userService, IDictionaryService dictionaryService, IHomeLoanBenefitService homeLoanBenefitService,ISocialServiceBenefitService socialServiceBenefitService, IMapper mapper, UserManager<ApplicationUser> userManager)
         {
             this.benefitService = benefitService;
             this.dictionaryService = dictionaryService;
             this.homeLoanBenefitService = homeLoanBenefitService;
             this.socialServiceBenefitService = socialServiceBenefitService;
+            this.userService = userService;
             this.mapper = mapper;
             this.userManager = userManager;
         }
 
         public IActionResult Index()
         {
+            IEnumerable<BenefitsViewModel> benefitsList;
             var benefits = benefitService.GetBenefits(userManager.GetUserAsync(User).Result).ToList();
-            var benefitsList = mapper.Map<List<BenefitsView>, List<BenefitsViewModel>>(benefits);
+
+            if (benefits.Any())
+            {
+                benefitsList = benefits.Select(x => new BenefitsViewModel
+                {
+                    AcceptingDate = x.AcceptingDate,
+                    BeneficiaryAddress = x.BeneficiaryAddress,
+                    BeneficiaryName = x.BeneficiaryName,
+                    BeneficiaryPhoneNumber = x.BeneficiaryPhoneNumber,
+                    BenefitNumber = x.BenefitNumber,
+                    BenefitStatus = mapper.Map<BenefitStatusModel>(dictionaryService.Get<BenefitStatus>(x.BenefitStatusId)),
+                    BenefitType = mapper.Map<BenefitTypeModel>(dictionaryService.Get<BenefitType>(x.BenefitTypeId)),
+                    Id = x.Id,
+                    RejectingDate = x.RejectingDate,
+                    SubmittingDate = x.SubmittingDate,
+                    RejectionReason = x.RejectionReason,
+                    SubmittingUser = x.SubmittingUserId != null ? mapper.Map<UserModel>(userService.GetUserById(x.SubmittingUserId)) : new UserModel(),
+                    AcceptingUser = x.AcceptingUserId != null ? mapper.Map<UserModel>(userService.GetUserById(x.AcceptingUserId)) : new UserModel(),
+                    RejectingUser = x.RejectingUserId != null ? mapper.Map<UserModel>(userService.GetUserById(x.RejectingUserId)) : new UserModel(),
+                });
+            }
+            else
+            {
+                benefitsList = new List<BenefitsViewModel>();
+            }
 
             var model = new BenefitViewListModel()
             {

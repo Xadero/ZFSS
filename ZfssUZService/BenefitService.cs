@@ -28,13 +28,13 @@ namespace ZfssUZService
 
         public IEnumerable<BenefitsView> GetBenefits(ApplicationUser user)
         {
-            if (user.UserGroupId == (int)eUserGroup.Administration)
+            if (user.UserGroupId != (int)eUserGroup.UzEmpoloyee)
             {
                 return applicationDbContext.BenefitsView.ToList();
             }
             else
             {
-                return applicationDbContext.BenefitsView.Where(x => x.SubmittingUserId.ToString() == user.Id).ToList();
+                return applicationDbContext.BenefitsView.Where(x => x.SubmittingUserId == user.Id).ToList();
             }
         }
 

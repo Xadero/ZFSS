@@ -1,4 +1,5 @@
 ﻿using System;
+using ZfssUZ.Models.Users;
 
 namespace ZfssUZ.Models.Benefit
 {
@@ -10,9 +11,9 @@ namespace ZfssUZ.Models.Benefit
 
         public DateTime SubmittingDate { get; set; }
 
-        public string SubmittingUserId { get; set; }
+        public UserModel SubmittingUser { get; set; }
 
-        public int BenefitTypeId { get; set; }
+        public BenefitTypeModel BenefitType { get; set; }
 
         public string BeneficiaryAddress { get; set; }
 
@@ -20,15 +21,15 @@ namespace ZfssUZ.Models.Benefit
 
         public string BeneficiaryPhoneNumber { get; set; }
 
-        public int BenefitStatusId { get; set; }
+        public BenefitStatusModel BenefitStatus { get; set; }
 
         public DateTime? AcceptingDate { get; set; }
 
-        public string AcceptingUserId { get; set; }
+        public UserModel AcceptingUser { get; set; }
 
         public DateTime? RejectingDate { get; set; }
 
-        public string RejectingUserId { get; set; }
+        public UserModel RejectingUser { get; set; }
 
         public string RejectionReason { get; set; }
     }
