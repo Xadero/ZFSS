@@ -1,0 +1,48 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
+
+<script type="text/javascript" src="https://ajax.cdnjs.com/ajax/libs/json2/20110223/json2.js"></script>
+<div class="container">
+    <div class="row">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">@Localizer["Rejection"]</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="button" class="btn btn-default" id="btnSave" value="@Localizer["Save"]" />
+                        <input type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close" value="@Localizer["Cancel"]">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">@Localizer["RejectionReason"]</label>
+                        <textarea class="form-control" id="rejectionReason" rows="4" cols="50" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    debugger;
+    $("#btnSave").click(function () {
+        $.ajax({
+            url: '@Url.Action("RejectBenefit", "Benefit")',
+            type: "POST",
+            dataType: "json",
+            data: { id: getBenefitId(), benefitTypeId: getBenefitTypeId(), rejectionReason: $("#rejectionReason").val() },
+            success: function() {
+                $("#rejectionModal").modal("toggle");
+                location.reload();
+                alert("Wniosek został odrzucony!");
+            },
+            error: function () {
+                alert("@Localizer["AddRelativesError"]");
+            }
+        });
+    });
+</script>

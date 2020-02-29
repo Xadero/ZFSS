@@ -10,5 +10,11 @@ namespace ZfssUZData.Interfaces
         void CreateBenefit(SocialServiceBenefit benefit);
 
         void AddRelatives(List<Relatives> relatives);
+
+        void ChangeBenefitStatus(int id);
+
+        void AcceptBenefit(int id, string acceptingUserId);
+
+        void RejectBenefit(int id, string rejectingUserId, string rejectionReason);
     }
 }

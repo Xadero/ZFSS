@@ -1,4 +1,5 @@
-﻿using System.Net.Mail;
+﻿using System.Net;
+using System.Net.Mail;
 
 namespace ZfssUZ.Helper
 {
@@ -6,14 +7,30 @@ namespace ZfssUZ.Helper
     {
         public static void SendEmail(string emailAddress, string senderFirstName, string senderLastName, string messageContent)
         {
-            var message = new MailMessage();
-            message.From = new MailAddress(emailAddress);
-            message.To.Add(new MailAddress("pracamagisterska2019a@gmail.com"));
-            message.Subject = string.Format("Wiadomość od klienta ZFSS: {0} {1}", senderFirstName, senderLastName);
-            message.Body = messageContent;
+            var fromAddress = new MailAddress("pracamagisterska2019a@gmail.com", "From Name");
+            var toAddress = new MailAddress("+48606873712@tmomail.net", "To Name");
+            string fromPassword = "magisterka2019";
+            string subject = "Konsultacja z Obsługą klienta ZFSS: " + senderFirstName + " " + senderLastName;
+            string body = messageContent;
 
-            var client = new SmtpClient();
-            client.Send(message);
+
+            var smtp = new SmtpClient
+            {
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
+            };
+            using (var message = new MailMessage(fromAddress, toAddress)
+            {
+                Subject = subject,
+                Body = body
+            })
+            {
+                smtp.Send(message);
+            }
         }
     }
 }

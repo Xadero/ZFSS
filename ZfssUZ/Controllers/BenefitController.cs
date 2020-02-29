@@ -210,5 +210,61 @@ namespace ZfssUZ.Controllers
             relativesModel.AddRange(JsonConvert.DeserializeObject<List<RelativesModel>>(relatives));
             return Json(relatives);
         }
+
+        public virtual IActionResult VerifyBenefit(int id, int benefitTypeId)
+        {
+            try
+            {
+                if (benefitTypeId == (int)eBenefitType.HomeLoanBenefit)
+                    homeLoanBenefitService.VerifyBenefit(id, (int)eBenefitStatus.InVeryfication);
+                else
+                    socialServiceBenefitService.ChangeBenefitStatus(id);
+
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+        public virtual IActionResult AcceptBenefit(int id, int benefitTypeId)
+        {
+            try
+            {
+                if (benefitTypeId == (int)eBenefitType.HomeLoanBenefit)
+                    homeLoanBenefitService.AcceptBenefit(id, userManager.GetUserAsync(User).Result.Id);
+                else
+                    socialServiceBenefitService.AcceptBenefit(id, userManager.GetUserAsync(User).Result.Id);
+
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+        public virtual IActionResult OpenRejectionView()
+        {
+            return PartialView("Reject");
+        }
+
+        public virtual IActionResult RejectBenefit(int id, int benefitTypeId, string rejectionReason)
+        {
+            try
+            {
+                if (benefitTypeId == (int)eBenefitType.HomeLoanBenefit)
+                    homeLoanBenefitService.RejectBenefit(id, userManager.GetUserAsync(User).Result.Id, rejectionReason);
+                else
+                    socialServiceBenefitService.RejectBenefit(id, userManager.GetUserAsync(User).Result.Id, rejectionReason);
+
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
     }
 }

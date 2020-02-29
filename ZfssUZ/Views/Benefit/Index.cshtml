@@ -20,6 +20,7 @@
 <div id="idx" class="container" style="width:165% !important">
     <div>
         <input class="form-control" id="myInput" type="text" style="width:50%;align-items:center" placeholder="@Localizer["Search"]">
+        <div class="modal fade" id="rejectionModal" role="dialog" data-url='@Url.Action("OpenRejectionView", "Benefit")'></div>
         <div style="margin-top:10px">
             <input type="button" class="btn btn-default" id="showBenefit" value="@Localizer["Show"]" disabled="disabled" />
             <input type="button" class="btn btn-default" id="editBenefit" value="@Localizer["Edit"]" disabled="disabled" />
@@ -34,8 +35,10 @@
         <table class="table table-striped table-bordered dt-responsive nowrap" style="width:100%;" id="benefitTable" cellspacing="0">
             <thead>
                 <tr>
-                    <th clss="th-sm" style="display:none">@Localizer["Username"]</th>
-                    <th clss="th-sm" style="display:none">@Localizer["Username"]</th>
+                    <th clss="th-sm" style="display:none"></th>
+                    <th clss="th-sm" style="display:none"></th>
+                    <th clss="th-sm" style="display:none"></th>
+                    <th></th>
                     <th clss="th-sm">@Localizer["BenefitNumber"]</th>
                     <th clss="th-sm">@Localizer["BeneficiaryName"]</th>
                     <th clss="th-sm">@Localizer["BeneficiaryAddress"]</th>
@@ -55,10 +58,11 @@
                 @{int i = 0;}
                 @foreach (var benefitList in Model.BenefitsViewList)
                 {
-                    <tr id="userList@(i)">
-                        <td name="username" style="display:none">@benefitList.Id</td>
-                        <td name="username" style="display:none">@benefitList.BenefitStatus.Id</td>
-
+                    <tr id="benefitList@(i)">
+                        <td name="benefitId" style="display:none">@benefitList.Id</td>
+                        <td name="benefitStatusId" style="display:none">@benefitList.BenefitStatus.Id</td>
+                        <td name="benefitTypeId" style="display:none">@benefitList.BenefitType.Id</td>
+                        <td></td>
                         <td>@benefitList.BenefitNumber</td>
                         <td>@benefitList.BeneficiaryName</td>
                         <td>@benefitList.BeneficiaryAddress</td>
@@ -86,6 +90,21 @@
         $(".container").css("margin-right", "0px");
         if ("@TempData["BenefitAddSuccess"]" != null && "@TempData["BenefitAddSuccess"]" != "" && "@TempData["BenefitAddSuccess"]" != "Success") {
             alert("Utworzono wniosek o numerze: " + "@TempData["BenefitAddSuccess"]");
+        }
+
+        var benefitStatuses = document.getElementsByName("benefitStatusId");
+        if (benefitStatuses !== undefined) {
+            for (var i = 0; i < benefitStatuses.length; i++) {
+                if (benefitStatuses[i].innerText == @((int)eBenefitStatus.InVeryfication)) {
+                    $("#" + benefitStatuses[i].parentElement.id).css("color", "gold");
+                }
+                else if (benefitStatuses[i].innerText == @((int)eBenefitStatus.Accepted)) {
+                    $("#" + benefitStatuses[i].parentElement.id).css("color", "green");
+                }
+                else if (benefitStatuses[i].innerText == @((int)eBenefitStatus.Rejected)) {
+                    $("#" + benefitStatuses[i].parentElement.id).css("color", "red");
+                }
+            }
         }
 
         $("#benefitTable").DataTable({
@@ -132,7 +151,7 @@
             $('#deleteBenefit').attr("disabled", true);
             $('#verifyBenefit').attr("disabled", true);
             $('#acceptBenefit').attr("disabled", true);
-            $('#deleteBenefit').attr("disabled", true);
+            $('#rejectBenefit').attr("disabled", true);
         }
         else if (benefitStatus == @((int)eBenefitStatus.Passed)) {
             $('#showBenefit').attr("disabled", false);
@@ -148,7 +167,7 @@
             $('#deleteBenefit').attr("disabled", true);
             $('#verifyBenefit').attr("disabled", true);
             $('#acceptBenefit').attr("disabled", false);
-            $('#deleteBenefit').attr("disabled", false);
+            $('#rejectBenefit').attr("disabled", false);
         }
         else if (benefitStatus == @((int)eBenefitStatus.Rejected) || benefitStatus == @((int)eBenefitStatus.Accepted)) {
             $('#showBenefit').attr("disabled", false);
@@ -156,15 +175,16 @@
             $('#deleteBenefit').attr("disabled", true);
             $('#verifyBenefit').attr("disabled", true);
             $('#acceptBenefit').attr("disabled", true);
-            $('#deleteBenefit').attr("disabled", true);
+            $('#rejectBenefit').attr("disabled", true);
         }
     }
 
     function getBenefitId() {
         var table = $("#benefitTable").DataTable();
-        $.map(table.rows('.selected').data(), function (item) {
+        id = $.map(table.rows('.selected').data(), function (item) {
             return item[0]
         });
+        return id[0];
     }
 
     function getBenefitStatusId() {
@@ -175,5 +195,56 @@
         return id[0];
     }
 
+    function getBenefitTypeId() {
+        var table = $("#benefitTable").DataTable();
+        var id = $.map(table.rows('.selected').data(), function (item) {
+            return item[2]
+        });
+        return id[0];
+    }
+
+    $("#verifyBenefit").click(function () {
+        $.ajax({
+            url: '@Url.Action("VerifyBenefit", "Benefit")',
+            type: 'POST',
+            dataType: 'json',
+            data: { id: getBenefitId(), benefitTypeId: getBenefitTypeId() },
+            success: function (data) {
+                if (data.success) {
+                    alert("Wniosek przyjęty do weryfikacji");
+                    location.reload();
+                }
+            },
+            error: function () {
+                alert('Wystąpił błąd podczas zmiany statusu wniosku! Skontaktuj się z administratorem!');
+            }
+        });
+    });
+
+    $("#acceptBenefit").click(function () {
+        $.ajax({
+            url: '@Url.Action("AcceptBenefit", "Benefit")',
+            type: 'POST',
+            dataType: 'json',
+            data: { id: getBenefitId(), benefitTypeId: getBenefitTypeId() },
+            success: function (data) {
+                if (data.success) {
+                    alert("Wniosek został zaakceptowany!");
+                    location.reload();
+                }
+            },
+            error: function () {
+                alert('Wystąpił błąd podczas zmiany statusu wniosku! Skontaktuj się z administratorem!');
+            }
+        });
+    });
+
+    $('#rejectBenefit').click(function () {
+        var url = $('#rejectionModal').data('url');
+        $.get(url, function (data) {
+            $("#rejectionModal").html(data);
+            $("#rejectionModal").modal('show');
+        });
+    });
     </script>
 }
