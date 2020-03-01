@@ -7,6 +7,9 @@ namespace ZfssUZData.Interfaces
 {
     public interface ISocialServiceBenefitService
     {
+        SocialServiceBenefit GetBenefit(int id);
+        List<Relatives> GetRelatives(SocialServiceBenefit id);
+
         void CreateBenefit(SocialServiceBenefit benefit);
 
         void AddRelatives(List<Relatives> relatives);

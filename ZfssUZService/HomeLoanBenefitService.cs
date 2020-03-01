@@ -22,6 +22,11 @@ namespace ZfssUZService
             this.userService = userService;
         }
 
+        public HomeLoanBenefit GetBenefit(int id)
+        {
+            return applicationDbContext.HomeLoanBenefit.Where(x => x.Id == id).FirstOrDefault();
+        }
+
         public void AcceptBenefit(int id, string acceptingUserId)
         {
             var benefitToAccept = applicationDbContext.HomeLoanBenefit.Where(x => x.Id == id).FirstOrDefault();

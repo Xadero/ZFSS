@@ -21,6 +21,7 @@
     <div>
         <input class="form-control" id="myInput" type="text" style="width:50%;align-items:center" placeholder="@Localizer["Search"]">
         <div class="modal fade" id="rejectionModal" role="dialog" data-url='@Url.Action("OpenRejectionView", "Benefit")'></div>
+        <div class="modal fade" id="showBenefitModal" role="dialog" data-url='@Url.Action("Show", "Benefit")'></div>
         <div style="margin-top:10px">
             <input type="button" class="btn btn-default" id="showBenefit" value="@Localizer["Show"]" disabled="disabled" />
             <input type="button" class="btn btn-default" id="editBenefit" value="@Localizer["Edit"]" disabled="disabled" />
@@ -38,7 +39,6 @@
                     <th clss="th-sm" style="display:none"></th>
                     <th clss="th-sm" style="display:none"></th>
                     <th clss="th-sm" style="display:none"></th>
-                    <th></th>
                     <th clss="th-sm">@Localizer["BenefitNumber"]</th>
                     <th clss="th-sm">@Localizer["BeneficiaryName"]</th>
                     <th clss="th-sm">@Localizer["BeneficiaryAddress"]</th>
@@ -62,7 +62,6 @@
                         <td name="benefitId" style="display:none">@benefitList.Id</td>
                         <td name="benefitStatusId" style="display:none">@benefitList.BenefitStatus.Id</td>
                         <td name="benefitTypeId" style="display:none">@benefitList.BenefitType.Id</td>
-                        <td></td>
                         <td>@benefitList.BenefitNumber</td>
                         <td>@benefitList.BeneficiaryName</td>
                         <td>@benefitList.BeneficiaryAddress</td>
@@ -96,7 +95,7 @@
         if (benefitStatuses !== undefined) {
             for (var i = 0; i < benefitStatuses.length; i++) {
                 if (benefitStatuses[i].innerText == @((int)eBenefitStatus.InVeryfication)) {
-                    $("#" + benefitStatuses[i].parentElement.id).css("color", "gold");
+                    $("#" + benefitStatuses[i].parentElement.id).css("color", "blue");
                 }
                 else if (benefitStatuses[i].innerText == @((int)eBenefitStatus.Accepted)) {
                     $("#" + benefitStatuses[i].parentElement.id).css("color", "green");
@@ -246,5 +245,21 @@
             $("#rejectionModal").modal('show');
         });
     });
-    </script>
+
+    $('#showBenefit').click(function () {
+        $.ajax({
+            url: '@Url.Action("Show", "Benefit")',
+            type: 'POST',
+            datatype: "json",
+            data: { id: getBenefitId(), benefitTypeId: getBenefitTypeId() },
+            success: function (data) {
+                $("#showBenefitModal").html(data);
+                $("#showBenefitModal").modal('show');
+            },
+            error: function () {
+                alert('Wystąpił nieznamy błąd! Skontaktuj się z administratorem!');
+            }
+        });
+    });
+</script>
 }

@@ -7,6 +7,7 @@ namespace ZfssUZData.Interfaces
 {
     public interface IHomeLoanBenefitService
     {
+        HomeLoanBenefit GetBenefit(int id);
         void CreateBenefit(HomeLoanBenefit benefit);
 
         void VerifyBenefit(int id, int benefitStatusId);

@@ -22,6 +22,11 @@ namespace ZfssUZService
             this.userService = userService;
         }
 
+        public SocialServiceBenefit GetBenefit(int id)
+        {
+            return applicationDbContext.SocialServiceBenefit.Where(x => x.Id == id).FirstOrDefault();
+        }
+
         public void CreateBenefit(SocialServiceBenefit benefit)
         {
             applicationDbContext.SocialServiceBenefit.Add(benefit).State = EntityState.Added;
@@ -63,6 +68,11 @@ namespace ZfssUZService
                 benefitToReject.RejectionReason = rejectionReason;
                 applicationDbContext.SaveChanges();
             }
+        }
+
+        public List<Relatives> GetRelatives(SocialServiceBenefit benefit)
+        {
+            return applicationDbContext.Relatives.Where(x => x.SocialServiceBenefits == benefit).ToList();
         }
     }
 }

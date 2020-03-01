@@ -102,7 +102,6 @@ namespace ZfssUZ.Controllers
                 return View(model);
 
             model.Relatives = relativesModel;
-            relativesModel.Clear();
 
             var newBenefit = new SocialServiceBenefit()
             {
@@ -135,6 +134,7 @@ namespace ZfssUZ.Controllers
                 }
                    
                 TempData["BenefitAddSuccess"] = newBenefit.BenefitNumber.ToString();
+                relativesModel.Clear();
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
@@ -260,6 +260,31 @@ namespace ZfssUZ.Controllers
                     socialServiceBenefitService.RejectBenefit(id, userManager.GetUserAsync(User).Result.Id, rejectionReason);
 
                 return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+        public virtual IActionResult Show(int id, int benefitTypeId)
+        {
+            try
+            {
+                if (benefitTypeId == (int)eBenefitType.HomeLoanBenefit)
+                {
+                    var benefit = homeLoanBenefitService.GetBenefit(id);
+                    var model = new HomeLoanBenefitModel();
+                    return PartialView("ShowHomeLoanBenefit", model);
+
+                }
+                else
+                {
+                    var benefit = socialServiceBenefitService.GetBenefit(id);
+                    var relatives = socialServiceBenefitService.GetRelatives(benefit);
+                    var model = new SocialServiceBenefitModel();
+                    return PartialView("ShowSocialServiceBenefit", model);
+                }
             }
             catch (Exception ex)
             {

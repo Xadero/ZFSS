@@ -40,25 +40,25 @@
             </div>
             <div class="form-group" id="phoneNumberForm" hidden>
                 @Html.LabelFor(x => x.PhoneNumber, new { @class = formLabel })
-                @Html.TextBoxFor(x => x.PhoneNumber, new { @class = formControl })
+                @Html.TextBoxFor(x => x.PhoneNumber, new { @class = formControl, @type = "number" })
             </div>
             <div class="form-group">
                 @Html.LabelFor(x => x.MessageContent, new { @class = formLabel })
-                @Html.TextAreaFor(x => x.MessageContent, new { @class = formControl })
+                @Html.TextAreaFor(x => x.MessageContent, new { @class = formControl, @style = "max-width:540px" })
             </div>
             <div class="form-group">
-                <input type="submit" value="@Localizer["Send"]" class="btn btn-default" onclick="createBenefit()" />
+                <input type="submit" value="@Localizer["Send"]" class="btn btn-default" onclick="sendMessage()" />
                 <a asp-action="Index" asp-controller="Benefit" class="btn btn-default">@Localizer["Back"]</a>
             </div>
         </form>
     </div>
 </div>
 
-<script type="text/javascript">
-    $("input[type=radio][name=ContantForm]").change(function () {
+<script>
+    $("input[type=radio][id=ContactForm]").change(function () {
         $("#EmailAddress").val("");
         $("#PhoneNumber").val("");
-        if ($("#ContantForm:checked").val() == @((int)eMessageType.EmailAddress)) {
+        if ($("#ContactForm:checked").val() == @((int)eMessageType.EmailAddress)) {
             $("#emailAddressForm").show();
             $("#phoneNumberForm").hide();
         } else {
