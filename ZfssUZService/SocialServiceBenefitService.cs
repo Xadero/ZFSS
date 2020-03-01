@@ -24,7 +24,13 @@ namespace ZfssUZService
 
         public SocialServiceBenefit GetBenefit(int id)
         {
-            return applicationDbContext.SocialServiceBenefit.Where(x => x.Id == id).FirstOrDefault();
+            var benefit = applicationDbContext.SocialServiceBenefit.Where(x => x.Id == id)
+                .Include(x => x.SocialServiceKind)
+                .Include(x => x.SubmittingUser)
+                .Include(x => x.AcceptingUser)
+                .FirstOrDefault();
+
+            return benefit;
         }
 
         public void CreateBenefit(SocialServiceBenefit benefit)
@@ -47,7 +53,7 @@ namespace ZfssUZService
 
         public void AcceptBenefit(int id, string acceptingUserId)
         {
-            var benefitToAccept = applicationDbContext.HomeLoanBenefit.Where(x => x.Id == id).FirstOrDefault();
+            var benefitToAccept = applicationDbContext.SocialServiceBenefit.Where(x => x.Id == id).FirstOrDefault();
             if (benefitToAccept != null)
             {
                 benefitToAccept.AcceptingDate = DateTime.Now;

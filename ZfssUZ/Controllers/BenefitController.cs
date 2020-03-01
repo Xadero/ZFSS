@@ -282,7 +282,23 @@ namespace ZfssUZ.Controllers
                 {
                     var benefit = socialServiceBenefitService.GetBenefit(id);
                     var relatives = socialServiceBenefitService.GetRelatives(benefit);
-                    var model = new SocialServiceBenefitModel();
+                    var model = new SocialServiceBenefitModel() 
+                    { 
+                        AcceptingDate = benefit.AcceptingDate,
+                        AcceptingUser = benefit.AcceptingUser != null ? new UserModel { Firstname = benefit.SubmittingUser.FirstName, LastName = benefit.SubmittingUser.LastName } : new UserModel(),
+                        AdditionInformation = benefit.AdditionInformation,
+                        AvreageIncome = benefit.AvreageIncome,
+                        SocialServiceKind = mapper.Map<SocialServiceKindModel>(benefit.SocialServiceKind),
+                        OtherSocialServiceKind = benefit.OtherSocialServiceKind,
+                        SubmittingUser = new UserModel { Firstname = benefit.SubmittingUser.FirstName, LastName = benefit.SubmittingUser.LastName},
+                        SubmittingDate = benefit.SubmittingDate,
+                        Year = benefit.Year,
+                        BeneficiaryAddress = benefit.BeneficiaryAddress,
+                        BeneficiaryName = benefit.BeneficiaryName,
+                        BeneficiaryPhoneNumber = benefit.BeneficiaryPhoneNumber,
+                        Relatives = mapper.Map<List<Relatives>, List<RelativesModel>>(socialServiceBenefitService.GetRelatives(benefit)),
+                        Position = benefit.Position
+                    };
                     return PartialView("ShowSocialServiceBenefit", model);
                 }
             }

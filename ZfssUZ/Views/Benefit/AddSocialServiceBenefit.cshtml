@@ -99,8 +99,8 @@
         $("#BeneficiaryPhoneNumber").val(@UserManager.GetUserAsync(User).Result.PhoneNumber);
     }
 
-    $("#SocialServiceKind").change(function () {
-        if ($("#SocialServiceKind option:selected").val() == @((int)eSocialServiceKind.OtherBenefit)) {
+    $("#SocialServiceKind_Id").change(function () {
+        if ($("#SocialServiceKind_Id option:selected").val() == @((int)eSocialServiceKind.OtherBenefit)) {
             $("#OtherSocialServiceKind").val("");
             $("#otherSocialService").show();
         }

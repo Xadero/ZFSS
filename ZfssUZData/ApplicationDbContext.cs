@@ -32,8 +32,8 @@ namespace ZfssUZData
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.HasSequence("SEQ_SocialServiceNumber").StartsAt(1).IncrementsBy(1);
-            modelBuilder.HasSequence("SEQ_HomeLoanNumber").StartsAt(1).IncrementsBy(1);
+            modelBuilder.HasSequence<int>("SEQ_SocialServiceNumber").StartsAt(1).IncrementsBy(1);
+            modelBuilder.HasSequence<int>("SEQ_HomeLoanNumber").StartsAt(1).IncrementsBy(1);
             modelBuilder.Entity<BenefitsView>().ToView("BenefitsView").HasNoKey();
         }
     }

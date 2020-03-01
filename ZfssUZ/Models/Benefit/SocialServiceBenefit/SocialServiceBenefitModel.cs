@@ -11,6 +11,16 @@ namespace ZfssUZ.Models.Benefit
     {
         public int Id { get; set; }
 
+        public string BeneficiaryName { get; set; }
+
+        public string BeneficiaryAddress { get; set; }
+
+        public string BeneficiaryPhoneNumber { get; set; }
+
+        public string Position { get; set; }
+
+        public DateTime DateOfEmployment { get; set; }
+
         [Required]
         public long BenefitNumber { get; set; }
 
@@ -44,5 +54,7 @@ namespace ZfssUZ.Models.Benefit
         public BenefitTypeModel BenefitType { get; set; }
 
         public IEnumerable<SelectListItem> SociaServiceKindList { get; set; }
+
+        public List<RelativesModel> Relatives { get; set; }
     }
 }

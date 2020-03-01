@@ -1,20 +1,119 @@
-﻿@{
+﻿@model ZfssUZ.Models.Benefit.SocialServiceBenefitModel
+@using ZfssUZ.Enums
+@{
     Context.Items["Title"] = "Show";
 }
-
-<div class="container">
-    <div class="row">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Klauzula informacyjna ZFŚS</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+<div class="modal-dialog">
+    <div class="modal-content" id="modalContent">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body" id="modalBody">
+            <form id="modalForm">
+                <div class="form-group" style="overflow-y:auto;">
+                    <p align="center" style="margin: 0 !important;">WNIOSEK</p>
+                    <p align="center" style="margin: 0 !important;">(o przyznanie świadczenia socjalnego)</p>
+                    <p style="margin: 0 !important;">A.</p>
+                    <p style="margin: 0 !important;">&emsp;Imię i nazwisko wnioskodawcy <label style="border-bottom:1px dotted;"><b>@Model.BeneficiaryName</b></label> </p>
+                    <p style="margin: 0 !important;">&emsp;Pracuję od dnia <label style="border-bottom:1px dotted;"><b>@Model.DateOfEmployment.ToString("dd.MM.yyyy")</b></label> na stanowisku <label style="border-bottom:1px dotted;"><b>@Model.Position</b></label></pstyle="margin:>
+                    <p style="margin: 0 !important;">&emsp;Adres zamieszkania wnioskodawcy <label style="border-bottom:1px dotted;"><b>@Model.BeneficiaryAddress</b></label> </p>
+                    <p style="margin: 0 !important;">&emsp;telefon <label style="border-bottom:1px dotted;"><b>@Model.BeneficiaryPhoneNumber</b></label> </p>
+                    <p style="margin: 0 !important;">&emsp;Proszę o przyznanie mi i mojej rodzinie∗</p>
                 </div>
-                <div class="modal-body">
+                <div class="form-group">
+                    <table id="relativesGrid" class="table table-bordered" cellpadding="0" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th style="width:200px">Nazwisko i imię<br /> członka rodziny</th>
+                                <th style="width:200px">Data<br /> urodzenia</th>
+                                <th style="width:200px">Stopień<br /> pokrewieństwa</th>
+                                <th style="width:200px">Inne<br /> uwagi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var relative in Model.Relatives)
+                            {
+                                <tr>
+                                    <td>@relative.RelativeFullName</td>
+                                    <td>@relative.DateOfBirth.ToString("dd.MM.yyyy")</td>
+                                    <td>@relative.DegreeOfRelationship</td>
+                                    <td>@relative.Notes</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 </div>
-            </div>
+                <div class="form-group">
+                    <p style="margin: 0 !important;">z Zakładowego Funduszu Świadczeń Socjalnych (rodzaj świadczenia):</p>
+                    <p id="vacation" style="margin: 0 !important;">- dofinansowanie do wypoczynku letniego ∗</p>
+                    <p id="holiday" style="margin: 0 !important;">- świadczenie świąteczne ∗</p>
+                    <p id="other" style="margin: 0 !important;">- inne świadczenie - <label style="border-bottom:1px dotted;"><b>@Model.OtherSocialServiceKind</b></label>*</p>
+                </div>
+                <div class="form-group">
+                    <p style="margin: 0 !important;">B.</p>
+                    <p>&emsp;Oświadczenie wnioskodawcy :</p>
+                    <p>
+                        &emsp;&emsp; Ja, niżej podpisany/a, niniejszym oświadczam, że w okresie <label style="border-bottom:1px dotted;"><b>@Model.Year</b></label>
+                        roku średnia łącznego dochodu netto wszystkich członków mojej rodziny, wspólnie zamieszkujących i prowadzących wspólne gospodarstwo domowe, zgodnie z zeznaniem
+                        podatkowym rocznym PIT∗ w przeliczeniu na jedną osobę miesięcznie wynosiła <label style="border-bottom:1px dotted;"><b>@Model.AvreageIncome</b></label> zł (netto).  ∗•
+                    </p>
+                </div>
+                <div class="form-group">
+                    <p style="margin: 0 !important;">C.</p>
+                    <p>&emsp;Inne informacje uzupełniające: <label style="border-bottom:1px dotted;"><b>@Model.AdditionInformation</b></label></p>
+                    <p>
+                        &emsp;Prawdziwość wyżej przedstawionych danych potwierdzam własnym podpisem, świadomy odpowiedzialności regulaminowej. Wyrażam zgodę na przetwarzanie moich danych osobowych
+                        przez zakład pracy.
+                    </p>
+                </div>
+                <div class="form-group" style="width:100%; display:inline-block">
+                    <p style="margin: 0 !important;" align="right"><label style="border-bottom:1px dotted;">@Model.SubmittingDate.ToString("dd.MM.yyyy"), @Model.SubmittingUser.Firstname @Model.SubmittingUser.LastName</label></p>
+                    <p style="margin: 0 !important;" align="right">(data i podpis wnioskodawcy)</p>
+                </div>
+                <div class="form-group" width:100%; display:inline-block">
+                    <small align="left">
+                        adnotacje Działu Socjalnego <br />
+                        o przyznaniu świadczenia <br />
+                        i dofinansowaniu z Funduszu <br />
+                    </small>
+                </div>
+                <div class="form-group" style="width:100%; display:inline-block">
+                    @if (Model.AcceptingDate.HasValue && Model.AcceptingUser != null)
+                    {
+                        <p style="margin: 0 !important;" align="right"><label style="border-bottom:1px dotted;">@Model.AcceptingDate.Value.ToString("dd.MM.yyyy"), @Model.AcceptingUser.Firstname @Model.AcceptingUser.LastName</label></p>
+                    }
+                    else
+                    {
+                        <p style="margin: 0 !important;" align="right">..........................................</p>
+                    }
+                    <p style="margin: 0 !important;" align="right">(data i podpis pracownika socjalnego)</p>
+                </div>
+                <div class="form-group" style="width:100%; display:inline-block">
+                    <small align="left">
+                        *niepotrzebne skreślić <br />
+                        ∗• przychód bez podatku oraz składek na ubezpieczenia zdrowotne i społeczne
+                    </small>
+                </div>
+            </form>
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        if (@Model.SocialServiceKind.Id == @((int)eSocialServiceKind.VacationHoliday)) {
+            $("#holiday").wrap("<strike>");
+            $("#other").wrap("<strike>");
+        }
+        else if (@Model.SocialServiceKind.Id == @((int)eSocialServiceKind.HolidayBenefit)) {
+            $("#vacation").wrap("<strike>");
+            $("#other").wrap("<strike>");
+        }
+        else {
+            $("#vacation").wrap("<strike>");
+            $("#holiday").wrap("<strike>");
+        }
+    });
+</script>
