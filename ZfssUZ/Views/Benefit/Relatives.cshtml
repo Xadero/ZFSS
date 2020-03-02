@@ -36,7 +36,7 @@
                                 {
                                     <tr>
                                         <td>@customer.RelativeFullName</td>
-                                        <td>@customer.DateOfBirth.ToString("dd.mm.yyyy")</td>
+                                        <td>@customer.DateOfBirth.ToString("dd.MM.yyyy")</td>
                                         <td>@customer.DegreeOfRelationship</td>
                                         <td>@customer.Notes</td>
                                         <td><input type="button" class="btn btn-default" value="@Localizer["Remove"]" onclick="Remove(this)" /></td>
@@ -111,10 +111,7 @@
 
     $("#btnSave").click(function () {
         var relatives = new Array();
-        if ($('#relativesGrid TBODY TR').length <= 0) {
-            alert("@Localizer["NoDataToSave"]");
-            return;
-        }
+
         $("#relativesGrid TBODY TR").each(function () {
             var row = $(this);
             var RelativesModel = {};

@@ -1,0 +1,63 @@
+﻿@model ZfssUZ.Models.Benefit.HomeLoanBenefit.HomeLoanBenefitModel
+<div class="modal-dialog">
+    <div class="modal-content" id="modalContent">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body" id="modalBody">
+            <form id="modalForm">
+                <div class="form-group">
+                    <p align="center"><big><b>Wniosek o przyznanie pożyczki z ZFŚS na cele mieszkaniowe</b></big></p>
+                </div>
+                <br />
+                <div class="form-group" style="width:30%">
+                    <p class="benefit-view-p dotted-text" style="width:100%"><label><b>@Model.BeneficiaryName</b></label> </p>
+                    <p align="center" class="benefit-view-p"><small>(nazwisko i imię)</small></p>
+                    <p class="benefit-view-p dotted-text" style="width:100%; border-bottom: 1px dotted"><label><b>@Model.BeneficiaryAddress</b></label></p>
+                    <p align="center" class="benefit-view-p"><small>(adres)</small></p>
+                    <p class="benefit-view-p dotted-text" style="width:100%"><label><b>@Model.BeneficiaryPhoneNumber</b></label></p>
+                    <p align="center" class="benefit-view-p"><small>(numer telefonu kontaktowego)</small></p>
+                </div>
+                <div class="form-group">
+                    <p align="right">
+                        Komisja ds. Miekszaniowych <br />
+                        przy Uniwersytecie Zielonogórskim
+                    </p>
+                </div>
+                <br />
+                <div class="form-group">
+                    <p align="center"><big>PODANIE</big></p>
+                </div>
+                <div class="form-group">
+                    <p>
+                        &emsp; Proszę o przyznanie mi z Zakładowego Funduszu świadczeń Socjalnych pożyczki w wysokości <label class="dotted-text">@Model.LoanCost</label>
+                        zł na cele mieszkaniowe. Pożyczkę chcę przeznaczyć na <label class="dotted-text">@Model.LoanPurpose</label>
+                    </p>
+                    <p class="benefit-view-p dotted-text"></p>
+                    <p align="center">(dokładnie określić cel pożyczki)</p>
+                </div>
+                <div class="form-group">
+                    <p>Pożyczkę zobowiązuje się spłacić w <label class="dotted-text">@Model.Months</label> równych ratach miesięcznych <label class="dotted-text">(@Model.Instalment zł)</label></p>
+                </div>
+                <br />
+                <div class="form-group">
+                    <p align="center"><big>OŚWIADCZENIE</big></p>
+                </div>
+                <div class="form-group">
+                    <p>
+                        &emsp; Oświadczam, że znam treść Zakładowego Regulaminu Świadczeń Socjalnych,
+                        i że zostałem/am poinformowany/a o możliwości ubiegania się o umorzenie pożyczki oraz
+                        o wynikającym z tego obowiązku odprowadzenia podatku dochodowego.
+                    </p>
+                </div>
+                <br />
+                <div class="form-group benefit-view-div">
+                    <p align="right"><label class="dotted-text">@Model.SubmittingUser.Firstname @Model.SubmittingUser.LastName</label></p>
+                    <p align="right" class="benefit-view-p">podpis wnioskodawcy</p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

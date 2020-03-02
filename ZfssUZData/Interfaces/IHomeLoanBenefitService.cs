@@ -15,5 +15,7 @@ namespace ZfssUZData.Interfaces
         void AcceptBenefit(int id, string acceptingUserId);
 
         void RejectBenefit(int id, string rejectingUserId, string rejectionReason);
+
+        void DeleteBenefit(int id);
     }
 }

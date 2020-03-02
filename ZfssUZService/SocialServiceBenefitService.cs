@@ -80,5 +80,14 @@ namespace ZfssUZService
         {
             return applicationDbContext.Relatives.Where(x => x.SocialServiceBenefits == benefit).ToList();
         }
+
+        public void DeleteBenefit(int id)
+        {
+            var benefitToDelete = applicationDbContext.SocialServiceBenefit.Where(x => x.Id == id).First();
+            var relativesToDelete = applicationDbContext.Relatives.Where(x => x.SocialServiceBenefits == benefitToDelete).ToList();
+            applicationDbContext.Relatives.RemoveRange(relativesToDelete);
+            applicationDbContext.SocialServiceBenefit.Remove(benefitToDelete);
+            applicationDbContext.SaveChanges();
+        }
     }
 }

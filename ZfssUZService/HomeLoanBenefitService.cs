@@ -24,7 +24,9 @@ namespace ZfssUZService
 
         public HomeLoanBenefit GetBenefit(int id)
         {
-            return applicationDbContext.HomeLoanBenefit.Where(x => x.Id == id).FirstOrDefault();
+            return applicationDbContext.HomeLoanBenefit.Where(x => x.Id == id)
+                .Include(x => x.SubmittingUser)
+                .FirstOrDefault();
         }
 
         public void AcceptBenefit(int id, string acceptingUserId)
@@ -62,6 +64,13 @@ namespace ZfssUZService
                 benefitToReject.RejectionReason = rejectionReason;
                 applicationDbContext.SaveChanges();
             }
+        }
+
+        public void DeleteBenefit(int id)
+        {
+            var benefitToDelete = applicationDbContext.HomeLoanBenefit.Where(x => x.Id == id).First();
+            applicationDbContext.HomeLoanBenefit.Remove(benefitToDelete);
+            applicationDbContext.SaveChanges();
         }
     }
 }

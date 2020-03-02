@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using ZfssUZ.Data.Models.Benefits;
 using ZfssUZ.Enums;
@@ -171,7 +172,7 @@ namespace ZfssUZ.Controllers
                 BenefitStatus = dictionaryService.Get<BenefitStatus>((int)eBenefitStatus.Passed),
                 BenefitType = dictionaryService.Get<BenefitType>((int)eBenefitType.HomeLoanBenefit),
                 LoanCost = model.LoanCost,
-                Instalment = model.Instalment,
+                Instalment = decimal.Parse(model.Instalment.Replace(".", ",")),
                 LoanPurpose = model.LoanPurpose,
                 Months = model.Months,
                 SubmittingDate = DateTime.Now,
@@ -207,6 +208,7 @@ namespace ZfssUZ.Controllers
 
         public virtual JsonResult SaveRelatives(string relatives)
         {
+            relativesModel.Clear();
             relativesModel.AddRange(JsonConvert.DeserializeObject<List<RelativesModel>>(relatives));
             return Json(relatives);
         }
@@ -274,7 +276,17 @@ namespace ZfssUZ.Controllers
                 if (benefitTypeId == (int)eBenefitType.HomeLoanBenefit)
                 {
                     var benefit = homeLoanBenefitService.GetBenefit(id);
-                    var model = new HomeLoanBenefitModel();
+                    var model = new HomeLoanBenefitModel()
+                    {
+                        BeneficiaryName = benefit.BeneficiaryName,
+                        BeneficiaryAddress = benefit.BeneficiaryAddress,
+                        BeneficiaryPhoneNumber = benefit.BeneficiaryPhoneNumber,
+                        LoanCost = benefit.LoanCost,
+                        LoanPurpose = benefit.LoanPurpose,
+                        Months = benefit.Months,
+                        Instalment = benefit.Instalment,
+                        SubmittingUser = benefit.SubmittingUser != null ? new UserModel { Firstname = benefit.SubmittingUser.FirstName, LastName = benefit.SubmittingUser.LastName } : new UserModel()
+                    };
                     return PartialView("ShowHomeLoanBenefit", model);
 
                 }
@@ -300,6 +312,27 @@ namespace ZfssUZ.Controllers
                         Position = benefit.Position
                     };
                     return PartialView("ShowSocialServiceBenefit", model);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+        public virtual IActionResult Delete(int id, int benefitTypeId)
+        {
+            try
+            {
+                if (benefitTypeId == (int)eBenefitType.HomeLoanBenefit)
+                {
+                    homeLoanBenefitService.DeleteBenefit(id);
+                    return Json(new { success = true });
+                }
+                else
+                {
+                    socialServiceBenefitService.DeleteBenefit(id);
+                    return Json(new { success = true });
                 }
             }
             catch (Exception ex)

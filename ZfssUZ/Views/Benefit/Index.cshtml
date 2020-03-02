@@ -110,7 +110,7 @@
             dom: '<"top"i>rt<"bottom"flp><"clear">',
             "scrollX": true,
             "autoWidth": true,
-            searching: false,
+            searching: true,
             language: {
                 info: "@Localizer["EntriesInfo"]",
                 lengthMenu: "@Localizer["RecordsPerPage"]",
@@ -122,12 +122,12 @@
             }
         });
 
-        $("#myInput").on("keyup", function () {
-            var value = $(this).val().toLowerCase();
-            $("#myTable tr").filter(function () {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-        });
+        $("#benefitTable_filter").hide();
+
+        var table = $('#benefitTable').DataTable();
+        $('#myInput').on( 'keyup', function () {
+            table.search( this.value ).draw();
+        } );
 
         $('#benefitTable tbody').on('click', 'tr', function () {
             if ($(this).hasClass('selected')) {
@@ -202,6 +202,14 @@
         return id[0];
     }
 
+    function getBenefitNumber() {
+        var table = $("#benefitTable").DataTable();
+        var id = $.map(table.rows('.selected').data(), function (item) {
+            return item[3]
+        });
+        return id[0];
+    }
+
     $("#verifyBenefit").click(function () {
         $.ajax({
             url: '@Url.Action("VerifyBenefit", "Benefit")',
@@ -260,6 +268,25 @@
                 alert('Wystąpił nieznamy błąd! Skontaktuj się z administratorem!');
             }
         });
+    });
+
+    $('#deleteBenefit').click(function () {
+        var r = confirm("Na pewno usunąć wniosek " + getBenefitNumber() + "?");
+        if (r) {
+            $.ajax({
+                url: '@Url.Action("Delete", "Benefit")',
+                type: 'POST',
+                datatype: "json",
+                data: { id: getBenefitId(), benefitTypeId: getBenefitTypeId() },
+                success: function (data) {
+                    alert("Wniosek został usunięty!");
+                    location.reload();
+                },
+                error: function () {
+                    alert('Wystąpił nieznamy błąd! Skontaktuj się z administratorem!');
+                }
+            });
+        };
     });
 </script>
 }

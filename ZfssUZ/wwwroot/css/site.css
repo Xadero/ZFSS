@@ -47,3 +47,16 @@ body {
         display: inline; 
      }
 }
+
+.benefit-view-div {
+    width: 100%;
+    display: inline-block;
+}
+
+.benefit-view-p {
+    margin: 0 !important;
+}
+
+.dotted-text {
+    border-bottom: 1px dotted;
+}

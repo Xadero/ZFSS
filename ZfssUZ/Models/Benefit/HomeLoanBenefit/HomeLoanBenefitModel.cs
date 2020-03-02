@@ -10,6 +10,12 @@ namespace ZfssUZ.Models.Benefit.HomeLoanBenefit
     {
         public int Id { get; set; }
 
+        public string BeneficiaryName { get; set; }
+
+        public string BeneficiaryAddress { get; set; }
+
+        public string BeneficiaryPhoneNumber { get; set; }
+
         [Required]
         public long BenefitNumber { get; set; }
 

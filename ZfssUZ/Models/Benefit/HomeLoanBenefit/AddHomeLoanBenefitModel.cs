@@ -27,11 +27,10 @@ namespace ZfssUZ.Models.Benefit.HomeLoanBenefit
         [Display(Name = "Instalment")]
         [Required]
         [Range(1, Double.MaxValue, ErrorMessage = "ValidateInstalment")]
-        public decimal Instalment { get; set; }
+        public string Instalment { get; set; }
 
         [Display(Name = "Months")]
-        [Required]
-        [Range(1, Double.MaxValue, ErrorMessage = "ValidateMonhts")]
+        [Required(ErrorMessage = "ValidateMonhts")]
         public int Months { get; set; }
 
         [Display(Name = "LoanPurpose")]
