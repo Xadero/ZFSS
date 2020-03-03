@@ -288,5 +288,9 @@
             });
         };
     });
+
+    $('#editBenefit').click(function () {
+        window.location.href = "@Url.Action("Edit", "Benefit")?id=" + getBenefitId() + "&benefitTypeId=" + getBenefitTypeId();
+    });
 </script>
 }

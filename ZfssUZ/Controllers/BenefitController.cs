@@ -5,9 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using ZfssUZ.Data.Models.Benefits;
 using ZfssUZ.Enums;
 using ZfssUZ.Models.Benefit;
 using ZfssUZ.Models.Benefit.HomeLoanBenefit;
@@ -29,7 +27,7 @@ namespace ZfssUZ.Controllers
         private IUserService userService;
         private UserManager<ApplicationUser> userManager;
         private static List<RelativesModel> relativesModel = new List<RelativesModel>();
-        public BenefitController (IBenefitService benefitService, IUserService userService, IDictionaryService dictionaryService, IHomeLoanBenefitService homeLoanBenefitService,ISocialServiceBenefitService socialServiceBenefitService, IMapper mapper, UserManager<ApplicationUser> userManager)
+        public BenefitController(IBenefitService benefitService, IUserService userService, IDictionaryService dictionaryService, IHomeLoanBenefitService homeLoanBenefitService, ISocialServiceBenefitService socialServiceBenefitService, IMapper mapper, UserManager<ApplicationUser> userManager)
         {
             this.benefitService = benefitService;
             this.dictionaryService = dictionaryService;
@@ -89,7 +87,7 @@ namespace ZfssUZ.Controllers
                 BenefitTypeList = new SelectList(benefitService.GetBenefitsTypes(), "Id", "Value", 2),
                 SocialServiceKindList = new SelectList(benefitService.GetSocialServiceKinds(), "Id", "Value"),
             };
-            
+
             return View(model);
         }
 
@@ -133,7 +131,7 @@ namespace ZfssUZ.Controllers
                     relatives.ForEach(x => x.SocialServiceBenefits = newBenefit);
                     socialServiceBenefitService.AddRelatives(relatives);
                 }
-                   
+
                 TempData["BenefitAddSuccess"] = newBenefit.BenefitNumber.ToString();
                 relativesModel.Clear();
                 return RedirectToAction("Index");
@@ -186,7 +184,7 @@ namespace ZfssUZ.Controllers
                 TempData["BenefitAddSuccess"] = newBenefit.BenefitNumber.ToString();
                 return RedirectToAction("Index");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 TempData["BenefitAddError"] = ex.Message;
                 return View(model);
@@ -203,6 +201,7 @@ namespace ZfssUZ.Controllers
         public IActionResult AddRelatives(List<RelativesModel> model)
         {
             model.AddRange(relativesModel);
+
             return PartialView("Relatives", model);
         }
 
@@ -294,15 +293,15 @@ namespace ZfssUZ.Controllers
                 {
                     var benefit = socialServiceBenefitService.GetBenefit(id);
                     var relatives = socialServiceBenefitService.GetRelatives(benefit);
-                    var model = new SocialServiceBenefitModel() 
-                    { 
+                    var model = new SocialServiceBenefitModel()
+                    {
                         AcceptingDate = benefit.AcceptingDate,
                         AcceptingUser = benefit.AcceptingUser != null ? new UserModel { Firstname = benefit.SubmittingUser.FirstName, LastName = benefit.SubmittingUser.LastName } : new UserModel(),
                         AdditionInformation = benefit.AdditionInformation,
-                        AvreageIncome = benefit.AvreageIncome,
+                        AverageIncome = benefit.AvreageIncome,
                         SocialServiceKind = mapper.Map<SocialServiceKindModel>(benefit.SocialServiceKind),
                         OtherSocialServiceKind = benefit.OtherSocialServiceKind,
-                        SubmittingUser = new UserModel { Firstname = benefit.SubmittingUser.FirstName, LastName = benefit.SubmittingUser.LastName},
+                        SubmittingUser = new UserModel { Firstname = benefit.SubmittingUser.FirstName, LastName = benefit.SubmittingUser.LastName },
                         SubmittingDate = benefit.SubmittingDate,
                         Year = benefit.Year,
                         BeneficiaryAddress = benefit.BeneficiaryAddress,
@@ -339,6 +338,82 @@ namespace ZfssUZ.Controllers
             {
                 return Json(new { success = false, message = ex.Message });
             }
+        }
+
+        public virtual IActionResult Edit(int id, int benefitTypeId)
+        {
+            try
+            {
+                if (benefitTypeId == (int)eBenefitType.HomeLoanBenefit)
+                {
+                    var benefit = homeLoanBenefitService.GetBenefit(id);
+                    var model = new HomeLoanBenefitModel()
+                    {
+                        BeneficiaryName = benefit.BeneficiaryName,
+                        BeneficiaryAddress = benefit.BeneficiaryAddress,
+                        BeneficiaryPhoneNumber = benefit.BeneficiaryPhoneNumber,
+                        BenefitNumber = benefit.BenefitNumber,
+                        Id = benefit.Id,
+                        Instalment = benefit.Instalment,
+                        LoanPurpose = benefit.LoanPurpose,
+                        Months = benefit.Months,
+                        BenefitType = mapper.Map<BenefitTypeModel>(benefit.BenefitType),
+                        LoanCost = benefit.LoanCost,
+                        BenefitTypeList = new SelectList(benefitService.GetBenefitsTypes(), "Id", "Value", 1),
+
+                    };
+
+                    return View("EditHomeLoanBenefit", model);
+                }
+                else
+                {
+                    var benefit = socialServiceBenefitService.GetBenefit(id);
+                    var model = new SocialServiceBenefitModel()
+                    {
+                        BeneficiaryName = benefit.BeneficiaryName,
+                        BenefitNumber = benefit.BenefitNumber,
+                        BeneficiaryAddress = benefit.BeneficiaryPhoneNumber,
+                        OtherSocialServiceKind = benefit.OtherSocialServiceKind,
+                        DateOfEmployment = benefit.DateOfEmployment,
+                        AdditionInformation = benefit.AdditionInformation,
+                        Position = benefit.Position,
+                        Id = benefit.Id,
+                        SocialServiceKind = mapper.Map<SocialServiceKindModel>(benefit.SocialServiceKind),
+                        SocialServiceKindList = new SelectList(benefitService.GetSocialServiceKinds(), "Id", "Value"),
+                        Year = benefit.Year,
+                        BenefitType = mapper.Map<BenefitTypeModel>(benefit.BenefitType),
+                        BeneficiaryPhoneNumber = benefit.BeneficiaryPhoneNumber,
+                        AverageIncome = benefit.AvreageIncome,
+                        BenefitTypeList = new SelectList(benefitService.GetBenefitsTypes(), "Id", "Value", 2),
+                    };
+
+                    model.Relatives = mapper.Map<List<Relatives>, List<RelativesModel>>(socialServiceBenefitService.GetRelatives(benefit));
+
+                    if (model.Relatives.Any())
+                    {
+                        relativesModel.Clear();
+                        relativesModel.AddRange(model.Relatives);
+                    }
+
+                    return View("EditSocialServiceBenefit", model);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        public virtual IActionResult EditHomeLoanBenefit(AddHomeLoanBenefitModel model)
+        {
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public virtual IActionResult EditSocialServiceBenefit(AddSocialServiceBenefitModel model)
+        {
+            return RedirectToAction("Index");
         }
     }
 }

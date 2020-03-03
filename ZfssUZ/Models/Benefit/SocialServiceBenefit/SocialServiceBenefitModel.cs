@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using ZfssUZ.Models.Benefit.SocialServiceBenefit;
 using ZfssUZ.Models.Users;
 
-namespace ZfssUZ.Models.Benefit
+namespace ZfssUZ.Models.Benefit.SocialServiceBenefit
 {
     public class SocialServiceBenefitModel
     {
@@ -34,7 +34,7 @@ namespace ZfssUZ.Models.Benefit
         public int Year { get; set; }
 
         [Required]
-        public decimal AvreageIncome { get; set; }
+        public decimal AverageIncome { get; set; }
 
         public string AdditionInformation { get; set; }
 
@@ -53,7 +53,9 @@ namespace ZfssUZ.Models.Benefit
 
         public BenefitTypeModel BenefitType { get; set; }
 
-        public IEnumerable<SelectListItem> SociaServiceKindList { get; set; }
+        public IEnumerable<SelectListItem> BenefitTypeList { get; set; }
+
+        public IEnumerable<SelectListItem> SocialServiceKindList { get; set; }
 
         public List<RelativesModel> Relatives { get; set; }
     }

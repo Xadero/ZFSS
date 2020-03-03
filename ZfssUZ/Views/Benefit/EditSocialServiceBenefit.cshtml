@@ -1,0 +1,133 @@
+﻿@model ZfssUZ.Models.Benefit.SocialServiceBenefit.SocialServiceBenefitModel
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Identity
+@using ZfssUZData.Models.Users
+@using ZfssUZ.Enums
+
+@inject IViewLocalizer Localizer
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    object formLabel = "form-label";
+    object formControl = "form-control";
+    Context.Items["Title"] = Localizer["AddSocialServiceBenefitTitle"];
+}
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<h3>@Localizer["AddSocialServiceBenefitTitle"] @Model.BenefitNumber</h3>
+<hr />
+<div class="row">
+    <div class="col-md-5">
+        <form asp-action="EditSocialServiceBenefit">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <input type="button" class="btn btn-default" id="GetUserData" value="@Localizer["GetUserData"]" onclick="getUserData()" />
+                <input type="button" class="btn btn-default" id="showClause" value="@Localizer["Clause"]" />
+                <div class="modal fade" id="clauseModal" role="dialog" data-url='@Url.Action("ShowClause", "Benefit")'></div>
+                <div class="modal fade" id="relativesModal" role="dialog" data-url='@Url.Action("AddRelatives", "Benefit", new { model = Model.Relatives })'></div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.BeneficiaryName, new { @class = formLabel })
+                @Html.TextBoxFor(x => x.BeneficiaryName, string.Empty, new { @class = formControl })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.Position, new { @class = formLabel })
+                @Html.TextBoxFor(x => x.Position, string.Empty, new { @class = formControl })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.DateOfEmployment, new { @class = formLabel })
+                <input type="date" asp-for="DateOfEmployment" class="form-control" />
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.BeneficiaryAddress, new { @class = formLabel })
+                @Html.TextBoxFor(x => x.BeneficiaryAddress, string.Empty, new { @class = formControl })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.BeneficiaryPhoneNumber, new { @class = formLabel })
+                @Html.TextBoxFor(x => x.BeneficiaryPhoneNumber, string.Empty, new { @class = formControl })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.Relatives, new { @class = formLabel })
+                <div>
+                    <input type="button" class="btn btn-default" id="addRelatives" value="@Localizer["AddRelatives"]" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.SocialServiceKind, new { @class = formLabel })
+                @Html.DropDownListFor(x => x.SocialServiceKind.Id, Model.SocialServiceKindList, new { @class = formControl })
+            </div>
+            <div class="form-group" id="otherSocialService">
+                @Html.LabelFor(x => x.OtherSocialServiceKind, new { @class = formLabel })
+                @Html.TextBoxFor(x => x.OtherSocialServiceKind, string.Empty, new { @class = formControl })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.Year, new { @class = formLabel })
+                @Html.TextBoxFor(x => x.Year, string.Empty, new { @class = formControl, @type = "number" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.AverageIncome, new { @class = formLabel })
+                @Html.TextBoxFor(x => x.AverageIncome, string.Empty, new { @class = formControl, @type = "number" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.AdditionInformation, new { @class = formLabel })
+                @Html.TextBoxFor(x => x.AdditionInformation, string.Empty, new { @class = formControl })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.BenefitType)
+                @Html.DropDownListFor(x => x.BenefitType.Id, Model.BenefitTypeList, new { @class = formControl, @disabled = "disabled" })
+            </div>
+            <div class="form-group">
+                @using (Html.BeginForm("EditSocialServiceBenefit", "Benefit", new { model = Model }, FormMethod.Post))
+                {
+                   <input type="submit" name="editSocialServiceBenefit" class="btn btn-default" value="@Localizer["Create"]" />
+                }
+                <a asp-action="Index" asp-controller="Benefit" class="btn btn-default">@Localizer["Back"]</a>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function () {
+        $("#otherSocialService").hide();
+        $("#AverageIncome").val(@Model.AverageIncome);
+        if ("@TempData["BenefitAddError"]" != null && "@TempData["BenefitAddError"]" != "" && "@TempData["BenefitAddError"]" != "Error") {
+            alert("@Localizer["AddHomeLoanBenefitError"]" + "@TempData["BenefitAddError"]");
+        }
+    });
+    function getUserData() {
+        $("#BeneficiaryName").val("@UserManager.GetUserAsync(User).Result.FirstName " +  "@UserManager.GetUserAsync(User).Result.LastName");
+        $("#BeneficiaryAddress").val("@UserManager.GetUserAsync(User).Result.Address, " + "@UserManager.GetUserAsync(User).Result.PostCode " + "@UserManager.GetUserAsync(User).Result.City");
+        $("#BeneficiaryPhoneNumber").val(@UserManager.GetUserAsync(User).Result.PhoneNumber);
+    }
+
+    $("#SocialServiceKind_Id").change(function () {
+        if ($("#SocialServiceKind_Id option:selected").val() == @((int)eSocialServiceKind.OtherBenefit)) {
+            $("#OtherSocialServiceKind").val("");
+            $("#otherSocialService").show();
+        }
+        else {
+            $("#otherSocialService").hide();
+            $("#OtherSocialServiceKind").val("");
+        }
+    });
+
+    $('#showClause').click(function () {
+        var url = $('#clauseModal').data('url');
+        $.get(url, function (data) {
+            $("#clauseModal").html(data);
+            $("#clauseModal").modal('show');
+        });
+    });
+
+    $('#addRelatives').click(function () {
+        var url = $('#relativesModal').data('url');
+        $.get(url, function (data) {
+            $("#relativesModal").html(data);
+            $("#relativesModal").modal('show');
+        });
+    });
+</script>
+

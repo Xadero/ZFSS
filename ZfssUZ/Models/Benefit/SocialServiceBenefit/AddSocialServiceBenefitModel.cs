@@ -7,6 +7,10 @@ namespace ZfssUZ.Models.Benefit.SocialServiceBenefit
 {
     public class AddSocialServiceBenefitModel
     {
+        public int Id { get; set; }
+
+        public long BenefitNumber { get; set; }
+
         [Display(Name = "BeneficiaryName")]
         [Required(ErrorMessage = "ValidateBeneficiaryName")]
         public string BeneficiaryName { get; set; }
