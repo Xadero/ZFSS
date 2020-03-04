@@ -1,0 +1,58 @@
+﻿using NUnit.Framework;
+using OpenQA.Selenium.Chrome;
+using System;
+using ZfssUZ.AutomatedTests.PageObjects;
+
+namespace ZfssUZ.AutomatedTests.Tests.Smoke
+{
+    [TestFixture]
+    public class Tests
+    {
+        private ChromeDriver driver;
+        private PageObjectInitializer pageObjects;
+        private PageObjectHelper pageObjectHelper;
+
+
+        [OneTimeSetUp]
+        protected void OneTimeSetUp()
+        {
+            Report.ReportOneTimeSetUp();
+        }
+
+        [OneTimeTearDown]
+        protected void OneTimeTearDown()
+        {
+            Report.ReportOneTimeTearDown();
+        }
+
+
+        [SetUp]
+        protected void TestSetUp()
+        {
+            driver = new ChromeDriver();
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(0.1);
+            driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(30);
+            driver.Manage().Timeouts().AsynchronousJavaScript = TimeSpan.FromSeconds(30);
+
+            Report.ReportSetUp(driver);
+
+            pageObjectHelper = new PageObjectHelper(driver);
+            pageObjects = new PageObjectInitializer(driver);
+        }
+
+        [TearDown]
+        protected void TestTearDown()
+        {
+            Report.ReportTearDown();
+
+            driver.Quit();
+        }
+
+        [TestCase]
+        public void Test1()
+        {
+            driver.Navigate().GoToUrl("");
+            pageObjectHelper.Click(pageObjects.MainPage.Delete);
+        }
+    }
+}

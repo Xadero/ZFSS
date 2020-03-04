@@ -72,5 +72,21 @@ namespace ZfssUZService
             applicationDbContext.HomeLoanBenefit.Remove(benefitToDelete);
             applicationDbContext.SaveChanges();
         }
+
+        public void UpdateBenefitData(HomeLoanBenefit benefit)
+        {
+            var benefitToUpdate = GetBenefit(benefit.Id);
+
+            benefitToUpdate.BeneficiaryName = benefit.BeneficiaryName;
+            benefitToUpdate.BeneficiaryAddress = benefit.BeneficiaryAddress;
+            benefitToUpdate.BeneficiaryPhoneNumber = benefit.BeneficiaryPhoneNumber;
+            benefitToUpdate.LoanCost = benefit.LoanCost;
+            benefitToUpdate.LoanPurpose = benefit.LoanPurpose;
+            benefitToUpdate.Months = benefit.Months;
+            benefitToUpdate.Instalment = benefit.Instalment;
+
+            applicationDbContext.Entry(benefitToUpdate).State = EntityState.Modified;
+            applicationDbContext.SaveChanges();
+        }
     }
 }

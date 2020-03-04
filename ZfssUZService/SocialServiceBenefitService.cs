@@ -89,5 +89,28 @@ namespace ZfssUZService
             applicationDbContext.SocialServiceBenefit.Remove(benefitToDelete);
             applicationDbContext.SaveChanges();
         }
+
+        public void UpdateBenefitData(SocialServiceBenefit benefit)
+        {
+            var benefitToUpdate = GetBenefit(benefit.Id);
+            benefitToUpdate.BeneficiaryAddress = benefit.BeneficiaryAddress;
+            benefitToUpdate.BeneficiaryName = benefit.BeneficiaryName;
+            benefitToUpdate.BeneficiaryPhoneNumber = benefit.BeneficiaryPhoneNumber;
+            benefitToUpdate.DateOfEmployment = benefit.DateOfEmployment;
+            benefitToUpdate.Position = benefit.Position;
+            benefitToUpdate.OtherSocialServiceKind = benefit.OtherSocialServiceKind;
+            benefitToUpdate.SocialServiceKind = dictionaryService.Get<SocialServiceKind>(benefit.SocialServiceKind.Id);
+            benefitToUpdate.AvreageIncome = benefit.AvreageIncome;
+            benefitToUpdate.AdditionInformation = benefit.AdditionInformation;
+            benefitToUpdate.Year = benefit.Year;
+
+            applicationDbContext.Entry(benefitToUpdate).State = EntityState.Modified;
+            applicationDbContext.SaveChanges();
+        }
+
+        public void UpdateRelatives(List<Relatives> relatives)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

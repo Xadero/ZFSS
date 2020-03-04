@@ -17,5 +17,7 @@ namespace ZfssUZData.Interfaces
         void RejectBenefit(int id, string rejectingUserId, string rejectionReason);
 
         void DeleteBenefit(int id);
+
+        void UpdateBenefitData(HomeLoanBenefit benefit);
     }
 }

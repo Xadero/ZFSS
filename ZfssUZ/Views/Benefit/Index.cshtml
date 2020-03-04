@@ -91,6 +91,10 @@
             alert("Utworzono wniosek o numerze: " + "@TempData["BenefitAddSuccess"]");
         }
 
+        if ("@TempData["Edit"]" != null && "@TempData["Edit"]" != "" && "@TempData["Edit"]" != "None") {
+            alert("Zapisano dane wniosku o numerze: " + "@TempData["Edit"]");
+        }
+
         var benefitStatuses = document.getElementsByName("benefitStatusId");
         if (benefitStatuses !== undefined) {
             for (var i = 0; i < benefitStatuses.length; i++) {

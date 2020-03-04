@@ -27,6 +27,8 @@ namespace ZfssUZ.Controllers
         private IUserService userService;
         private UserManager<ApplicationUser> userManager;
         private static List<RelativesModel> relativesModel = new List<RelativesModel>();
+        private static int benefitId;
+        private static string benefitNumber = string.Empty;
         public BenefitController(IBenefitService benefitService, IUserService userService, IDictionaryService dictionaryService, IHomeLoanBenefitService homeLoanBenefitService, ISocialServiceBenefitService socialServiceBenefitService, IMapper mapper, UserManager<ApplicationUser> userManager)
         {
             this.benefitService = benefitService;
@@ -342,6 +344,8 @@ namespace ZfssUZ.Controllers
 
         public virtual IActionResult Edit(int id, int benefitTypeId)
         {
+            TempData["Edit"] = "None";
+            benefitId = id;
             try
             {
                 if (benefitTypeId == (int)eBenefitType.HomeLoanBenefit)
@@ -362,7 +366,7 @@ namespace ZfssUZ.Controllers
                         BenefitTypeList = new SelectList(benefitService.GetBenefitsTypes(), "Id", "Value", 1),
 
                     };
-
+                    benefitNumber = benefit.BenefitNumber.ToString();
                     return View("EditHomeLoanBenefit", model);
                 }
                 else
@@ -395,6 +399,7 @@ namespace ZfssUZ.Controllers
                         relativesModel.AddRange(model.Relatives);
                     }
 
+                    benefitNumber = benefit.BenefitNumber.ToString();
                     return View("EditSocialServiceBenefit", model);
                 }
             }
@@ -405,15 +410,63 @@ namespace ZfssUZ.Controllers
         }
 
         [HttpPost]
-        public virtual IActionResult EditHomeLoanBenefit(AddHomeLoanBenefitModel model)
+        public virtual IActionResult EditHomeLoanBenefit(HomeLoanBenefit model)
         {
-            return RedirectToAction("Index");
+            var benefit = new HomeLoanBenefit
+            {
+                Id = benefitId,
+                BeneficiaryAddress = model.BeneficiaryAddress,
+                BeneficiaryName = model.BeneficiaryName,
+                BeneficiaryPhoneNumber = model.BeneficiaryPhoneNumber,
+                LoanCost = model.LoanCost,
+                LoanPurpose = model.LoanPurpose,
+                Months = model.Months,
+                Instalment = model.Instalment,
+                BenefitNumber = model.BenefitNumber,
+            };
+
+            try
+            {
+                homeLoanBenefitService.UpdateBenefitData(benefit);
+                TempData["Edit"] = benefitNumber;
+                return RedirectToAction("Index");
+            }
+            catch(Exception ex)
+            {
+                TempData["Edit"] = ex.Message;
+                return View(model);
+            }
         }
 
         [HttpPost]
-        public virtual IActionResult EditSocialServiceBenefit(AddSocialServiceBenefitModel model)
+        public virtual IActionResult EditSocialServiceBenefit(SocialServiceBenefitModel model)
         {
-            return RedirectToAction("Index");
+            var benefit = new SocialServiceBenefit
+            {
+                Id = benefitId,
+                BeneficiaryAddress = model.BeneficiaryAddress,
+                BeneficiaryName = model.BeneficiaryName,
+                BeneficiaryPhoneNumber = model.BeneficiaryPhoneNumber,
+                DateOfEmployment = model.DateOfEmployment,
+                Position = model.Position,
+                OtherSocialServiceKind = model.OtherSocialServiceKind,
+                SocialServiceKind = dictionaryService.Get<SocialServiceKind>(model.SocialServiceKind.Id),
+                AvreageIncome = model.AverageIncome,
+                AdditionInformation = model.AdditionInformation,
+                Year = model.Year,
+            };
+
+            try
+            {
+                socialServiceBenefitService.UpdateBenefitData(benefit);
+                TempData["Edit"] = benefitNumber;
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                TempData["Edit"] = ex.Message;
+                return View(model);
+            }
         }
     }
 }

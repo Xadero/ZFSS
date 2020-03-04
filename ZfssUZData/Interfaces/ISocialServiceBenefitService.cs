@@ -21,5 +21,9 @@ namespace ZfssUZData.Interfaces
         void RejectBenefit(int id, string rejectingUserId, string rejectionReason);
 
         void DeleteBenefit(int id);
+
+        void UpdateBenefitData(SocialServiceBenefit benefit);
+
+        void UpdateRelatives(List<Relatives> relatives);
     }
 }
