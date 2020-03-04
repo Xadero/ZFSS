@@ -110,7 +110,7 @@ namespace ZfssUZ.Controllers
                 BeneficiaryAddress = model.BeneficiaryAddress,
                 BeneficiaryName = model.BeneficiaryName,
                 BeneficiaryPhoneNumber = model.BeneficiaryPhoneNumber,
-                AvreageIncome = model.AverageIncome,
+                AverageIncome = model.AverageIncome,
                 BenefitStatus = dictionaryService.Get<BenefitStatus>((int)eBenefitStatus.Passed),
                 BenefitType = dictionaryService.Get<BenefitType>((int)eBenefitType.SocialServiceBenefit),
                 DateOfEmployment = model.DateOfEmployment,
@@ -300,7 +300,7 @@ namespace ZfssUZ.Controllers
                         AcceptingDate = benefit.AcceptingDate,
                         AcceptingUser = benefit.AcceptingUser != null ? new UserModel { Firstname = benefit.SubmittingUser.FirstName, LastName = benefit.SubmittingUser.LastName } : new UserModel(),
                         AdditionInformation = benefit.AdditionInformation,
-                        AverageIncome = benefit.AvreageIncome,
+                        AverageIncome = benefit.AverageIncome,
                         SocialServiceKind = mapper.Map<SocialServiceKindModel>(benefit.SocialServiceKind),
                         OtherSocialServiceKind = benefit.OtherSocialServiceKind,
                         SubmittingUser = new UserModel { Firstname = benefit.SubmittingUser.FirstName, LastName = benefit.SubmittingUser.LastName },
@@ -387,7 +387,7 @@ namespace ZfssUZ.Controllers
                         Year = benefit.Year,
                         BenefitType = mapper.Map<BenefitTypeModel>(benefit.BenefitType),
                         BeneficiaryPhoneNumber = benefit.BeneficiaryPhoneNumber,
-                        AverageIncome = benefit.AvreageIncome,
+                        AverageIncome = benefit.AverageIncome,
                         BenefitTypeList = new SelectList(benefitService.GetBenefitsTypes(), "Id", "Value", 2),
                     };
 
@@ -451,7 +451,7 @@ namespace ZfssUZ.Controllers
                 Position = model.Position,
                 OtherSocialServiceKind = model.OtherSocialServiceKind,
                 SocialServiceKind = dictionaryService.Get<SocialServiceKind>(model.SocialServiceKind.Id),
-                AvreageIncome = model.AverageIncome,
+                AverageIncome = model.AverageIncome,
                 AdditionInformation = model.AdditionInformation,
                 Year = model.Year,
             };

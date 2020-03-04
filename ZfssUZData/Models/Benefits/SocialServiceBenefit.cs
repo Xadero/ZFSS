@@ -39,9 +39,9 @@ namespace ZfssUZData.Models.Benefits
 
         [Required]
         public int Year { get; set; }
-
+        
         [Required]
-        public decimal AvreageIncome { get; set; }
+        public decimal AverageIncome { get; set; }
 
         public string AdditionInformation { get; set; }
 

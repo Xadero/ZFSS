@@ -100,7 +100,7 @@ namespace ZfssUZService
             benefitToUpdate.Position = benefit.Position;
             benefitToUpdate.OtherSocialServiceKind = benefit.OtherSocialServiceKind;
             benefitToUpdate.SocialServiceKind = dictionaryService.Get<SocialServiceKind>(benefit.SocialServiceKind.Id);
-            benefitToUpdate.AvreageIncome = benefit.AvreageIncome;
+            benefitToUpdate.AverageIncome = benefit.AverageIncome;
             benefitToUpdate.AdditionInformation = benefit.AdditionInformation;
             benefitToUpdate.Year = benefit.Year;
 
