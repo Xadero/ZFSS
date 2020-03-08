@@ -29,7 +29,7 @@ namespace ZfssUZ.AutomatedTests.Tests.Smoke
         [SetUp]
         protected void TestSetUp()
         {
-            driver = new ChromeDriver();
+            driver = new ChromeDriver(@"D:\Projekty\ZFSS\ZfssUZ.AutomatedTests");
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(0.1);
             driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(30);
             driver.Manage().Timeouts().AsynchronousJavaScript = TimeSpan.FromSeconds(30);
@@ -48,11 +48,10 @@ namespace ZfssUZ.AutomatedTests.Tests.Smoke
             driver.Quit();
         }
 
-        [TestCase]
+        [TestCase(Description = "TestowyTestSimple1")]
         public void Test1()
         {
-            driver.Navigate().GoToUrl("");
-            pageObjectHelper.Click(pageObjects.MainPage.Delete);
+            driver.Navigate().GoToUrl("http://localhost/zfss");
         }
     }
 }

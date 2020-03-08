@@ -21,6 +21,7 @@ namespace ZfssUZ.Controllers
             return View();
         }
 
+        [HttpPost]
         public IActionResult Contact()
         {
             var model = new ContactModel

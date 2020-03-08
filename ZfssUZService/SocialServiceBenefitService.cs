@@ -41,8 +41,11 @@ namespace ZfssUZService
 
         public void AddRelatives(List<Relatives> relatives)
         {
-            applicationDbContext.Relatives.AddRange(relatives);
-            applicationDbContext.SaveChanges();
+            if (relatives.Any())
+            {
+                applicationDbContext.Relatives.AddRange(relatives);
+                applicationDbContext.SaveChanges();
+            }
         }
 
         public void ChangeBenefitStatus(int id)
@@ -108,9 +111,20 @@ namespace ZfssUZService
             applicationDbContext.SaveChanges();
         }
 
-        public void UpdateRelatives(List<Relatives> relatives)
+        public void UpdateRelatives(List<Relatives> relatives, SocialServiceBenefit benefit)
         {
-            throw new NotImplementedException();
+            var currentRelatives = GetRelatives(benefit);
+            if (currentRelatives.Any())
+            {
+                applicationDbContext.Relatives.RemoveRange(currentRelatives);
+            }
+
+            if (relatives.Any())
+            {
+                applicationDbContext.Relatives.AddRange(relatives);
+            }
+
+            applicationDbContext.SaveChanges();
         }
     }
 }

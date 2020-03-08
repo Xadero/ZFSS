@@ -310,7 +310,8 @@ namespace ZfssUZ.Controllers
                         BeneficiaryName = benefit.BeneficiaryName,
                         BeneficiaryPhoneNumber = benefit.BeneficiaryPhoneNumber,
                         Relatives = mapper.Map<List<Relatives>, List<RelativesModel>>(socialServiceBenefitService.GetRelatives(benefit)),
-                        Position = benefit.Position
+                        Position = benefit.Position,
+                        DateOfEmployment = benefit.DateOfEmployment
                     };
                     return PartialView("ShowSocialServiceBenefit", model);
                 }
@@ -459,6 +460,13 @@ namespace ZfssUZ.Controllers
             try
             {
                 socialServiceBenefitService.UpdateBenefitData(benefit);
+                var relatives = mapper.Map<List<RelativesModel>, List<Relatives>>(relativesModel);
+                if (relatives.Any())
+                {
+                    socialServiceBenefitService.UpdateRelatives(relatives, benefit);
+                    relativesModel.Clear();
+                }
+
                 TempData["Edit"] = benefitNumber;
                 return RedirectToAction("Index");
             }

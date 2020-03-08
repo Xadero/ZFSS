@@ -78,6 +78,7 @@ namespace ZfssUZ.Controllers
                 Password = model.Password,
                 PostCode = model.PostCode,
                 UserGroupId = model.UserGroup.Id,
+                PhoneNumber = model.PhoneNumber,
                 EmailConfirmed = true
             };
 

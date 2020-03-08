@@ -24,6 +24,6 @@ namespace ZfssUZData.Interfaces
 
         void UpdateBenefitData(SocialServiceBenefit benefit);
 
-        void UpdateRelatives(List<Relatives> relatives);
+        void UpdateRelatives(List<Relatives> relatives, SocialServiceBenefit benefit);
     }
 }
