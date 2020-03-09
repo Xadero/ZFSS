@@ -65,11 +65,11 @@
             </div>
             <div class="form-group">
                 @Html.LabelFor(x => x.Year, new { @class = formLabel })
-                @Html.TextBoxFor(x => x.Year, string.Empty, new { @class = formControl, @type = "number" })
+                @Html.TextBoxFor(x => x.Year, string.Empty, new { @class = formControl, @type = "number", @min = 1900 })
             </div>
             <div class="form-group">
                 @Html.LabelFor(x => x.AverageIncome, new { @class = formLabel })
-                @Html.TextBoxFor(x => x.AverageIncome, string.Empty, new { @class = formControl, @type = "number" })
+                @Html.TextBoxFor(x => x.AverageIncome, string.Empty, new { @class = formControl, @type = "number", @min = 1 })
             </div>
             <div class="form-group">
                 @Html.LabelFor(x => x.AdditionInformation, new { @class = formLabel })

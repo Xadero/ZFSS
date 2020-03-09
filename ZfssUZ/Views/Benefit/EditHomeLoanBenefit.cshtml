@@ -39,7 +39,7 @@
             </div>
             <div class="form-group">
                 @Html.LabelFor(x => x.LoanCost, new { @class = formLabel, })
-                @Html.TextBoxFor(x => x.LoanCost, string.Empty, new { @class = formControl, @type = "number" })
+                @Html.TextBoxFor(x => x.LoanCost, string.Empty, new { @class = formControl, @type = "number", @min = 1 })
             </div>
             <div class="form-group">
                 @Html.LabelFor(x => x.LoanPurpose, new { @class = formLabel })
@@ -47,11 +47,11 @@
             </div>
             <div class="form-group">
                 @Html.LabelFor(x => x.Months, new { @class = formLabel })
-                @Html.TextBoxFor(x => x.Months, string.Empty, new { @class = formControl, @type = "number" })
+                @Html.TextBoxFor(x => x.Months, string.Empty, new { @class = formControl, @type = "number", @min = 1 })
             </div>
             <div class="form-group">
                 @Html.LabelFor(x => x.Instalment, new { @class = formLabel })
-                @Html.TextBoxFor(x => x.Instalment, string.Empty, new { @class = formControl, @readonly = "readonly", @type = "number" })
+                @Html.TextBoxFor(x => x.Instalment, string.Empty, new { @class = formControl, @readonly = "readonly", @type = "number", @min = 1 })
             </div>
             <div class="form-group">
                 @Html.LabelFor(x => x.BenefitType)

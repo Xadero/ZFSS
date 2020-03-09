@@ -290,7 +290,7 @@ namespace ZfssUZ.Controllers
                         LoanCost = benefit.LoanCost,
                         LoanPurpose = benefit.LoanPurpose,
                         Months = benefit.Months,
-                        Instalment = benefit.Instalment,
+                        Instalment = benefit.Instalment.ToString().Replace(".", ","),
                         SubmittingUser = benefit.SubmittingUser != null ? new UserModel { Firstname = benefit.SubmittingUser.FirstName, LastName = benefit.SubmittingUser.LastName } : new UserModel()
                     };
 
@@ -366,7 +366,7 @@ namespace ZfssUZ.Controllers
                         BeneficiaryPhoneNumber = benefit.BeneficiaryPhoneNumber,
                         BenefitNumber = benefit.BenefitNumber,
                         Id = benefit.Id,
-                        Instalment = benefit.Instalment,
+                        Instalment = benefit.Instalment.ToString().Replace(".", ","),
                         LoanPurpose = benefit.LoanPurpose,
                         Months = benefit.Months,
                         BenefitType = mapper.Map<BenefitTypeModel>(benefit.BenefitType),
@@ -418,8 +418,13 @@ namespace ZfssUZ.Controllers
         }
 
         [HttpPost]
-        public virtual IActionResult EditHomeLoanBenefit(HomeLoanBenefit model)
+        public virtual IActionResult EditHomeLoanBenefit(HomeLoanBenefitModel model)
         {
+            model.BenefitTypeList = new SelectList(benefitService.GetBenefitsTypes(), "Id", "Value", 1);
+
+            if (!ModelState.IsValid)
+                return View(model);
+
             var benefit = new HomeLoanBenefit
             {
                 Id = benefitId,
@@ -429,7 +434,7 @@ namespace ZfssUZ.Controllers
                 LoanCost = model.LoanCost,
                 LoanPurpose = model.LoanPurpose,
                 Months = model.Months,
-                Instalment = model.Instalment,
+                Instalment = decimal.Parse(model.Instalment.Replace(".", ",")),
                 BenefitNumber = model.BenefitNumber,
             };
 
@@ -450,6 +455,12 @@ namespace ZfssUZ.Controllers
         [HttpPost]
         public virtual IActionResult EditSocialServiceBenefit(SocialServiceBenefitModel model)
         {
+            model.SocialServiceKindList = new SelectList(benefitService.GetSocialServiceKinds(), "Id", "Value");
+            model.BenefitTypeList = new SelectList(benefitService.GetBenefitsTypes(), "Id", "Value", 2);
+
+            if (!ModelState.IsValid)
+                return View(model);
+
             var benefit = new SocialServiceBenefit
             {
                 Id = benefitId,
