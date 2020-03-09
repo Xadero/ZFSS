@@ -10,7 +10,7 @@ namespace ZfssUZ.Models.Home
 
         [Display(Name = "PhoneNumber")]
         [Phone]
-        public int PhoneNumber { get; set; }
+        public int? PhoneNumber { get; set; }
 
         [Display(Name = "EmailAddress")]
         [EmailAddress]
@@ -18,7 +18,6 @@ namespace ZfssUZ.Models.Home
 
         [Display(Name = "MessageContent")]
         [Required(ErrorMessage = "ValidateMessageContent")]
-        [EmailAddress]
         public string MessageContent { get; set; }
     }
 }

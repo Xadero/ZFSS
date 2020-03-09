@@ -47,7 +47,7 @@
                 @Html.TextAreaFor(x => x.MessageContent, new { @class = formControl, @style = "max-width:540px" })
             </div>
             <div class="form-group">
-                <input type="submit" value="@Localizer["Send"]" class="btn btn-default" onclick="sendMessage()" />
+                <input type="submit" value="@Localizer["Send"]" class="btn btn-default" />
                 <a asp-action="Index" asp-controller="Benefit" class="btn btn-default">@Localizer["Back"]</a>
             </div>
         </form>
@@ -55,6 +55,12 @@
 </div>
 
 <script>
+    $(document).ready(function () {
+        if ("@TempData["IsSent"]" != null && "@TempData["IsSent"]" != "" && "@TempData["IsSent"]" != "False") {
+            alert("Wiadomość została do obsługi klienta");
+        }
+    });
+
     $("input[type=radio][id=ContactForm]").change(function () {
         $("#EmailAddress").val("");
         $("#PhoneNumber").val("");
@@ -75,12 +81,4 @@
         document.getElementById("contact").setAttribute("type", "number");
         document.getElementById("contact").value = '';
     };
-    function sendMessage() {
-        if (document.getElementById("contact").innerHTML != "" && document.getElementById("message").innerHTML != "") {
-            alert("Wiadomość została wysłana do obsługi klienta");
-            location.reload();
-        } else {
-            alert("Proszę uzupełnić wartości w polach: E-mail/Telefon oraz Treść wiadomości!");
-        }
-    }
 </script>

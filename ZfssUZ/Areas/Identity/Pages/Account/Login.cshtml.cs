@@ -85,8 +85,8 @@ namespace ZfssUZ.Areas.Identity.Pages.Account
                 }
                 if (result.IsLockedOut)
                 {
-                    _logger.LogWarning("User account locked out.");
-                    return RedirectToPage("./Lockout");
+                    ViewData["ModelIsValid"] = false;
+                    return Page();
                 }
                 else
                 {

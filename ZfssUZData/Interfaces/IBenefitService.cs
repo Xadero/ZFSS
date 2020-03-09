@@ -14,5 +14,9 @@ namespace ZfssUZData.Interfaces
         long GenerateBenefitNumber(int benefitType);
 
         IEnumerable<BenefitsView> GetBenefits(ApplicationUser user);
+
+        void DeleteUserBenefits(string userId);
+
+        long GetBenefitNumber(int benefitId, int benefitTypeId);
     }
 }

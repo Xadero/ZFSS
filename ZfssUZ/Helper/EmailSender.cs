@@ -1,18 +1,18 @@
 ﻿using System.Net;
 using System.Net.Mail;
+using ZfssUZ.Enums;
 
 namespace ZfssUZ.Helper
 {
     public class EmailSender
     {
-        public static void SendEmail(string emailAddress, string senderFirstName, string senderLastName, string messageContent)
+        public static void SendEmail(string contactFormValue, string senderFirstName, string senderLastName, string messageContent, int messageTypeId)
         {
             var fromAddress = new MailAddress("pracamagisterska2019a@gmail.com", "From Name");
-            var toAddress = new MailAddress("+48606873712@tmomail.net", "To Name");
+            var toAddress = messageTypeId == (int)eMessageType.PhoneNumber ? new MailAddress("+48726763203@text.plusgsm.pl", "To Name") : new MailAddress("xadero2@gmail.com", "To Name");
             string fromPassword = "magisterka2019";
-            string subject = "Konsultacja z Obsługą klienta ZFSS: " + senderFirstName + " " + senderLastName;
+            string subject = "Kontakt z Obsługą klienta ZFŚS: " + senderFirstName + " " + senderLastName + " (" + contactFormValue + ")";
             string body = messageContent;
-
 
             var smtp = new SmtpClient
             {

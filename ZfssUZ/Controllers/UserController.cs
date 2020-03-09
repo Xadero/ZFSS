@@ -18,15 +18,17 @@ namespace ZfssUZ.Controllers
         private readonly IMapper mapper;
         private IUserService userService;
         private IDictionaryService dictionaryService;
+        private IBenefitService benefitService;
         private UserManager<ApplicationUser> userManager;
         private readonly IStringLocalizer<UserController> localizer;
-        public UserController(IUserService userService, UserManager<ApplicationUser> userManager, IStringLocalizer<UserController> localizer, IDictionaryService dictionaryService, IMapper mapper)
+        public UserController(IUserService userService, UserManager<ApplicationUser> userManager, IStringLocalizer<UserController> localizer, IDictionaryService dictionaryService, IMapper mapper, IBenefitService benefitService)
         {
             this.userService = userService;
             this.dictionaryService = dictionaryService;
             this.userManager = userManager;
             this.localizer = localizer;
             this.mapper = mapper;
+            this.benefitService = benefitService;
         }
 
         [HttpGet]
@@ -54,7 +56,7 @@ namespace ZfssUZ.Controllers
         {
             var model = new RegisterModel()
             {
-                UserGroupList = new SelectList(userService.GetUserGroups(), "Id", "GroupName")
+                UserGroupList = new SelectList(userService.GetUserGroups(), "Id", "GroupName"),
             };
             return View(model);
         }
@@ -74,7 +76,7 @@ namespace ZfssUZ.Controllers
                 LastName = model.LastName,
                 City = model.City,
                 Address = model.Address,
-                DateOfBirth = model.DateOfBirth,
+                DateOfBirth = model.DateOfBirth.Value,
                 Password = model.Password,
                 PostCode = model.PostCode,
                 UserGroupId = model.UserGroup.Id,
@@ -190,6 +192,7 @@ namespace ZfssUZ.Controllers
         {
             try
             {
+                benefitService.DeleteUserBenefits(userId);
                 userService.DeleteUser(userId);
                 return Json(new { success = true });
             }

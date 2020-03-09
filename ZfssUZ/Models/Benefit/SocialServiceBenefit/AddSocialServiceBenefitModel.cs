@@ -29,7 +29,7 @@ namespace ZfssUZ.Models.Benefit.SocialServiceBenefit
 
         [Display(Name = "DateOfEmployment")]
         [Required(ErrorMessage = "ValidateDateOfEmployment")]
-        public DateTime DateOfEmployment { get; set; }
+        public DateTime? DateOfEmployment { get; set; }
 
         [Display(Name = "SocialServiceKind")]
         public SocialServiceKindModel SocialServiceKind { get; set; }

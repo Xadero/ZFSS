@@ -6,6 +6,7 @@ using ZfssUZ.Service.Enums;
 using ZfssUZData;
 using ZfssUZData.Interfaces;
 using ZfssUZData.Models.Benefits;
+using ZfssUZData.Models.Users;
 
 namespace ZfssUZService
 {
@@ -39,10 +40,11 @@ namespace ZfssUZService
             applicationDbContext.SaveChanges();
         }
 
-        public void AddRelatives(List<Relatives> relatives)
+        public void AddRelatives(List<Relatives> relatives, SocialServiceBenefit benefit)
         {
             if (relatives.Any())
             {
+                relatives.ForEach(x => x.SocialServiceBenefits = benefit);
                 applicationDbContext.Relatives.AddRange(relatives);
                 applicationDbContext.SaveChanges();
             }
@@ -111,8 +113,9 @@ namespace ZfssUZService
             applicationDbContext.SaveChanges();
         }
 
-        public void UpdateRelatives(List<Relatives> relatives, SocialServiceBenefit benefit)
+        public void UpdateRelatives(List<Relatives> relatives, int benefitId)
         {
+            var benefit = GetBenefit(benefitId);
             var currentRelatives = GetRelatives(benefit);
             if (currentRelatives.Any())
             {
@@ -121,10 +124,15 @@ namespace ZfssUZService
 
             if (relatives.Any())
             {
-                applicationDbContext.Relatives.AddRange(relatives);
+                AddRelatives(relatives, benefit);
             }
 
             applicationDbContext.SaveChanges();
+        }
+
+        public List<SocialServiceBenefit> GetOwnBenefits(ApplicationUser user)
+        {
+            return applicationDbContext.SocialServiceBenefit.Where(x => x.SubmittingUser == user).ToList();
         }
     }
 }

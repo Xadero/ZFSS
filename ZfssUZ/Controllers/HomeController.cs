@@ -1,16 +1,27 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Text;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using ZfssUZ.Enums;
+using ZfssUZ.Helper;
 using ZfssUZ.Models;
 using ZfssUZ.Models.Home;
+using ZfssUZData.Interfaces;
+using ZfssUZData.Models.Users;
 
 namespace ZfssUZ.Controllers
 {
     public class HomeController : Controller
     {
+        private UserManager<ApplicationUser> userManager;
+
+        public HomeController(UserManager<ApplicationUser> userManager)
+        {
+            this.userManager = userManager;
+        }
         public IActionResult Index()
         {
             return View();
@@ -21,7 +32,7 @@ namespace ZfssUZ.Controllers
             return View();
         }
 
-        [HttpPost]
+        [HttpGet]
         public IActionResult Contact()
         {
             var model = new ContactModel
@@ -29,7 +40,23 @@ namespace ZfssUZ.Controllers
                 ContactForm = (int)eMessageType.EmailAddress
             };
 
+            TempData["IsSent"] = false;
+
             return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Contact(ContactModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var user = userManager.GetUserAsync(User).Result;
+            var contact = model.ContactForm == (int)eMessageType.EmailAddress ? model.EmailAddress : model.PhoneNumber.ToString();
+            EmailSender.SendEmail(contact, user.FirstName, user.LastName, model.MessageContent, model.ContactForm);
+            TempData["IsSent"] = true;
+
+            return View();
         }
 
         public IActionResult Privacy()

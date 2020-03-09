@@ -38,7 +38,7 @@ namespace ZfssUZ.Models.Users
 
         [Display(Name = "DateOfBirth")]
         [Required(ErrorMessage = "ValidateDateOfBirth")]
-        public DateTime DateOfBirth { get; set; }
+        public DateTime? DateOfBirth { get; set; }
 
         [EmailAddress]
         [Display(Name = "Email")]

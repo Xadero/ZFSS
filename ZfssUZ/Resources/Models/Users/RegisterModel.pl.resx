@@ -154,7 +154,7 @@
   <data name="ValidatePostCode" xml:space="preserve">
     <value>Pole 'Kod pocztowy' jest wymagane.</value>
   </data>
-  <data name="ValidateBirthOfBirth" xml:space="preserve">
+  <data name="ValidateDateOfBirth" xml:space="preserve">
     <value>Pole 'Data urodzenia' jest wymagane.</value>
   </data>
   <data name="ValidateConfirmPassword" xml:space="preserve">

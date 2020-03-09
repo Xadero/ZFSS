@@ -17,10 +17,16 @@ namespace ZfssUZService
     {
         private ApplicationDbContext applicationDbContext;
 
-        public BenefitService(ApplicationDbContext applicationDbContext, UserManager<ApplicationUser> userManager)
+        private ISocialServiceBenefitService socialServiceBenefitService;
+        private IHomeLoanBenefitService homeLoanBenefitService;
+
+        public BenefitService(ApplicationDbContext applicationDbContext, UserManager<ApplicationUser> userManager, ISocialServiceBenefitService socialServiceBenefitService, IHomeLoanBenefitService homeLoanBenefitService)
         {
             this.applicationDbContext = applicationDbContext;
+            this.socialServiceBenefitService = socialServiceBenefitService;
+            this.homeLoanBenefitService = homeLoanBenefitService;
         }
+
         public IEnumerable<BenefitType> GetBenefitsTypes()
         {
             return applicationDbContext.BenefitType;
@@ -41,6 +47,15 @@ namespace ZfssUZService
         public IEnumerable<SocialServiceKind> GetSocialServiceKinds()
         {
             return applicationDbContext.SocialServiceKind;
+        }
+
+        public long GetBenefitNumber(int benefitId, int benefitTypeId)
+        {
+            if (benefitTypeId == (int)eBenefitType.HomeLoanBenefit)
+                return applicationDbContext.HomeLoanBenefit.Where(x => x.Id == benefitId).First().BenefitNumber;
+            else
+                return applicationDbContext.SocialServiceBenefit.Where(x => x.Id == benefitId).First().BenefitNumber;
+
         }
 
         public long GenerateBenefitNumber(int benefitType)
@@ -112,6 +127,33 @@ namespace ZfssUZService
             }
 
             return benefitNumber;
+        }
+
+        public void DeleteUserBenefits(string userId)
+        {
+            var user = applicationDbContext.Users.Where(x => x.Id == userId).FirstOrDefault();
+            if (user != null)
+            {
+                var homeLoanBenfits = homeLoanBenefitService.GetOwnBenefits(user);
+
+                if (homeLoanBenfits.Any())
+                {
+                    foreach (var benefit in homeLoanBenfits)
+                    {
+                        homeLoanBenefitService.DeleteBenefit(benefit.Id);
+                    }
+                }
+
+                var socialServiceBenefits = socialServiceBenefitService.GetOwnBenefits(user);
+
+                if (socialServiceBenefits.Any())
+                {
+                    foreach (var benefit in socialServiceBenefits)
+                    {
+                        socialServiceBenefitService.DeleteBenefit(benefit.Id);
+                    }
+                }
+            }
         }
     }
 }

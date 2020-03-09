@@ -1,11 +1,12 @@
-﻿using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using ZfssUZ.Service.Enums;
 using ZfssUZData;
 using ZfssUZData.Interfaces;
 using ZfssUZData.Models.Benefits;
+using ZfssUZData.Models.Users;
 
 namespace ZfssUZService
 {
@@ -28,6 +29,7 @@ namespace ZfssUZService
                 .Include(x => x.SubmittingUser)
                 .FirstOrDefault();
         }
+
 
         public void AcceptBenefit(int id, string acceptingUserId)
         {
@@ -87,6 +89,11 @@ namespace ZfssUZService
 
             applicationDbContext.Entry(benefitToUpdate).State = EntityState.Modified;
             applicationDbContext.SaveChanges();
+        }
+
+        public List<HomeLoanBenefit> GetOwnBenefits(ApplicationUser user)
+        {
+            return applicationDbContext.HomeLoanBenefit.Where(x => x.SubmittingUser == user).ToList();
         }
     }
 }

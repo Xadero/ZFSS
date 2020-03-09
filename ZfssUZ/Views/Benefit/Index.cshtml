@@ -129,9 +129,15 @@
         $("#benefitTable_filter").hide();
 
         var table = $('#benefitTable').DataTable();
-        $('#myInput').on( 'keyup', function () {
+
+        if ("@TempData["BenefitNumber"]" != null && "@TempData["BenefitNumber"]" != "") {
+            $("#myInput").val("@TempData["BenefitNumber"]");
+            table.search($("#myInput").val()).draw();
+        }
+
+        $('#myInput').on('keyup', function () {
             table.search( this.value ).draw();
-        } );
+        });
 
         $('#benefitTable tbody').on('click', 'tr', function () {
             if ($(this).hasClass('selected')) {
@@ -195,6 +201,7 @@
         var id = $.map(table.rows('.selected').data(), function (item) {
             return item[1]
         });
+
         return id[0];
     }
 
@@ -203,6 +210,7 @@
         var id = $.map(table.rows('.selected').data(), function (item) {
             return item[2]
         });
+
         return id[0];
     }
 
@@ -211,6 +219,7 @@
         var id = $.map(table.rows('.selected').data(), function (item) {
             return item[3]
         });
+
         return id[0];
     }
 

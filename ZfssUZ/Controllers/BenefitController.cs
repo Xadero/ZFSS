@@ -113,7 +113,7 @@ namespace ZfssUZ.Controllers
                 AverageIncome = model.AverageIncome,
                 BenefitStatus = dictionaryService.Get<BenefitStatus>((int)eBenefitStatus.Passed),
                 BenefitType = dictionaryService.Get<BenefitType>((int)eBenefitType.SocialServiceBenefit),
-                DateOfEmployment = model.DateOfEmployment,
+                DateOfEmployment = model.DateOfEmployment.Value,
                 OtherSocialServiceKind = model.OtherSocialServiceKind,
                 Position = model.Position,
                 SocialServiceKind = dictionaryService.Get<SocialServiceKind>(model.SocialServiceKind.Id),
@@ -130,8 +130,7 @@ namespace ZfssUZ.Controllers
                 if (model.Relatives.Any())
                 {
                     var relatives = mapper.Map<List<RelativesModel>, List<Relatives>>(model.Relatives);
-                    relatives.ForEach(x => x.SocialServiceBenefits = newBenefit);
-                    socialServiceBenefitService.AddRelatives(relatives);
+                    socialServiceBenefitService.AddRelatives(relatives, newBenefit);
                 }
 
                 TempData["BenefitAddSuccess"] = newBenefit.BenefitNumber.ToString();
@@ -152,7 +151,7 @@ namespace ZfssUZ.Controllers
             TempData["BenefitAddSuccess"] = "Success";
             var model = new AddHomeLoanBenefitModel()
             {
-                BenefitTypeList = new SelectList(benefitService.GetBenefitsTypes(), "Id", "Value", 1)
+                BenefitTypeList = new SelectList(benefitService.GetBenefitsTypes(), "Id", "Value", 1),
             };
             return View(model);
         }
@@ -214,6 +213,7 @@ namespace ZfssUZ.Controllers
             return Json(relatives);
         }
 
+        [HttpPost]
         public virtual IActionResult VerifyBenefit(int id, int benefitTypeId)
         {
             try
@@ -223,6 +223,7 @@ namespace ZfssUZ.Controllers
                 else
                     socialServiceBenefitService.ChangeBenefitStatus(id);
 
+                TempData["BenefitNumber"] = benefitService.GetBenefitNumber(id, benefitTypeId).ToString();
                 return Json(new { success = true });
             }
             catch (Exception ex)
@@ -231,6 +232,7 @@ namespace ZfssUZ.Controllers
             }
         }
 
+        [HttpPost]
         public virtual IActionResult AcceptBenefit(int id, int benefitTypeId)
         {
             try
@@ -240,6 +242,7 @@ namespace ZfssUZ.Controllers
                 else
                     socialServiceBenefitService.AcceptBenefit(id, userManager.GetUserAsync(User).Result.Id);
 
+                TempData["BenefitNumber"] = benefitService.GetBenefitNumber(id, benefitTypeId).ToString();
                 return Json(new { success = true });
             }
             catch (Exception ex)
@@ -253,6 +256,7 @@ namespace ZfssUZ.Controllers
             return PartialView("Reject");
         }
 
+        [HttpPost]
         public virtual IActionResult RejectBenefit(int id, int benefitTypeId, string rejectionReason)
         {
             try
@@ -262,6 +266,7 @@ namespace ZfssUZ.Controllers
                 else
                     socialServiceBenefitService.RejectBenefit(id, userManager.GetUserAsync(User).Result.Id, rejectionReason);
 
+                TempData["BenefitNumber"] = benefitService.GetBenefitNumber(id, benefitTypeId).ToString();
                 return Json(new { success = true });
             }
             catch (Exception ex)
@@ -288,6 +293,7 @@ namespace ZfssUZ.Controllers
                         Instalment = benefit.Instalment,
                         SubmittingUser = benefit.SubmittingUser != null ? new UserModel { Firstname = benefit.SubmittingUser.FirstName, LastName = benefit.SubmittingUser.LastName } : new UserModel()
                     };
+
                     return PartialView("ShowHomeLoanBenefit", model);
 
                 }
@@ -300,7 +306,7 @@ namespace ZfssUZ.Controllers
                         AcceptingDate = benefit.AcceptingDate,
                         AcceptingUser = benefit.AcceptingUser != null ? new UserModel { Firstname = benefit.SubmittingUser.FirstName, LastName = benefit.SubmittingUser.LastName } : new UserModel(),
                         AdditionInformation = benefit.AdditionInformation,
-                        AverageIncome = benefit.AverageIncome,
+                        AverageIncome = relatives.Count > 0 ? benefit.AverageIncome / (relatives.Count + 1) : benefit.AverageIncome,
                         SocialServiceKind = mapper.Map<SocialServiceKindModel>(benefit.SocialServiceKind),
                         OtherSocialServiceKind = benefit.OtherSocialServiceKind,
                         SubmittingUser = new UserModel { Firstname = benefit.SubmittingUser.FirstName, LastName = benefit.SubmittingUser.LastName },
@@ -313,6 +319,7 @@ namespace ZfssUZ.Controllers
                         Position = benefit.Position,
                         DateOfEmployment = benefit.DateOfEmployment
                     };
+
                     return PartialView("ShowSocialServiceBenefit", model);
                 }
             }
@@ -430,6 +437,7 @@ namespace ZfssUZ.Controllers
             {
                 homeLoanBenefitService.UpdateBenefitData(benefit);
                 TempData["Edit"] = benefitNumber;
+                TempData["BenefitNumber"] = benefitNumber;
                 return RedirectToAction("Index");
             }
             catch(Exception ex)
@@ -463,11 +471,12 @@ namespace ZfssUZ.Controllers
                 var relatives = mapper.Map<List<RelativesModel>, List<Relatives>>(relativesModel);
                 if (relatives.Any())
                 {
-                    socialServiceBenefitService.UpdateRelatives(relatives, benefit);
+                    socialServiceBenefitService.UpdateRelatives(relatives, benefit.Id);
                     relativesModel.Clear();
                 }
 
                 TempData["Edit"] = benefitNumber;
+                TempData["BenefitNumber"] = benefitNumber;
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
