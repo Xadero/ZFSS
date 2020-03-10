@@ -25,6 +25,7 @@ namespace ZfssUZ.Models.Users
         [Required(ErrorMessage = "ValidateDateOfBirth")]
         public DateTime DateOfBirth { get; set; }
 
+        [Phone]
         [Display(Name = "PhoneNumber")]
         [Required(ErrorMessage = "ValidatePhoneNumber")]
         public string PhoneNumber { get; set; }

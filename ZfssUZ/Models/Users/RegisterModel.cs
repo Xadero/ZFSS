@@ -19,6 +19,7 @@ namespace ZfssUZ.Models.Users
         [Required(ErrorMessage = "ValidateLastname")]
         public string LastName { get; set; }
 
+        [Phone]
         [Display(Name = "PhoneNumber")]
         [Required(ErrorMessage = "ValidatePhoneNumber")]
         public string PhoneNumber { get; set; }

@@ -18,6 +18,7 @@ namespace ZfssUZ.Models.Benefit.SocialServiceBenefit
         [Required(ErrorMessage = "ValidateBeneficiaryAddress")]
         public string BeneficiaryAddress { get; set; }
 
+        [Phone]
         [Display(Name = "BeneficiaryPhoneNumber")]
         [Required(ErrorMessage = "ValidateBeneficiaryPhoneNumber")]
         public string BeneficiaryPhoneNumber { get; set; }

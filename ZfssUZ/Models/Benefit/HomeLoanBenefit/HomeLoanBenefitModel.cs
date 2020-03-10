@@ -20,6 +20,7 @@ namespace ZfssUZ.Models.Benefit.HomeLoanBenefit
         [Required(ErrorMessage = "ValidateBeneficiaryAddress")]
         public string BeneficiaryAddress { get; set; }
 
+        [Phone]
         [Display(Name = "BeneficiaryPhoneNumber")]
         [Required(ErrorMessage = "ValidateBeneficiaryPhoneNumber")]
         public string BeneficiaryPhoneNumber { get; set; }
