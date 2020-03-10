@@ -115,4 +115,7 @@
   <data name="Back" xml:space="preserve">
     <value>Back</value>
   </data>
+  <data name="MessageSent" xml:space="preserve">
+    <value>Message has been sent to Customer Service</value>
+  </data>
 </root>

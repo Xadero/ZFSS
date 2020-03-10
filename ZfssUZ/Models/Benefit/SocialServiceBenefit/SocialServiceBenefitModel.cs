@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using ZfssUZ.Models.Benefit.SocialServiceBenefit;
 using ZfssUZ.Models.Users;
 
 namespace ZfssUZ.Models.Benefit.SocialServiceBenefit
@@ -34,8 +33,6 @@ namespace ZfssUZ.Models.Benefit.SocialServiceBenefit
         [Required]
         public long BenefitNumber { get; set; }
 
-        public BenefitStatusModel BenefitStatus { get; set; }
-
         [Display(Name = "SocialServiceKind")]
         public SocialServiceKindModel SocialServiceKind { get; set; }
 
@@ -62,10 +59,6 @@ namespace ZfssUZ.Models.Benefit.SocialServiceBenefit
         public DateTime? AcceptingDate { get; set; }
 
         public UserModel AcceptingUser { get; set; }
-
-        public DateTime? RejectingDate { get; set; }
-
-        public UserModel RejectingUser { get; set; }
 
         [Display(Name = "BenefitType")]
         public BenefitTypeModel BenefitType { get; set; }

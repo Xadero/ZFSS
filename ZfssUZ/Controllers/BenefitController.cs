@@ -134,6 +134,7 @@ namespace ZfssUZ.Controllers
                 }
 
                 TempData["BenefitAddSuccess"] = newBenefit.BenefitNumber.ToString();
+                TempData["BenefitNumber"] = newBenefit.BenefitNumber.ToString();
                 relativesModel.Clear();
                 return RedirectToAction("Index");
             }
@@ -183,6 +184,7 @@ namespace ZfssUZ.Controllers
             {
                 homeLoanBenefitService.CreateBenefit(newBenefit);
                 TempData["BenefitAddSuccess"] = newBenefit.BenefitNumber.ToString();
+                TempData["BenefitNumber"] = newBenefit.BenefitNumber.ToString();
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
@@ -290,7 +292,7 @@ namespace ZfssUZ.Controllers
                         LoanCost = benefit.LoanCost,
                         LoanPurpose = benefit.LoanPurpose,
                         Months = benefit.Months,
-                        Instalment = benefit.Instalment.ToString().Replace(".", ","),
+                        Instalment = benefit.Instalment,
                         SubmittingUser = benefit.SubmittingUser != null ? new UserModel { Firstname = benefit.SubmittingUser.FirstName, LastName = benefit.SubmittingUser.LastName } : new UserModel()
                     };
 
@@ -306,7 +308,7 @@ namespace ZfssUZ.Controllers
                         AcceptingDate = benefit.AcceptingDate,
                         AcceptingUser = benefit.AcceptingUser != null ? new UserModel { Firstname = benefit.SubmittingUser.FirstName, LastName = benefit.SubmittingUser.LastName } : new UserModel(),
                         AdditionInformation = benefit.AdditionInformation,
-                        AverageIncome = relatives.Count > 0 ? benefit.AverageIncome / (relatives.Count + 1) : benefit.AverageIncome,
+                        AverageIncome = benefit.AverageIncome,
                         SocialServiceKind = mapper.Map<SocialServiceKindModel>(benefit.SocialServiceKind),
                         OtherSocialServiceKind = benefit.OtherSocialServiceKind,
                         SubmittingUser = new UserModel { Firstname = benefit.SubmittingUser.FirstName, LastName = benefit.SubmittingUser.LastName },
@@ -366,7 +368,7 @@ namespace ZfssUZ.Controllers
                         BeneficiaryPhoneNumber = benefit.BeneficiaryPhoneNumber,
                         BenefitNumber = benefit.BenefitNumber,
                         Id = benefit.Id,
-                        Instalment = benefit.Instalment.ToString().Replace(".", ","),
+                        Instalment = benefit.Instalment,
                         LoanPurpose = benefit.LoanPurpose,
                         Months = benefit.Months,
                         BenefitType = mapper.Map<BenefitTypeModel>(benefit.BenefitType),
@@ -434,7 +436,7 @@ namespace ZfssUZ.Controllers
                 LoanCost = model.LoanCost,
                 LoanPurpose = model.LoanPurpose,
                 Months = model.Months,
-                Instalment = decimal.Parse(model.Instalment.Replace(".", ",")),
+                Instalment = model.Instalment,
                 BenefitNumber = model.BenefitNumber,
             };
 

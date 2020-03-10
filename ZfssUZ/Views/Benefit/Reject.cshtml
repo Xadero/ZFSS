@@ -37,10 +37,10 @@
             success: function() {
                 $("#rejectionModal").modal("toggle");
                 location.reload();
-                alert("Wniosek został odrzucony!");
+                alert("@Localizer["BenefitRejected"]");
             },
             error: function () {
-                alert("@Localizer["AddRelativesError"]");
+                alert("@Localizer["RejectBenefitError"]");
             }
         });
     });

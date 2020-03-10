@@ -35,13 +35,9 @@ namespace ZfssUZService
         public IEnumerable<BenefitsView> GetBenefits(ApplicationUser user)
         {
             if (user.UserGroupId != (int)eUserGroup.UzEmpoloyee)
-            {
                 return applicationDbContext.BenefitsView.ToList();
-            }
             else
-            {
                 return applicationDbContext.BenefitsView.Where(x => x.SubmittingUserId == user.Id).ToList();
-            }
         }
 
         public IEnumerable<SocialServiceKind> GetSocialServiceKinds()

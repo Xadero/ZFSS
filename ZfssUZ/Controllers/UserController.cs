@@ -58,6 +58,7 @@ namespace ZfssUZ.Controllers
             {
                 UserGroupList = new SelectList(userService.GetUserGroups(), "Id", "GroupName"),
             };
+
             return View(model);
         }
 
@@ -65,6 +66,7 @@ namespace ZfssUZ.Controllers
         public async Task<IActionResult> Register(RegisterModel model)
         {
             model.UserGroupList = new SelectList(userService.GetUserGroups(), "Id", "GroupName");
+
             if (!ModelState.IsValid)
                 return View(model);
 
@@ -85,6 +87,7 @@ namespace ZfssUZ.Controllers
             };
 
             var result = await userManager.CreateAsync(user, model.Password);
+
             if (result.Succeeded)
                 return RedirectToAction("Index");
 

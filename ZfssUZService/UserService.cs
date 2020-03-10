@@ -15,6 +15,7 @@ namespace ZfssUZService
         {
             applicationDbContext = context;
         }
+
         public IEnumerable<ApplicationUser> GetAllUsers()
         {
             return applicationDbContext.Users;

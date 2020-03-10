@@ -7,8 +7,6 @@ namespace ZfssUZ.Models.Users
 {
     public class RegisterModel
     {
-        public string Id { get; set; }
-
         [Display(Name = "Username")]
         [Required(ErrorMessage = "ValidateUsername")]
         public string Username { get; set; }

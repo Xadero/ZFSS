@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using SeleniumExtras.PageObjects;
 
 namespace ZfssUZ.AutomatedTests.PageObjects
 {
@@ -12,9 +13,11 @@ namespace ZfssUZ.AutomatedTests.PageObjects
             this.driver = driver;
 
             driver.Manage().Window.Maximize();
+            PageFactory.InitElements(driver, this);
         }
 
-        public IWebElement Delete => driver.FindElement(By.XPath(""));
+        [FindsBy(How = How.Id, Using = "myInput")]
+        public IWebElement Search { get; set; }
 
     }
 }

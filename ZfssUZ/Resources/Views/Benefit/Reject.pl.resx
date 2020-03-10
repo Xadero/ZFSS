@@ -109,4 +109,10 @@
   <data name="RejectionReason" xml:space="preserve">
     <value>Przyczyna odrzucenia</value>
   </data>
+  <data name="RejectBenefitError" xml:space="preserve">
+    <value>Wystąpił nieoczekiwany błąd podczas usuwania wniosku! Skontaktuj się z administratorem!</value>
+  </data>
+  <data name="BenefitRejected" xml:space="preserve">
+    <value>Wniosek został odrzucony!</value>
+  </data>
 </root>

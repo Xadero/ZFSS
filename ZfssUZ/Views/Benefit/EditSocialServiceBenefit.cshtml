@@ -47,14 +47,12 @@
                 @Html.LabelFor(x => x.BeneficiaryPhoneNumber, new { @class = formLabel })
                 @Html.TextBoxFor(x => x.BeneficiaryPhoneNumber, string.Empty, new { @class = formControl })
             </div>
-
             <div class="form-group">
                 @Html.LabelFor(x => x.Relatives, new { @class = formLabel })
                 <div>
                     <input type="button" class="btn btn-default" id="addRelatives" value="@Localizer["AddRelatives"]" />
                 </div>
             </div>
-
             <div class="form-group">
                 @Html.LabelFor(x => x.SocialServiceKind, new { @class = formLabel })
                 @Html.DropDownListFor(x => x.SocialServiceKind.Id, Model.SocialServiceKindList, new { @class = formControl })
@@ -80,10 +78,7 @@
                 @Html.DropDownListFor(x => x.BenefitType.Id, Model.BenefitTypeList, new { @class = formControl, @disabled = "disabled" })
             </div>
             <div class="form-group">
-                @using (Html.BeginForm("EditSocialServiceBenefit", "Benefit", new { model = Model }, FormMethod.Post))
-                {
-                   <input type="submit" name="editSocialServiceBenefit" class="btn btn-default" value="@Localizer["Create"]" />
-                }
+                <input type="submit" name="editSocialServiceBenefit" class="btn btn-default" value="@Localizer["Create"]" />
                 <a asp-action="Index" asp-controller="Benefit" class="btn btn-default">@Localizer["Back"]</a>
             </div>
         </form>

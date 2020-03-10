@@ -26,6 +26,7 @@
             <input type="button" class="btn btn-default" id="showBenefit" value="@Localizer["Show"]" disabled="disabled" />
             <input type="button" class="btn btn-default" id="editBenefit" value="@Localizer["Edit"]" disabled="disabled" />
             <input type="button" class="btn btn-default" id="deleteBenefit" value="@Localizer["Delete"]" disabled="disabled" />
+
             @if (UserManager.GetUserAsync(User).Result.UserGroupId != (int)eUserGroup.UzEmpoloyee)
             {
                 <input type="button" class="btn btn-default" id="verifyBenefit" value="@Localizer["Verify"]" disabled="disabled" />
@@ -54,7 +55,7 @@
                     <th clss="th-sm">@Localizer["RejectionReason"]</th>
                 </tr>
             </thead>
-            <tbody id="myTable">
+            <tbody>
                 @{int i = 0;}
                 @foreach (var benefitList in Model.BenefitsViewList)
                 {
@@ -88,24 +89,28 @@
         $(".container").css("margin-left", "0px");
         $(".container").css("margin-right", "0px");
         if ("@TempData["BenefitAddSuccess"]" != null && "@TempData["BenefitAddSuccess"]" != "" && "@TempData["BenefitAddSuccess"]" != "Success") {
-            alert("Utworzono wniosek o numerze: " + "@TempData["BenefitAddSuccess"]");
+            alert("@Localizer["BenefitCreatedMessage"]" + "@TempData["BenefitAddSuccess"]");
         }
 
         if ("@TempData["Edit"]" != null && "@TempData["Edit"]" != "" && "@TempData["Edit"]" != "None") {
-            alert("Zapisano dane wniosku o numerze: " + "@TempData["Edit"]");
+            alert("@Localizer["BenefitSavedMessage"]" + "@TempData["Edit"]");
         }
 
         var benefitStatuses = document.getElementsByName("benefitStatusId");
         if (benefitStatuses !== undefined) {
             for (var i = 0; i < benefitStatuses.length; i++) {
-                if (benefitStatuses[i].innerText == @((int)eBenefitStatus.InVeryfication)) {
-                    $("#" + benefitStatuses[i].parentElement.id).css("color", "blue");
-                }
-                else if (benefitStatuses[i].innerText == @((int)eBenefitStatus.Accepted)) {
-                    $("#" + benefitStatuses[i].parentElement.id).css("color", "green");
-                }
-                else if (benefitStatuses[i].innerText == @((int)eBenefitStatus.Rejected)) {
-                    $("#" + benefitStatuses[i].parentElement.id).css("color", "red");
+                switch (benefitStatuses[i].innerText) {
+                    case "@((int)eBenefitStatus.InVeryfication)":
+                        $("#" + benefitStatuses[i].parentElement.id).css("color", "blue");
+                        break;
+                    case "@((int)eBenefitStatus.Accepted)":
+                        $("#" + benefitStatuses[i].parentElement.id).css("color", "green");
+                        break;
+                    case "@((int)eBenefitStatus.Rejected)":
+                        $("#" + benefitStatuses[i].parentElement.id).css("color", "red");
+                        break;
+                    default:
+                        $("#" + benefitStatuses[i].parentElement.id).css("color", "black");
                 }
             }
         }
@@ -153,44 +158,52 @@
     });
 
     function getButtonaAvailability() {
-        var benefitStatus = getBenefitStatusId();
-        if ($("#benefitTable").DataTable().$('tr.selected').length == 0) {
-            $('#showBenefit').attr("disabled", true);
-            $('#editBenefit').attr("disabled", true);
-            $('#deleteBenefit').attr("disabled", true);
-            $('#verifyBenefit').attr("disabled", true);
-            $('#acceptBenefit').attr("disabled", true);
-            $('#rejectBenefit').attr("disabled", true);
-        }
-        else if (benefitStatus == @((int)eBenefitStatus.Passed)) {
-            $('#showBenefit').attr("disabled", false);
-            $('#editBenefit').attr("disabled", false);
-            $('#deleteBenefit').attr("disabled", false);
-            $('#verifyBenefit').attr("disabled", false);
-            $('#acceptBenefit').attr("disabled", true);
-            $('#rejectBenefit').attr("disabled", true);
-        }
-        else if (benefitStatus == @((int)eBenefitStatus.InVeryfication)) {
-            $('#showBenefit').attr("disabled", false);
-            $('#editBenefit').attr("disabled", true);
-            $('#deleteBenefit').attr("disabled", true);
-            $('#verifyBenefit').attr("disabled", true);
-            $('#acceptBenefit').attr("disabled", false);
-            $('#rejectBenefit').attr("disabled", false);
-        }
-        else if (benefitStatus == @((int)eBenefitStatus.Rejected) || benefitStatus == @((int)eBenefitStatus.Accepted)) {
-            $('#showBenefit').attr("disabled", false);
-            $('#editBenefit').attr("disabled", true);
-            $('#deleteBenefit').attr("disabled", true);
-            $('#verifyBenefit').attr("disabled", true);
-            $('#acceptBenefit').attr("disabled", true);
-            $('#rejectBenefit').attr("disabled", true);
+        switch (getBenefitStatusId()) {
+            case "@((int)eBenefitStatus.Passed)":
+                $("#showBenefit").attr("disabled", false);
+                $("#editBenefit").attr("disabled", false);
+                $("#deleteBenefit").attr("disabled", false);
+                $("#verifyBenefit").attr("disabled", false);
+                $("#acceptBenefit").attr("disabled", true);
+                $("#rejectBenefit").attr("disabled", true);
+                break;
+            case "@((int)eBenefitStatus.InVeryfication)":
+                $("#showBenefit").attr("disabled", false);
+                $("#editBenefit").attr("disabled", true);
+                $("#deleteBenefit").attr("disabled", true);
+                $("#verifyBenefit").attr("disabled", true);
+                $("#acceptBenefit").attr("disabled", false);
+                $("#rejectBenefit").attr("disabled", false);
+                break;
+            case "@((int)eBenefitStatus.Rejected)" || "@((int)eBenefitStatus.Accepted)":
+                $("#showBenefit").attr("disabled", false);
+                $("#editBenefit").attr("disabled", true);
+                $("#deleteBenefit").attr("disabled", true);
+                $("#verifyBenefit").attr("disabled", true);
+                $("#acceptBenefit").attr("disabled", true);
+                $("#rejectBenefit").attr("disabled", true);
+                break;
+            case "@((int)eBenefitStatus.Accepted)":
+                $("#showBenefit").attr("disabled", false);
+                $("#editBenefit").attr("disabled", true);
+                $("#deleteBenefit").attr("disabled", true);
+                $("#verifyBenefit").attr("disabled", true);
+                $("#acceptBenefit").attr("disabled", true);
+                $("#rejectBenefit").attr("disabled", true);
+                break;
+            default:
+                $("#showBenefit").attr("disabled", true);
+                $("#editBenefit").attr("disabled", true);
+                $("#deleteBenefit").attr("disabled", true);
+                $("#verifyBenefit").attr("disabled", true);
+                $("#acceptBenefit").attr("disabled", true);
+                $("#rejectBenefit").attr("disabled", true);
         }
     }
 
     function getBenefitId() {
         var table = $("#benefitTable").DataTable();
-        id = $.map(table.rows('.selected').data(), function (item) {
+        id = $.map(table.rows(".selected").data(), function (item) {
             return item[0]
         });
         return id[0];
@@ -198,7 +211,7 @@
 
     function getBenefitStatusId() {
         var table = $("#benefitTable").DataTable();
-        var id = $.map(table.rows('.selected').data(), function (item) {
+        var id = $.map(table.rows(".selected").data(), function (item) {
             return item[1]
         });
 
@@ -207,7 +220,7 @@
 
     function getBenefitTypeId() {
         var table = $("#benefitTable").DataTable();
-        var id = $.map(table.rows('.selected').data(), function (item) {
+        var id = $.map(table.rows(".selected").data(), function (item) {
             return item[2]
         });
 
@@ -216,7 +229,7 @@
 
     function getBenefitNumber() {
         var table = $("#benefitTable").DataTable();
-        var id = $.map(table.rows('.selected').data(), function (item) {
+        var id = $.map(table.rows(".selected").data(), function (item) {
             return item[3]
         });
 
@@ -225,36 +238,36 @@
 
     $("#verifyBenefit").click(function () {
         $.ajax({
-            url: '@Url.Action("VerifyBenefit", "Benefit")',
-            type: 'POST',
-            dataType: 'json',
+            url: "@Url.Action("VerifyBenefit", "Benefit")",
+            type: "POST",
+            dataType: "json",
             data: { id: getBenefitId(), benefitTypeId: getBenefitTypeId() },
             success: function (data) {
                 if (data.success) {
-                    alert("Wniosek przyjęty do weryfikacji");
+                    alert("@Localizer["VerifiedBenefit"]");
                     location.reload();
                 }
             },
             error: function () {
-                alert('Wystąpił błąd podczas zmiany statusu wniosku! Skontaktuj się z administratorem!');
+                alert("@Localizer["VerifyBenefitError"]");
             }
         });
     });
 
     $("#acceptBenefit").click(function () {
         $.ajax({
-            url: '@Url.Action("AcceptBenefit", "Benefit")',
-            type: 'POST',
-            dataType: 'json',
+            url: "@Url.Action("AcceptBenefit", "Benefit")",
+            type: "POST",
+            dataType: "json",
             data: { id: getBenefitId(), benefitTypeId: getBenefitTypeId() },
             success: function (data) {
                 if (data.success) {
-                    alert("Wniosek został zaakceptowany!");
+                    alert("@Localizer["BenefitAccepted"]");
                     location.reload();
                 }
             },
             error: function () {
-                alert('Wystąpił błąd podczas zmiany statusu wniosku! Skontaktuj się z administratorem!');
+                alert("@Localizer["AcceptingBenefitError"]");
             }
         });
     });
@@ -269,8 +282,8 @@
 
     $('#showBenefit').click(function () {
         $.ajax({
-            url: '@Url.Action("Show", "Benefit")',
-            type: 'POST',
+            url: "@Url.Action("Show", "Benefit")",
+            type: "POST",
             datatype: "json",
             data: { id: getBenefitId(), benefitTypeId: getBenefitTypeId() },
             success: function (data) {
@@ -278,25 +291,25 @@
                 $("#showBenefitModal").modal('show');
             },
             error: function () {
-                alert('Wystąpił nieznamy błąd! Skontaktuj się z administratorem!');
+                alert("@Localizer["ShowBenefitError"]");
             }
         });
     });
 
     $('#deleteBenefit').click(function () {
-        var r = confirm("Na pewno usunąć wniosek " + getBenefitNumber() + "?");
+        var r = confirm("@Localizer["WantToDeleteBenefit"]" + getBenefitNumber() + "?");
         if (r) {
             $.ajax({
-                url: '@Url.Action("Delete", "Benefit")',
-                type: 'POST',
+                url: "@Url.Action("Delete", "Benefit")",
+                type: "POST",
                 datatype: "json",
                 data: { id: getBenefitId(), benefitTypeId: getBenefitTypeId() },
                 success: function (data) {
-                    alert("Wniosek został usunięty!");
+                    alert("@Localizer["DeletedBenefit"]");
                     location.reload();
                 },
                 error: function () {
-                    alert('Wystąpił nieznamy błąd! Skontaktuj się z administratorem!');
+                    alert("@Localizer["DeleteBenefitError"]");
                 }
             });
         };

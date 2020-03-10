@@ -7,10 +7,6 @@ namespace ZfssUZ.Models.Benefit.HomeLoanBenefit
 {
     public class AddHomeLoanBenefitModel
     {
-        public int Id { get; set; }
-
-        public long BenefitNumber { get; set; }
-
         [Display(Name = "BeneficiaryName")]
         [Required(ErrorMessage = "ValidateBeneficiaryName")]
         public string BeneficiaryName { get; set; }

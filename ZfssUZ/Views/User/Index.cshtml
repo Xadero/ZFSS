@@ -73,7 +73,7 @@
     </div>
 </div>
 @section Scripts {
-    <script>
+<script>
     $(document).ready(function () {
         var userNames = document.getElementsByName("username");
         var loggedUser = "@UserManager.GetUserAsync(User).Result.UserName";
@@ -111,13 +111,13 @@
             });
         });
 
-        $('#userIndexTable tbody').on('click', 'tr', function () {
-            if ($(this).hasClass('selected')) {
-                $(this).removeClass('selected');
+        $("#userIndexTable tbody").on("click", "tr", function () {
+            if ($(this).hasClass("selected")) {
+                $(this).removeClass("selected");
             }
             else {
-                $("#userIndexTable").DataTable().$('tr.selected').removeClass('selected');
-                $(this).addClass('selected');
+                $("#userIndexTable").DataTable().$("tr.selected").removeClass("selected");
+                $(this).addClass("selected");
             }
         });
     });
@@ -130,10 +130,10 @@
             data: { userId: value },
             success: function (data) {
                 $("#exampleModal").html(data);
-                $("#exampleModal").modal('show');
+                $("#exampleModal").modal("show");
             },
             error: function () {
-                alert('Wystąpił nieznamy błąd! Skontaktuj się z administratorem!');
+                alert("@Localizer["ShowingError"]");
             }
         });
     }
@@ -143,7 +143,7 @@
     }
 
     function confirmDelete(value) {
-        var r = confirm("Czy chces usunąć to cudowne konto?");
+        var r = confirm("@Localizer["WantToDeleteAccount"]");
         if (r) {
             $.ajax({
                 url: '@Url.Action("DeleteUser", "User")',
@@ -152,18 +152,18 @@
                 data: { userId: value },
                 success: function (data) {
                     if (data.success) {
-                        alert("Konto zostało usunięte");
+                        alert("@Localizer["AccountDeleted"]");
                         location.reload();
                     }
                     else {
-                        alert('Wystąpił błąd podczas usuwania konta! Skontaktuj się z administratorem!');
+                        alert("@Localizer["DeletingError"]");
                     }
                 },
                 error: function () {
-                    alert('Wystąpił błąd podczas usuwania konta! Skontaktuj się z administratorem!');
+                    alert("@Localizer["DeletingError"]");
                 }
             });
         }
     }
-    </script>
+</script>
 }

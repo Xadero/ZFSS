@@ -109,4 +109,10 @@
   <data name="RejectionReason" xml:space="preserve">
     <value>Rejection reason</value>
   </data>
+  <data name="RejectBenefitError" xml:space="preserve">
+    <value>Error occured while deleting benefit! Please contact with administrator!</value>
+  </data>
+  <data name="BenefitRejected" xml:space="preserve">
+    <value>Benefit has been rejected!</value>
+  </data>
 </root>

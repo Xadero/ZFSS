@@ -5,8 +5,6 @@ namespace ZfssUZ.Models.Benefit.SocialServiceBenefit
 {
     public class RelativesModel
     {
-        public int Id { get; set; }
-
         [Required]
         public string RelativeFullName { get; set; }
 
@@ -18,7 +16,5 @@ namespace ZfssUZ.Models.Benefit.SocialServiceBenefit
 
         [Required]
         public string Notes { get; set; }
-
-        public SocialServiceBenefitModel SocialServiceBenefits { get; set; }
     }
 }

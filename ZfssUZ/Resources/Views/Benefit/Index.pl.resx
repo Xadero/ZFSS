@@ -175,4 +175,34 @@
   <data name="RejectionReason" xml:space="preserve">
     <value>Przyczyna odrzucenia wniosku</value>
   </data>
+  <data name="BenefitCreatedMessage" xml:space="preserve">
+    <value>Utworzono wniosek o numerze: </value>
+  </data>
+  <data name="BenefitSavedMessage" xml:space="preserve">
+    <value>Zapisano dane wniosku o numerze: </value>
+  </data>
+  <data name="AcceptingBenefitError" xml:space="preserve">
+    <value>Wystąpił nieoczekiwany błąd podczas akceptacji wniosku! Skontaktuj się z administratorem!</value>
+  </data>
+  <data name="ShowBenefitError" xml:space="preserve">
+    <value>Wystąpił nieoczekiwany błąd podczas wyświetlania wniosku! Skontaktuj się z administratorem!</value>
+  </data>
+  <data name="VerifyBenefitError" xml:space="preserve">
+    <value>Wystąpił nieoczekiwany błąd podczas weryfikacji wniosku! Skontaktuj się z administratorem!</value>
+  </data>
+  <data name="DeleteBenefitError" xml:space="preserve">
+    <value>Wystąpił nieoczekiwany błąd podczas usuwania wniosku! Skontaktuj się z administratorem!</value>
+  </data>
+  <data name="DeletedBenefit" xml:space="preserve">
+    <value>Wniosek został usunięty!</value>
+  </data>
+  <data name="VerifiedBenefit" xml:space="preserve">
+    <value>Wniosek został przyjęty do weryfikacji.</value>
+  </data>
+  <data name="WantToDeleteBenefit" xml:space="preserve">
+    <value>Czy na pewno chcesz usunąć wniosek </value>
+  </data>
+  <data name="BenefitAccepted" xml:space="preserve">
+    <value>Wniosek został zaakceptowany!</value>
+  </data>
 </root>

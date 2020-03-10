@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using OpenQA.Selenium.Chrome;
 using System;
+using System.Threading;
 using ZfssUZ.AutomatedTests.PageObjects;
 
 namespace ZfssUZ.AutomatedTests.Tests.Smoke
@@ -16,13 +17,13 @@ namespace ZfssUZ.AutomatedTests.Tests.Smoke
         [OneTimeSetUp]
         protected void OneTimeSetUp()
         {
-            Report.ReportOneTimeSetUp();
+            //Report.ReportOneTimeSetUp();
         }
 
         [OneTimeTearDown]
         protected void OneTimeTearDown()
         {
-            Report.ReportOneTimeTearDown();
+            //Report.ReportOneTimeTearDown();
         }
 
 
@@ -34,7 +35,7 @@ namespace ZfssUZ.AutomatedTests.Tests.Smoke
             driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(30);
             driver.Manage().Timeouts().AsynchronousJavaScript = TimeSpan.FromSeconds(30);
 
-            Report.ReportSetUp(driver);
+            //Report.ReportSetUp(driver);
 
             pageObjectHelper = new PageObjectHelper(driver);
             pageObjects = new PageObjectInitializer(driver);
@@ -43,7 +44,7 @@ namespace ZfssUZ.AutomatedTests.Tests.Smoke
         [TearDown]
         protected void TestTearDown()
         {
-            Report.ReportTearDown();
+            //Report.ReportTearDown();
 
             driver.Quit();
         }
@@ -52,6 +53,8 @@ namespace ZfssUZ.AutomatedTests.Tests.Smoke
         public void Test1()
         {
             driver.Navigate().GoToUrl("http://localhost/zfss");
+            pageObjectHelper.SetTextOnWebElement(pageObjects.MainPage.Search, "20200200051");
+            Thread.Sleep(10000);
         }
     }
 }

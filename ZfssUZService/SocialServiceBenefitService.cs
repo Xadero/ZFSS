@@ -118,14 +118,10 @@ namespace ZfssUZService
             var benefit = GetBenefit(benefitId);
             var currentRelatives = GetRelatives(benefit);
             if (currentRelatives.Any())
-            {
                 applicationDbContext.Relatives.RemoveRange(currentRelatives);
-            }
 
             if (relatives.Any())
-            {
                 AddRelatives(relatives, benefit);
-            }
 
             applicationDbContext.SaveChanges();
         }

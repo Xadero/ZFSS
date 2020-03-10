@@ -142,4 +142,16 @@
   <data name="NotAuthorized" xml:space="preserve">
     <value>You are not authorized to see this page!</value>
   </data>
+  <data name="WantToDeleteAccount" xml:space="preserve">
+    <value>Do you really want to delete selected account?</value>
+  </data>
+  <data name="DeletingError" xml:space="preserve">
+    <value>Error occured while deleting account! Please contact with administrator!</value>
+  </data>
+  <data name="AccountDeleted" xml:space="preserve">
+    <value>Account has been deleted</value>
+  </data>
+  <data name="ShowingError" xml:space="preserve">
+    <value>Error occured while showing account! Please contact with administrator!</value>
+  </data>
 </root>

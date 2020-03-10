@@ -51,13 +51,12 @@
             </div>
             <div class="form-group">
                 @Html.LabelFor(x => x.Instalment, new { @class = formLabel })
-                @Html.TextBoxFor(x => x.Instalment, string.Empty, new { @class = formControl, @readonly = "readonly", @type = "number", @min = 1 })
+                @Html.TextBoxFor(x => x.Instalment, string.Empty, new {@class = formControl,  @disabled = "disabled"})
             </div>
             <div class="form-group">
                 @Html.LabelFor(x => x.BenefitType)
                 @Html.DropDownListFor(x => x.BenefitType.Id, Model.BenefitTypeList, new { @class = formControl, @disabled = "disabled" })
             </div>
-
             <div class="form-group">
                 <input type="submit" name="editHomeLoanBenefit" class="btn btn-default" value="@Localizer["Create"]" />
                 <a asp-action="Index" asp-controller="Benefit" class="btn btn-default">@Localizer["Back"]</a>
@@ -73,6 +72,9 @@
         }
     });
 
+    var instalment = @Model.Instalment;
+    $("#Instalment").val(instalment.toFixed(2));
+
     $("#LoanCost").on("change paste keyup", function () {
         copyText();
     });
@@ -80,6 +82,8 @@
     $("#Months").on("change paste keyup", function () {
         copyText();
     });
+
+    copyText();
 
     function getUserData() {
         $("#BeneficiaryName").val("@UserManager.GetUserAsync(User).Result.FirstName " +  "@UserManager.GetUserAsync(User).Result.LastName");

@@ -31,8 +31,8 @@ namespace ZfssUZ.Models.Benefit.HomeLoanBenefit
 
         [Display(Name = "Instalment")]
         [Required]
-        [Range(1, Double.MaxValue, ErrorMessage = "ValidateInstalment")]
-        public string Instalment { get; set; }
+        [DisplayFormat(DataFormatString = "{0:0.###}")]
+        public decimal Instalment { get; set; }
 
         [Display(Name = "Months")]
         [Required(ErrorMessage = "ValidateMonhts")]
@@ -42,22 +42,7 @@ namespace ZfssUZ.Models.Benefit.HomeLoanBenefit
         [Required(ErrorMessage = "ValidateLoanPurpose")]
         public string LoanPurpose { get; set; }
 
-        public BenefitStatusModel BenefitStatus { get; set; }
-
-        [Required]
-        public DateTime SubmittingDate { get; set; }
-
         public UserModel SubmittingUser { get; set; }
-
-        public DateTime? AcceptingDate { get; set; }
-
-        public UserModel AcceptingUser { get; set; }
-
-        public DateTime? RejectingDate { get; set; }
-
-        public UserModel RejectingUser { get; set; }
-
-        public string RejectionReason { get; set; }
 
         [Display(Name = "BenefitType")]
         public BenefitTypeModel BenefitType { get; set; }

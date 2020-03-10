@@ -57,7 +57,7 @@
 <script>
     $(document).ready(function () {
         if ("@TempData["IsSent"]" != null && "@TempData["IsSent"]" != "" && "@TempData["IsSent"]" != "False") {
-            alert("Wiadomość została do obsługi klienta");
+            alert("@Localizer["MessageSent"]");
         }
     });
 

@@ -30,7 +30,6 @@ namespace ZfssUZService
                 .FirstOrDefault();
         }
 
-
         public void AcceptBenefit(int id, string acceptingUserId)
         {
             var benefitToAccept = applicationDbContext.HomeLoanBenefit.Where(x => x.Id == id).FirstOrDefault();
