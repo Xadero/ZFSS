@@ -10,10 +10,10 @@ namespace ZfssUZ.AutomatedTests.PageObjects
 {
     class PageObjectHelper
     {
-        private readonly ChromeDriver driver;
+        private readonly IWebDriver driver;
         private OpenQA.Selenium.Support.UI.DefaultWait<IWebDriver> wait;
 
-        public PageObjectHelper(ChromeDriver driver)
+        public PageObjectHelper(IWebDriver driver)
         {
             this.driver = driver;
             wait = new DefaultWait<IWebDriver>(driver);

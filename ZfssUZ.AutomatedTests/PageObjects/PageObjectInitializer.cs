@@ -6,11 +6,13 @@ namespace ZfssUZ.AutomatedTests.PageObjects
     public class PageObjectInitializer
     {
         public MainPage MainPage;
-        private readonly ChromeDriver driver;
-        public PageObjectInitializer(ChromeDriver driver)
+        public LoginPage LoginPage;
+        private readonly IWebDriver driver;
+        public PageObjectInitializer(IWebDriver driver)
         {
             this.driver = driver;
             MainPage = new MainPage(driver);
+            LoginPage = new LoginPage(driver);
         }
     }
 }

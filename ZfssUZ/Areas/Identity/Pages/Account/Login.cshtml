@@ -52,8 +52,8 @@
                 <div class="form-group">
                     <input type="checkbox" asp-for="Input.RememberMe" /> 
                     <label class="check" style="font-size:20px; margin-right:10px">Zapamiętać hasło?</label>
-                    <input id="check3" name="check3" type="checkbox" value="Pokaż hasło" onclick="myFunction()"> 
-                    <label class="check" id="showPassword" for="check3" style="font-size:20px">Pokaż hasło</label>
+                    <input id="showPassword" name="check3" type="checkbox" value="Pokaż hasło" onclick="myFunction()"> 
+                    <label class="check" id="showPasswordlbl" for="check3" style="font-size:20px">Pokaż hasło</label>
                 </div>
                 <div class="agile_label">
 
@@ -62,7 +62,7 @@
             <script>
                 function myFunction() {
                     var x = document.getElementById("Input_Password");
-                    var label = document.getElementById("showPassword");
+                    var label = document.getElementById("showPasswordlbl");
                     if (x.type === "password") {
                         x.type = "text";
                         label.innerText = "Ukryj hasło";
@@ -81,7 +81,7 @@
                 }
             </script>
 
-            <input type="button" value="Zapomniałeś hasła?" onclick="window.location.href = '@Url.Action("Account/ForgotPassword", "Identity")';" />
+            <input type="button" value="Zapomniałeś hasła?" id="forgotPassword" onclick="window.location.href = '@Url.Action("Account/ForgotPassword", "Identity")';" />
         </form>
     </div>
     <div class="copy-wthree" style="text-align:left; padding:0; position:fixed; bottom:0">

@@ -100,7 +100,7 @@
   <data name="BenefitsList" xml:space="preserve">
     <value>Lista wniosków</value>
   </data>
-  <data name="AddBenefitApplication" xml:space="preserve">
+  <data name="AddBenefit" xml:space="preserve">
     <value>Dodaj wniosek</value>
   </data>
   <data name="SocialServiceBenefit" xml:space="preserve">

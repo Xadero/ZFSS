@@ -53,7 +53,9 @@ namespace ZfssUZ.AutomatedTests.Tests.Smoke
         public void Test1()
         {
             driver.Navigate().GoToUrl("http://localhost/zfss");
-            pageObjectHelper.SetTextOnWebElement(pageObjects.MainPage.Search, "20200200051");
+            pageObjectHelper.SetTextOnWebElement(pageObjects.LoginPage.Username, "admin");
+            pageObjectHelper.SetTextOnWebElement(pageObjects.LoginPage.Password, "zaq1@WSX");
+            pageObjectHelper.Click(pageObjects.LoginPage.ShowPassword);
             Thread.Sleep(10000);
         }
     }

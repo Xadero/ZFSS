@@ -36,23 +36,23 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Benefit" asp-action="Index" class="navbar-brand">@Localizer["BenefitsList"]</a>
+                <a asp-area="" asp-controller="Benefit" asp-action="Index" id="benefitList" class="navbar-brand">@Localizer["BenefitsList"]</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">@Localizer["CompanySocialBenefitsFund"]</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">@Localizer["Contact"]</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="About" id="about">@Localizer["CompanySocialBenefitsFund"]</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Contact" id="contact">@Localizer["Contact"]</a></li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="collapse" role="button">
-                            @Localizer["AddBenefitApplication"]
+                        <a href="#" class="dropdown-toggle" data-toggle="collapse" role="button" id="newBenefit">
+                            @Localizer["AddBenefit"]
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
                             <li role="presentation">
-                                <a asp-area="" asp-controller="Benefit" asp-action="AddSocialServiceBenefit">@Localizer["SocialServiceBenefit"]</a>
+                                <a asp-area="" asp-controller="Benefit" asp-action="AddSocialServiceBenefit" id="addSocialServiceBenefit">@Localizer["SocialServiceBenefit"]</a>
                             </li>
                             <li role="presentation">
-                                <a asp-area="" asp-controller="Benefit" asp-action="AddHomeLoanBenefit">@Localizer["HomeLoadBenefit"]</a>
+                                <a asp-area="" asp-controller="Benefit" asp-action="AddHomeLoanBenefit" id="addHomeLoanBenefit">@Localizer["HomeLoadBenefit"]</a>
                             </li>
                         </ul>
                     </li>

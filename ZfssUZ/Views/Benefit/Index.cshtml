@@ -19,7 +19,7 @@
 <h3>@Localizer["BenefitList"]</h3>
 <div id="idx" class="container" style="width:165% !important">
     <div>
-        <input class="form-control" id="myInput" type="text" style="width:50%;align-items:center" placeholder="@Localizer["Search"]">
+        <input class="form-control" id="searchBenefit" type="text" style="width:50%;align-items:center" placeholder="@Localizer["Search"]">
         <div class="modal fade" id="rejectionModal" role="dialog" data-url='@Url.Action("OpenRejectionView", "Benefit")'></div>
         <div class="modal fade" id="showBenefitModal" role="dialog" data-url='@Url.Action("Show", "Benefit")'></div>
         <div style="margin-top:10px">
@@ -136,11 +136,11 @@
         var table = $('#benefitTable').DataTable();
 
         if ("@TempData["BenefitNumber"]" != null && "@TempData["BenefitNumber"]" != "") {
-            $("#myInput").val("@TempData["BenefitNumber"]");
-            table.search($("#myInput").val()).draw();
+            $("#searchBenefit").val("@TempData["BenefitNumber"]");
+            table.search($("#searchBenefit").val()).draw();
         }
 
-        $('#myInput').on('keyup', function () {
+        $('#searchBenefit').on('keyup', function () {
             table.search( this.value ).draw();
         });
 

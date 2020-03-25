@@ -19,8 +19,8 @@
     65-417 Zielona Góra <br />
 </address>
 <address>
-    <strong>@Localizer["EmailAddress"]:</strong> +48 123 456 789<br />
-    <strong>@Localizer["PhoneNumber"]:</strong> <a href="mailto:prac.uz@gmail.com">zfss@uz.zgora.pl</a>
+    <strong>@Localizer["PhoneNumber"]:</strong> +48 123 456 789<br />
+    <strong>@Localizer["EmailAddress"]:</strong> <a href="mailto:prac.uz@gmail.com">zfss@uz.zgora.pl</a>
 </address>
 <img src="~/images/call-center-1015274_640.jpg" width="600" height="400" align="right" />
 <div class="row">
@@ -40,15 +40,15 @@
             </div>
             <div class="form-group" id="phoneNumberForm" hidden>
                 @Html.LabelFor(x => x.PhoneNumber, new { @class = formLabel })
-                @Html.TextBoxFor(x => x.PhoneNumber, new { @class = formControl, @type = "number" })
+                @Html.TextBoxFor(x => x.PhoneNumber, new { @class = formControl, @type = "number", @min = 1})
             </div>
             <div class="form-group">
                 @Html.LabelFor(x => x.MessageContent, new { @class = formLabel })
                 @Html.TextAreaFor(x => x.MessageContent, new { @class = formControl, @style = "max-width:540px" })
             </div>
             <div class="form-group">
-                <input type="submit" value="@Localizer["Send"]" class="btn btn-default" />
-                <a asp-action="Index" asp-controller="Benefit" class="btn btn-default">@Localizer["Back"]</a>
+                <input type="submit" id="sendMessage" value="@Localizer["Send"]" class="btn btn-default" />
+                <a asp-action="Index" asp-controller="Benefit" id="backToBenefitList" class="btn btn-default">@Localizer["Back"]</a>
             </div>
         </form>
     </div>
