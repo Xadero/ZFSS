@@ -49,7 +49,7 @@
                         <td name="username" style="display:none">@userList.Username</td>
                         <td><b>@userList.Firstname @userList.LastName</b></td>
                         <td><input type="submit" class="btn btn-default" id="showUserData" value="@Localizer["Show"]" onclick="showUser('@userList.Id.ToString()')" /></td>
-                        <td>@Html.ActionLink(@Localizer["Edit"].Value, "Edit", "User", new { userId = userList.Id }, new { @class = "btn btn-default" })</td>
+                        <td>@Html.ActionLink(@Localizer["Edit"].Value, "Edit", "User", new { userId = userList.Id }, new { @class = "btn btn-default", @id ="editUser" })</td>
                         <td><input type="submit" class="btn btn-default" id="deleteUser@(i)" value="@Localizer["Delete"]" onclick="confirmDelete('@userList.Id.ToString()')" /></td>
                         @if (userList.IsLocked)
                         {

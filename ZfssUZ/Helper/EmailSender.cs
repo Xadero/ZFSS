@@ -8,11 +8,11 @@ namespace ZfssUZ.Helper
     {
         public static void SendEmail(string contactFormValue, string senderFirstName, string senderLastName, string messageContent, int messageTypeId)
         {
-            var fromAddress = new MailAddress("pracamagisterska2019a@gmail.com", senderFirstName + " " + senderLastName + "(" + contactFormValue + ")");
+            var fromAddress = new MailAddress("pracamagisterska2019a@gmail.com", senderFirstName + " " + senderLastName + " (" + contactFormValue + ")");
             var toAddress = messageTypeId == (int)eMessageType.PhoneNumber ? new MailAddress("+48726763203@text.plusgsm.pl", "To Name") : new MailAddress("xadero2@gmail.com", "To Name");
-            string fromPassword = "magisterka2019";
-            string subject = "Kontakt z Obsługą klienta ZFŚS";
-            string body = messageContent;
+            var fromPassword = "magisterka2019";
+            var subject = "Kontakt z Obsluga klienta ZFSS";
+            var body = messageContent;
 
             var smtp = new SmtpClient
             {

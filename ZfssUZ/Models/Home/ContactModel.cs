@@ -9,7 +9,6 @@ namespace ZfssUZ.Models.Home
         public int ContactForm { get; set; }
 
         [Display(Name = "PhoneNumber")]
-        [Phone]
         public int? PhoneNumber { get; set; }
 
         [Display(Name = "EmailAddress")]

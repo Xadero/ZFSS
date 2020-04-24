@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using NUnit.Framework;
+using OpenQA.Selenium;
 using SeleniumExtras.PageObjects;
 
 namespace ZfssUZ.AutomatedTests.PageObjects
@@ -6,13 +7,16 @@ namespace ZfssUZ.AutomatedTests.PageObjects
     public class LoginPage
     {
         private readonly IWebDriver driver;
-
+        private PageObjectHelper pageObjectHelper;
+        private MainPage mainPage;
         public LoginPage(IWebDriver driver)
         {
             this.driver = driver;
 
             driver.Manage().Window.Maximize();
             PageFactory.InitElements(driver, this);
+            pageObjectHelper = new PageObjectHelper(driver);
+            mainPage = new MainPage(driver);        
         }
 
         /// <summary>
@@ -49,5 +53,20 @@ namespace ZfssUZ.AutomatedTests.PageObjects
         /// </summary>
         [FindsBy(How = How.Id, Using = "forgotPassword")]
         public IWebElement ForgotPassword { get; set; }
+
+        public void LogIn()
+        {
+            if (pageObjectHelper.IsDisplayed(Login))
+            {
+                pageObjectHelper.SetText(Username, Configuration.LOGIN);
+                pageObjectHelper.SetText(Password, Configuration.PASSWORD);
+                pageObjectHelper.Click(Login);
+                pageObjectHelper.Wait(mainPage.Search);
+                if(!pageObjectHelper.IsDisplayed(mainPage.Search))
+                    Assert.Fail("Wystąpił błąd logowania!");
+
+                mainPage.AcceptCookies.Click();
+            }
+        }
     }
 }

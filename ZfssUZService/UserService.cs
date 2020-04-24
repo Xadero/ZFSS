@@ -68,6 +68,7 @@ namespace ZfssUZService
             userToUpdate.UserName = user.UserName;
             userToUpdate.PostCode = user.PostCode;
             userToUpdate.UserGroupId = user.UserGroupId;
+            userToUpdate.DateOfBirth = user.DateOfBirth;
 
             applicationDbContext.Entry(userToUpdate).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
             applicationDbContext.SaveChanges();

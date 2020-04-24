@@ -66,7 +66,7 @@ namespace ZfssUZ.AutomatedTests.PageObjects
             return this;
         }
 
-        public PageObjectHelper SetTextOnWebElement(IWebElement element, string text)
+        public PageObjectHelper SetText(IWebElement element, string text)
         {
             Wait(element);
             element.Clear();

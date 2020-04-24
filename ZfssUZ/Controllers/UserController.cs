@@ -41,7 +41,7 @@ namespace ZfssUZ.Controllers
                 Username = result.UserName,
                 Firstname = result.FirstName,
                 LastName = result.LastName,
-                IsLocked = result.LockoutEnd != null
+                IsLocked = result.LockoutEnd.HasValue
             });
 
             var model = new UserListModel()
@@ -122,7 +122,8 @@ namespace ZfssUZ.Controllers
                 PostCode = user.PostCode,
                 PhoneNumber = user.PhoneNumber,
                 UserGroup = mapper.Map<UserGroupModel>(dictionaryService.Get<UserGroup>(user.UserGroupId)),
-                UserGroupList = new SelectList(userService.GetUserGroups(), "Id", "GroupName")
+                UserGroupList = new SelectList(userService.GetUserGroups(), "Id", "GroupName"),
+                IsLocked = user.LockoutEnd.HasValue
             };
 
             return View(model);
@@ -150,6 +151,11 @@ namespace ZfssUZ.Controllers
                 UserName = model.Username,
                 UserGroupId = model.UserGroup.Id
             };
+
+            if (model.IsLocked)
+                userService.LockUser(model.Id);
+            else
+                userService.UnlockUser(model.Id);
 
             userService.UpdateUserData(userToUpdate);
             return RedirectToAction("Index");

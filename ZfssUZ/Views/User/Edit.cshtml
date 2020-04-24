@@ -1,10 +1,15 @@
 ﻿@model ZfssUZ.Models.Users.UserModel
+
+@using Microsoft.AspNetCore.Identity
+@using ZfssUZData.Models.Users
 @using Microsoft.AspNetCore.Mvc.Localization
+
+@inject UserManager<ApplicationUser> UserManager
 @inject IViewLocalizer Localizer
 
 @{
     Context.Items["Title"] = Localizer["Title"];
-    object displayMode = new { disabled = "disabled", style = "form-control"};
+    object displayMode = new { disabled = "disabled", style = "form-control" };
 }
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <h2>@Localizer["Title"]</h2>
@@ -53,16 +58,21 @@
                 <label asp-for="UserGroup" class="control-label"></label>
                 @Html.DropDownListFor(x => x.UserGroup.Id, Model.UserGroupList, new { @class = "form-control" })
             </div>
-            <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input asp-for="IsLocked" /> @Html.DisplayNameFor(model => model.IsLocked)
-                    </label>
+
+            @if (Model.Id != UserManager.GetUserAsync(User).Result.Id)
+            {
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="IsLocked" /> @Html.DisplayNameFor(model => model.IsLocked)
+                        </label>
+                    </div>
                 </div>
-            </div>
+            }
+
             <div class="form-group">
-                <input type="submit" value="@Localizer["Save"]" class="btn btn-default" />
-                <a asp-action="Index" class="btn btn-default">@Localizer["Back"]</a>
+                <input type="submit" id="Save" value="@Localizer["Save"]" class="btn btn-default" />
+                <a asp-action="Index" id="Back" class="btn btn-default">@Localizer["Back"]</a>
             </div>
         </form>
     </div>
