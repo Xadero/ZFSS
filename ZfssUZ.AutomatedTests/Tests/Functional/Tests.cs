@@ -35,7 +35,6 @@ namespace ZfssUZ.AutomatedTests.Tests.Functional
             driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(30);
             driver.Manage().Timeouts().AsynchronousJavaScript = TimeSpan.FromSeconds(30);
 
-
             //Report.ReportSetUp(driver);
 
             helper = new PageObjectHelper(driver);
@@ -59,22 +58,6 @@ namespace ZfssUZ.AutomatedTests.Tests.Functional
                 Assert.Fail();
 
             pageObjects.LoginPage.LogIn();
-        }
-
-        [TestCase]
-        [Description("Wylogowanie z aplikacji ZFŚS")]
-        public void ZFSS_FUN_2()
-        {
-            driver.Navigate().GoToUrl(Configuration.URL);
-            if (!helper.IsDisplayed(pageObjects.LoginPage.Login))
-                Assert.Fail();
-
-            pageObjects.LoginPage.LogIn();
-            pageObjects.MainPage.LoggedUser.Click();
-            pageObjects.MainPage.Logout.Click();
-
-            if (!helper.IsDisplayed(pageObjects.LoginPage.Login))
-                Assert.Fail();
         }
     }
 }

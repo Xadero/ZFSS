@@ -72,7 +72,7 @@
         }
     });
 
-    var instalment = @Model.Instalment;
+    var instalment = @Model.Instalment.ToString().Replace(",", ".");
     $("#Instalment").val(instalment.toFixed(2));
 
     $("#LoanCost").on("change paste keyup", function () {

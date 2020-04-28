@@ -12,7 +12,7 @@ namespace ZfssUZ.AutomatedTests.Tests.Smoke
     {
         private ChromeDriver driver;
         private PageObjectInitializer pageObjects;
-        private PageObjectHelper helper;
+        private PageObjectHelper pageObjectHelper;
 
 
         [OneTimeSetUp]
@@ -35,10 +35,10 @@ namespace ZfssUZ.AutomatedTests.Tests.Smoke
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(0.1);
             driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(30);
             driver.Manage().Timeouts().AsynchronousJavaScript = TimeSpan.FromSeconds(30);
-            driver.Navigate().GoToUrl(Configuration.URL);
+
             //Report.ReportSetUp(driver);
 
-            helper = new PageObjectHelper(driver);
+            pageObjectHelper = new PageObjectHelper(driver);
             pageObjects = new PageObjectInitializer(driver);
         }
 
@@ -53,137 +53,13 @@ namespace ZfssUZ.AutomatedTests.Tests.Smoke
         [TestCase(Description = "Wyświetlenie formularza 'Logowanie'")]
         public void ZFSS_DYM_1()
         {
+            driver.Navigate().GoToUrl(Configuration.URL);
             var assertions = new List<bool>();
-            assertions.Add(helper.IsDisplayed(pageObjects.LoginPage.Username) && helper.IsDisplayed(pageObjects.LoginPage.Username));
-            assertions.Add(helper.IsDisplayed(pageObjects.LoginPage.Password) && helper.IsDisplayed(pageObjects.LoginPage.Password));
-            assertions.Add(helper.IsDisplayed(pageObjects.LoginPage.Login) && helper.IsDisplayed(pageObjects.LoginPage.Login));
+            assertions.Add(pageObjectHelper.IsDisplayed(pageObjects.LoginPage.Username) && pageObjectHelper.IsDisplayed(pageObjects.LoginPage.Username));
+            assertions.Add(pageObjectHelper.IsDisplayed(pageObjects.LoginPage.Password) && pageObjectHelper.IsDisplayed(pageObjects.LoginPage.Password));
+            assertions.Add(pageObjectHelper.IsDisplayed(pageObjects.LoginPage.Login) && pageObjectHelper.IsDisplayed(pageObjects.LoginPage.Login));
+            assertions.Add(pageObjectHelper.IsDisplayed(pageObjects.LoginPage.ForgotPassword) && pageObjectHelper.IsDisplayed(pageObjects.LoginPage.ForgotPassword));
             Assert.True(assertions.TrueForAll(a => a == true));
-        }
-
-        [TestCase(Description = "Wyświetlenie formularza 'Kontakt z obsługą klienta ZFŚS'")]
-        public void ZFSS_DYM_2()
-        {
-            pageObjects.LoginPage.LogIn();
-            helper.Click(pageObjects.MainPage.Contact);
-
-            var assertions = new List<bool>();
-            assertions.Add(helper.IsDisplayed(pageObjects.ContactPage.Back) && helper.IsEnabled(pageObjects.ContactPage.Back));
-            assertions.Add(helper.IsDisplayed(pageObjects.ContactPage.SendMessage) && helper.IsEnabled(pageObjects.ContactPage.SendMessage));
-            assertions.Add(helper.IsDisplayed(pageObjects.ContactPage.EmailAddress) && helper.IsEnabled(pageObjects.ContactPage.EmailAddress));
-            assertions.Add(helper.IsDisplayed(pageObjects.ContactPage.MessageContent) && helper.IsEnabled(pageObjects.ContactPage.MessageContent));
-
-            Assert.True(assertions.TrueForAll(x => x == true));
-        }
-
-        [TestCase(Description = "Wyświetlenie formularza 'Nowy wniosek o świadczenie socjalne'")]
-        public void ZFSS_DYM_3()
-        {
-            pageObjects.LoginPage.LogIn();
-            helper.Click(pageObjects.MainPage.AddBenefit);
-            helper.Click(pageObjects.MainPage.AddSocialServiceBenefit);
-
-            var assertions = new List<bool>();
-            assertions.Add(helper.IsDisplayed(pageObjects.SocialService.BeneficiaryName) && helper.IsEnabled(pageObjects.SocialService.BeneficiaryName));
-            assertions.Add(helper.IsDisplayed(pageObjects.SocialService.Position) && helper.IsEnabled(pageObjects.SocialService.Position));
-            assertions.Add(helper.IsDisplayed(pageObjects.SocialService.CreateBenefit) && helper.IsEnabled(pageObjects.SocialService.CreateBenefit));
-            assertions.Add(helper.IsDisplayed(pageObjects.SocialService.BackToBenefitList) && helper.IsEnabled(pageObjects.SocialService.BackToBenefitList));
-
-            Assert.True(assertions.TrueForAll(x => x == true));
-        }
-
-        [TestCase(Description = "Wyświetlenie formularza 'Członkowie rodziny'")]
-        public void ZFSS_DYM_4()
-        {
-            pageObjects.LoginPage.LogIn();
-            helper.Click(pageObjects.MainPage.AddBenefit);
-            helper.Click(pageObjects.MainPage.AddSocialServiceBenefit);
-            helper.Click(pageObjects.SocialService.AddRelatives);
-            Thread.Sleep(2000);
-            var assertions = new List<bool>();
-            assertions.Add(helper.IsDisplayed(pageObjects.Relatives.DegreeOfRelationship) && helper.IsEnabled(pageObjects.Relatives.DegreeOfRelationship));
-            assertions.Add(helper.IsDisplayed(pageObjects.Relatives.DateOfBirth) && helper.IsEnabled(pageObjects.Relatives.DateOfBirth));
-
-            Assert.True(assertions.TrueForAll(x => x == true));
-        }
-
-        [TestCase(Description = "Wyświetlenie formularza 'Nowy wniosek o pożyczkę mieszkaniową'")]
-        public void ZFSS_DYM_5()
-        {
-            pageObjects.LoginPage.LogIn();
-            helper.Click(pageObjects.MainPage.AddBenefit);
-            helper.Click(pageObjects.MainPage.AddHomeLoanBenefit);
-
-            var assertions = new List<bool>();
-            assertions.Add(helper.IsDisplayed(pageObjects.HomeLoan.BeneficiaryName) && helper.IsEnabled(pageObjects.HomeLoan.BeneficiaryName));
-            assertions.Add(helper.IsDisplayed(pageObjects.HomeLoan.LoanPurpose) && helper.IsEnabled(pageObjects.HomeLoan.LoanPurpose));
-            assertions.Add(helper.IsDisplayed(pageObjects.HomeLoan.CreateBenefit) && helper.IsEnabled(pageObjects.HomeLoan.CreateBenefit));
-            assertions.Add(helper.IsDisplayed(pageObjects.HomeLoan.BackToBenefitList) && helper.IsEnabled(pageObjects.HomeLoan.BackToBenefitList));
-
-            Assert.True(assertions.TrueForAll(x => x == true));
-        }
-
-        [TestCase(Description = "Wyświetlenie formularza 'Lista użytkowników")]
-        public void ZFSS_DYM_6()
-        {
-            pageObjects.LoginPage.LogIn();
-            helper.Click(pageObjects.MainPage.AdministrativePanel);
-            helper.Click(pageObjects.MainPage.UserList);
-
-            var assertions = new List<bool>();
-            assertions.Add(helper.IsDisplayed(pageObjects.UserList.Search) && helper.IsEnabled(pageObjects.UserList.Search));
-            assertions.Add(helper.IsDisplayed(pageObjects.UserList.Grid) && helper.IsEnabled(pageObjects.UserList.Grid));
-            Assert.True(assertions.TrueForAll(x => x == true));
-        }
-
-        [TestCase(Description = "Wyświetlenie formularza 'Rejestracja użytkownika")]
-        public void ZFSS_DYM_7()
-        {
-            pageObjects.LoginPage.LogIn();
-            helper.Click(pageObjects.MainPage.AdministrativePanel);
-            helper.Click(pageObjects.MainPage.AddUser);
-
-            var assertions = new List<bool>();
-            assertions.Add(helper.IsDisplayed(pageObjects.RegisterUser.Username) && helper.IsEnabled(pageObjects.RegisterUser.Username));
-            assertions.Add(helper.IsDisplayed(pageObjects.RegisterUser.PostCode) && helper.IsEnabled(pageObjects.RegisterUser.PostCode));
-            assertions.Add(helper.IsDisplayed(pageObjects.RegisterUser.UserGroup) && helper.IsEnabled(pageObjects.RegisterUser.UserGroup));
-            assertions.Add(helper.IsDisplayed(pageObjects.RegisterUser.Save) && helper.IsEnabled(pageObjects.RegisterUser.Save));
-
-            Assert.True(assertions.TrueForAll(x => x == true));
-        }
-
-        [TestCase(Description = "Wyświetlenie formularza 'Informacje o użytkowniku")]
-        public void ZFSS_DYM_8()
-        {
-            pageObjects.LoginPage.LogIn();
-            helper.Click(pageObjects.MainPage.AdministrativePanel);
-            helper.Click(pageObjects.MainPage.UserList);
-            helper.SetText(pageObjects.UserList.Search, Configuration.LOGIN);
-            helper.Click(pageObjects.UserList.Show);
-            Thread.Sleep(2000);
-
-            var assertions = new List<bool>();
-            assertions.Add(helper.IsDisplayed(pageObjects.UserInfo.Username) && !helper.IsEnabled(pageObjects.UserInfo.Username));
-            assertions.Add(helper.IsDisplayed(pageObjects.UserInfo.Firstname) && !helper.IsEnabled(pageObjects.UserInfo.Firstname));
-            assertions.Add(helper.IsDisplayed(pageObjects.UserInfo.Address) && !helper.IsEnabled(pageObjects.UserInfo.Address));
-            assertions.Add(helper.IsDisplayed(pageObjects.UserInfo.PhoneNumber) && !helper.IsEnabled(pageObjects.UserInfo.PhoneNumber));
-            Assert.True(assertions.TrueForAll(x => x == true));
-        }
-
-        [TestCase(Description = "Wyświetlenie formularza 'Edycja użytkownika'")]
-        public void ZFSS_DYM_9()
-        {
-            pageObjects.LoginPage.LogIn();
-            helper.Click(pageObjects.MainPage.AdministrativePanel);
-            helper.Click(pageObjects.MainPage.UserList);
-            helper.SetText(pageObjects.UserList.Search, Configuration.LOGIN);
-            helper.Click(pageObjects.UserList.Edit);
-            Thread.Sleep(2000);
-
-            var assertions = new List<bool>();
-            assertions.Add(helper.IsDisplayed(pageObjects.EditUser.Username) && helper.IsEnabled(pageObjects.EditUser.Username));
-            assertions.Add(helper.IsDisplayed(pageObjects.EditUser.PostCode) && helper.IsEnabled(pageObjects.EditUser.PostCode));
-            assertions.Add(helper.IsDisplayed(pageObjects.EditUser.UserGroup) && helper.IsEnabled(pageObjects.EditUser.UserGroup));
-            Assert.True(assertions.TrueForAll(x => x == true));
         }
     }
 }

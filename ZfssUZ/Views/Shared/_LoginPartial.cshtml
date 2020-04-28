@@ -14,35 +14,35 @@
             @if (UserManager.GetUserAsync(User).Result.UserGroupId == (int)eUserGroup.Administration)
             {
                 <li class="dropdown">
-                    <a href="#" id="administrativePanel" class="dropdown-toggle" data-toggle="collapse" role="button">
+                    <a href="#" class="dropdown-toggle" data-toggle="collapse" role="button">
                         @Localizer["Administrative panel"]
                         <span class="caret"></span>
                     </a>
 
                     <ul class="dropdown-menu" role="menu">
                         <li role="presentation">
-                            <a id="userList" asp-area="" asp-controller="User" asp-action="Index">@Localizer["User list"]</a>
+                            <a asp-area="" asp-controller="User" asp-action="Index">@Localizer["User list"]</a>
                         </li>
 
                         <li role="presentation">
-                            <a id="addUser" asp-area="" asp-controller="User" asp-action="Register">@Localizer["Add user"]</a>
+                            <a asp-area="" asp-controller="User" asp-action="Register">@Localizer["Add user"]</a>
                         </li>
                     </ul>
                 </li>
             }
             <li class="dropdown">
-                <a href="#" id="loggedUser" class="dropdown-toggle" data-toggle="collapse" role="button">
+                <a href="#" class="dropdown-toggle" data-toggle="collapse" role="button">
                     <b>@UserManager.GetUserAsync(User).Result.FirstName @UserManager.GetUserAsync(User).Result.LastName </b>
                     <span class="caret"></span>
                 </a>
 
                 <ul class="dropdown-menu" role="menu">
                     <li role="presentation">
-                        <a id="showProfile" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@Localizer["ShowProfile"]</a>
+                        <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@Localizer["ShowProfile"]</a>
                     </li>
 
                     <li role="presentation">
-                        <button type="submit" id="logout" class="btn btn-link navbar-btn navbar-link"><b>Wyloguj</b></button>
+                        <button type="submit" class="btn btn-link navbar-btn navbar-link"><b>Wyloguj</b></button>
                     </li>
                 </ul>
             </li>
