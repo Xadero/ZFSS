@@ -98,5 +98,11 @@ namespace ZfssUZ.AutomatedTests.PageObjects
         /// </summary>
         [FindsBy(How = How.Id, Using = "backToBenefitList")]
         public IWebElement BackToBenefitList { get; set; }
+
+        /// <summary>
+        /// Zapisz
+        /// </summary>
+        [FindsBy(How = How.Id, Using = "saveBenefit")]
+        public IWebElement SaveBenefit { get; set; }
     }
 }

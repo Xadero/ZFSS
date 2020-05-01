@@ -3,10 +3,11 @@ using SeleniumExtras.PageObjects;
 
 namespace ZfssUZ.AutomatedTests.PageObjects
 {
-    public class UserInfo
+    public class EditUserPage
     {
         private readonly IWebDriver driver;
-        public UserInfo(IWebDriver driver)
+
+        public EditUserPage(IWebDriver driver)
         {
             this.driver = driver;
 
@@ -79,5 +80,17 @@ namespace ZfssUZ.AutomatedTests.PageObjects
         /// </summary>
         [FindsBy(How = How.Id, Using = "IsLocked")]
         public IWebElement IsLocked { get; set; }
+
+        /// <summary>
+        /// Zapisz
+        /// </summary>
+        [FindsBy(How = How.Id, Using = "Save")]
+        public IWebElement Save { get; set; }
+
+        /// <summary>
+        /// Powrót
+        /// </summary>
+        [FindsBy(How = How.Id, Using = "Back")]
+        public IWebElement Back { get; set; }
     }
 }

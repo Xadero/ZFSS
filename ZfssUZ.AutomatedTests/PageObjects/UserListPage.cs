@@ -3,10 +3,10 @@ using SeleniumExtras.PageObjects;
 
 namespace ZfssUZ.AutomatedTests.PageObjects
 {
-    public class UserList
+    public class UserListPage
     {
         private readonly IWebDriver driver;
-        public UserList(IWebDriver driver)
+        public UserListPage(IWebDriver driver)
         {
             this.driver = driver;
 

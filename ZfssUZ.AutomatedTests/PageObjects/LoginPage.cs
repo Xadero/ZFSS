@@ -58,8 +58,8 @@ namespace ZfssUZ.AutomatedTests.PageObjects
         {
             if (pageObjectHelper.IsDisplayed(Login))
             {
-                pageObjectHelper.SetTextOnWebElement(Username, Configuration.LOGIN);
-                pageObjectHelper.SetTextOnWebElement(Password, Configuration.PASSWORD);
+                pageObjectHelper.SetText(Username, Configuration.LOGIN);
+                pageObjectHelper.SetText(Password, Configuration.PASSWORD);
                 pageObjectHelper.Click(Login);
                 pageObjectHelper.Wait(mainPage.Search);
                 if(!pageObjectHelper.IsDisplayed(mainPage.Search))

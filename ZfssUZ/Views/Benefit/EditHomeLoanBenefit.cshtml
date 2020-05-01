@@ -58,8 +58,8 @@
                 @Html.DropDownListFor(x => x.BenefitType.Id, Model.BenefitTypeList, new { @class = formControl, @disabled = "disabled" })
             </div>
             <div class="form-group">
-                <input type="submit" name="editHomeLoanBenefit" class="btn btn-default" value="@Localizer["Create"]" />
-                <a asp-action="Index" asp-controller="Benefit" class="btn btn-default">@Localizer["Back"]</a>
+                <input type="submit" id="saveBenefit" name="editHomeLoanBenefit" class="btn btn-default" value="@Localizer["Create"]" />
+                <a asp-action="Index" id="backToBenefitList" asp-controller="Benefit" class="btn btn-default">@Localizer["Back"]</a>
             </div>
         </form>
     </div>
