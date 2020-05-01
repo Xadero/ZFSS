@@ -31,7 +31,7 @@ namespace ZfssUZ.AutomatedTests.Tests.Smoke
         [SetUp]
         protected void TestSetUp()
         {
-            driver = new ChromeDriver(@"D:\Projekty\ZFSS\ZfssUZ.AutomatedTests");
+            driver = new ChromeDriver(@"G:\Projekty\ZFSS-new\ZFSS\ZfssUZ.AutomatedTests");
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(0.1);
             driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(30);
             driver.Manage().Timeouts().AsynchronousJavaScript = TimeSpan.FromSeconds(30);
@@ -58,7 +58,6 @@ namespace ZfssUZ.AutomatedTests.Tests.Smoke
             assertions.Add(helper.IsDisplayed(pageObjects.LoginPage.Username) && helper.IsDisplayed(pageObjects.LoginPage.Username));
             assertions.Add(helper.IsDisplayed(pageObjects.LoginPage.Password) && helper.IsDisplayed(pageObjects.LoginPage.Password));
             assertions.Add(helper.IsDisplayed(pageObjects.LoginPage.Login) && helper.IsDisplayed(pageObjects.LoginPage.Login));
-            assertions.Add(helper.IsDisplayed(pageObjects.LoginPage.ForgotPassword) && helper.IsDisplayed(pageObjects.LoginPage.ForgotPassword));
             Assert.True(assertions.TrueForAll(a => a == true));
         }
 
@@ -107,6 +106,7 @@ namespace ZfssUZ.AutomatedTests.Tests.Smoke
         [TestCase(Description = "Wyświetlenie formularza 'Kontakt z obsługą klienta ZFŚS'")]
         public void ZFSS_DYM_5()
         {
+            driver.Navigate().GoToUrl(Configuration.URL);
             pageObjects.LoginPage.LogIn();
             helper.Click(pageObjects.MainPage.Contact);
 
@@ -122,6 +122,7 @@ namespace ZfssUZ.AutomatedTests.Tests.Smoke
         [TestCase(Description = "Wyświetlenie formularza 'Członkowie rodziny'")]
         public void ZFSS_DYM_6()
         {
+            driver.Navigate().GoToUrl(Configuration.URL);
             pageObjects.LoginPage.LogIn();
             helper.Click(pageObjects.MainPage.AddBenefit);
             helper.Click(pageObjects.MainPage.AddSocialServiceBenefit);
@@ -137,6 +138,7 @@ namespace ZfssUZ.AutomatedTests.Tests.Smoke
         [TestCase(Description = "Wyświetlenie formularza 'Nowy wniosek o pożyczkę mieszkaniową'")]
         public void ZFSS_DYM_7()
         {
+            driver.Navigate().GoToUrl(Configuration.URL);
             pageObjects.LoginPage.LogIn();
             helper.Click(pageObjects.MainPage.AddBenefit);
             helper.Click(pageObjects.MainPage.AddHomeLoanBenefit);
@@ -153,6 +155,7 @@ namespace ZfssUZ.AutomatedTests.Tests.Smoke
         [TestCase(Description = "Wyświetlenie formularza 'Lista użytkowników")]
         public void ZFSS_DYM_8()
         {
+            driver.Navigate().GoToUrl(Configuration.URL);
             pageObjects.LoginPage.LogIn();
             helper.Click(pageObjects.MainPage.AdministrativePanel);
             helper.Click(pageObjects.MainPage.UserList);
@@ -166,6 +169,7 @@ namespace ZfssUZ.AutomatedTests.Tests.Smoke
         [TestCase(Description = "Wyświetlenie formularza 'Informacje o użytkowniku")]
         public void ZFSS_DYM_9()
         {
+            driver.Navigate().GoToUrl(Configuration.URL);
             pageObjects.LoginPage.LogIn();
             helper.Click(pageObjects.MainPage.AdministrativePanel);
             helper.Click(pageObjects.MainPage.UserList);
@@ -184,6 +188,7 @@ namespace ZfssUZ.AutomatedTests.Tests.Smoke
         [TestCase(Description = "Wyświetlenie formularza 'Edycja użytkownika'")]
         public void ZFSS_DYM_10()
         {
+            driver.Navigate().GoToUrl(Configuration.URL);
             pageObjects.LoginPage.LogIn();
             helper.Click(pageObjects.MainPage.AdministrativePanel);
             helper.Click(pageObjects.MainPage.UserList);
@@ -201,6 +206,7 @@ namespace ZfssUZ.AutomatedTests.Tests.Smoke
         [TestCase(Description = "Wyświetlenie górnego panelu aplikacji")]
         public void ZFSS_DYM_11()
         {
+            driver.Navigate().GoToUrl(Configuration.URL);
             pageObjects.LoginPage.LogIn();
             var assertions = new List<bool>();
             assertions.Add(helper.IsDisplayed(pageObjects.MainPage.AdministrativePanel) && helper.IsEnabled(pageObjects.MainPage.AdministrativePanel));
@@ -212,6 +218,7 @@ namespace ZfssUZ.AutomatedTests.Tests.Smoke
         [TestCase(Description = "Wyświetlenie formularza 'Edycja wniosku o świadczenie socjalne'")]
         public void ZFSS_DYM_12()
         {
+            driver.Navigate().GoToUrl(Configuration.URL);
             pageObjects.LoginPage.LogIn();
             helper.SetText(pageObjects.MainPage.Search, "Wniosek o świadczenie socjalne przekazany");
             helper.Click(pageObjects.MainPage.FirstRowInGrid);
@@ -228,8 +235,9 @@ namespace ZfssUZ.AutomatedTests.Tests.Smoke
         [TestCase(Description = "Wyświetlenie formularza 'Edycja wniosku o pożyczkę mieszkaniową'")]
         public void ZFSS_DYM_13()
         {
+            driver.Navigate().GoToUrl(Configuration.URL);
             pageObjects.LoginPage.LogIn();
-            helper.SetText(pageObjects.MainPage.Search, "Wniosek o pożyczkę miekszaniową przekazany");
+            helper.SetText(pageObjects.MainPage.Search, "Wniosek o pożyczkę mieszkaniową przekazany");
             helper.Click(pageObjects.MainPage.FirstRowInGrid);
             helper.Click(pageObjects.MainPage.EditBenefit);
             var assertions = new List<bool>();
@@ -244,6 +252,7 @@ namespace ZfssUZ.AutomatedTests.Tests.Smoke
         [TestCase(Description = "Wyświetlenie formularza 'Zarządzanie kontem")]
         public void ZFSS_DYM_14()
         {
+            driver.Navigate().GoToUrl(Configuration.URL);
             pageObjects.LoginPage.LogIn();
             helper.Click(pageObjects.MainPage.LoggedUser);
             helper.Click(pageObjects.MainPage.ShowProfile);

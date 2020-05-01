@@ -22,6 +22,7 @@ namespace ZfssUZ.AutomatedTests.PageObjects
         {
             this.driver = driver;
             MainPage = new MainPage(driver);
+            EditUser = new EditUserPage(driver);
             LoginPage = new LoginPage(driver);
             ContactPage = new ContactPage(driver);
             SocialService = new NewSocialServiceBenefitPage(driver);

@@ -76,7 +76,7 @@
                 @Html.DropDownListFor(x => x.UserGroup.Id, Model.UserGroupList, new { @class = "form-control" })
             </div>
             <div class="form-group">
-                <input type="submit" value="@Localizer["Save"]" class="btn btn-default" onclick="validateOnRegister()" />
+                <input type="submit" id="Save" value="@Localizer["Save"]" class="btn btn-default" onclick="validateOnRegister()" />
                 <a asp-action="Index" class="btn btn-default">@Localizer["Back"]</a>
             </div>
         </form>

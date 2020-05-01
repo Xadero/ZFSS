@@ -64,6 +64,8 @@ namespace ZfssUZ.AutomatedTests.PageObjects
                 pageObjectHelper.Wait(mainPage.Search);
                 if(!pageObjectHelper.IsDisplayed(mainPage.Search))
                     Assert.Fail("Wystąpił błąd logowania!");
+
+                pageObjectHelper.Click(mainPage.AcceptCookies);
             }
         }
     }
