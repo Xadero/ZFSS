@@ -14,29 +14,24 @@ namespace ZfssUZ.AutomatedTests.Tests.Smoke
         private PageObjectInitializer pageObjects;
         private PageObjectHelper helper;
 
-
         [OneTimeSetUp]
         protected void OneTimeSetUp()
         {
-            //Report.ReportOneTimeSetUp();
         }
 
         [OneTimeTearDown]
         protected void OneTimeTearDown()
         {
-            //Report.ReportOneTimeTearDown();
         }
 
 
         [SetUp]
         protected void TestSetUp()
         {
-            driver = new ChromeDriver(@"G:\Projekty\ZFSS-new\ZFSS\ZfssUZ.AutomatedTests");
+            driver = new ChromeDriver(Configuration.DRIVER);
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(0.1);
             driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(30);
             driver.Manage().Timeouts().AsynchronousJavaScript = TimeSpan.FromSeconds(30);
-
-            //Report.ReportSetUp(driver);
 
             helper = new PageObjectHelper(driver);
             pageObjects = new PageObjectInitializer(driver);
@@ -45,8 +40,6 @@ namespace ZfssUZ.AutomatedTests.Tests.Smoke
         [TearDown]
         protected void TestTearDown()
         {
-            //Report.ReportTearDown();
-
             driver.Quit();
         }
 
@@ -263,7 +256,7 @@ namespace ZfssUZ.AutomatedTests.Tests.Smoke
             assertions.Add(helper.IsDisplayed(pageObjects.AccountManagement.PhoneNumber) && helper.IsEnabled(pageObjects.AccountManagement.PhoneNumber));
             assertions.Add(helper.IsDisplayed(pageObjects.AccountManagement.UpdateProfile) && helper.IsEnabled(pageObjects.AccountManagement.UpdateProfile));
 
-            helper.Click(pageObjects.AccountManagement.Password);
+            helper.Click(pageObjects.AccountManagement.ChangeEmail);
             assertions.Add(helper.IsDisplayed(pageObjects.AccountManagement.Email) && !helper.IsEnabled(pageObjects.AccountManagement.Email));
             assertions.Add(helper.IsDisplayed(pageObjects.AccountManagement.NewEmail) && helper.IsEnabled(pageObjects.AccountManagement.NewEmail));
             assertions.Add(helper.IsDisplayed(pageObjects.AccountManagement.UpdateEmail) && helper.IsEnabled(pageObjects.AccountManagement.UpdateEmail));
@@ -272,7 +265,7 @@ namespace ZfssUZ.AutomatedTests.Tests.Smoke
             assertions.Add(helper.IsDisplayed(pageObjects.AccountManagement.OldPassword) && helper.IsEnabled(pageObjects.AccountManagement.OldPassword));
             assertions.Add(helper.IsDisplayed(pageObjects.AccountManagement.NewPassword) && helper.IsEnabled(pageObjects.AccountManagement.NewPassword));
             assertions.Add(helper.IsDisplayed(pageObjects.AccountManagement.ConfirmPassword) && helper.IsEnabled(pageObjects.AccountManagement.ConfirmPassword));
-            assertions.Add(helper.IsDisplayed(pageObjects.AccountManagement.UpdateProfile) && helper.IsEnabled(pageObjects.AccountManagement.UpdateProfile));
+            assertions.Add(helper.IsDisplayed(pageObjects.AccountManagement.UpdatePassowrd) && helper.IsEnabled(pageObjects.AccountManagement.UpdatePassowrd));
             Assert.True(assertions.TrueForAll(x => x == true));
         }
     }

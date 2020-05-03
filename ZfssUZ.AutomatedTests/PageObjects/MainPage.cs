@@ -154,5 +154,11 @@ namespace ZfssUZ.AutomatedTests.PageObjects
         /// </summary>
         [FindsBy(How = How.XPath, Using = ".//*[@id='benefitTable']//tbody//tr[1]")]
         public IWebElement FirstRowInGrid { get; set; }
+
+        /// <summary>
+        /// Okno wyświetlenia wniosku
+        /// </summary>
+        [FindsBy(How = How.Id, Using = "showBenefitModal")]
+        public IWebElement BenefitDialog { get; set; }
     }
 }

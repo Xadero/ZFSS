@@ -7,5 +7,6 @@
         public static string PASSWORD = "zaq1@WSX";
         public static string URL = "https://localhost:44366/";
         public static int TIMEOUT = 60;
+        public static string DRIVER = @"G:\Projekty\ZFSS-new\ZFSS\ZfssUZ.AutomatedTests";
     }
 }
