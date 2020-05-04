@@ -16,6 +16,7 @@ namespace ZfssUZ.AutomatedTests.PageObjects
         public RelativesPage Relatives;
         public EditUserPage EditUser;
         public AccountManagementPage AccountManagement;
+        public RejectionPage RejectionPage;
 
         private readonly IWebDriver driver;
         public PageObjectInitializer(IWebDriver driver)
@@ -32,6 +33,7 @@ namespace ZfssUZ.AutomatedTests.PageObjects
             UserInfo = new UserInfoPage(driver);
             Relatives = new RelativesPage(driver);
             AccountManagement = new AccountManagementPage(driver);
+            RejectionPage = new RejectionPage(driver);
         }
     }
 }

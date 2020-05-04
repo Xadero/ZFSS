@@ -156,6 +156,18 @@ namespace ZfssUZ.AutomatedTests.PageObjects
         public IWebElement FirstRowInGrid { get; set; }
 
         /// <summary>
+        /// Numer wniosku w wierwszym gridzie w siatce
+        /// </summary>
+        [FindsBy(How = How.XPath, Using = ".//*[@id='benefitTable']//tbody//tr[1]//td[4]")]
+        public IWebElement BenefitNumberFirstRow { get; set; }
+
+        /// <summary>
+        /// Status wniosku
+        /// </summary>
+        [FindsBy(How = How.XPath, Using = ".//*[@id='benefitTable']//tbody//tr[1]//td[9]")]
+        public IWebElement BenefitStatus { get; set; }
+
+        /// <summary>
         /// Okno wyświetlenia wniosku
         /// </summary>
         [FindsBy(How = How.Id, Using = "showBenefitModal")]

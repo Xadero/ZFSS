@@ -30,6 +30,7 @@ namespace ZfssUZ.AutomatedTests.PageObjects
         public void AcceptAlert()
         {
             driver.SwitchTo().Alert().Accept();
+            Sleep(1);
         }
 
         public bool IsDisplayed(IWebElement webElement)
