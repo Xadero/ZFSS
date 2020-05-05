@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using OpenQA.Selenium.Chrome;
 using System;
+using System.Collections.Generic;
 using ZfssUZ.AutomatedTests.PageObjects;
 
 namespace ZfssUZ.AutomatedTests.Tests.Functional
@@ -129,7 +130,7 @@ namespace ZfssUZ.AutomatedTests.Tests.Functional
             driver.Navigate().GoToUrl(Configuration.URL);
             pageObjects.LoginPage.LogIn();
 
-            helper.SetText(pageObjects.MainPage.Search, "Wniosek o pożyczkę mieszkaniową Przekazany");
+            helper.SetText(pageObjects.MainPage.Search, "Wniosek o świadczenie socjalne Przekazany");
             helper.Click(pageObjects.MainPage.FirstRowInGrid);
             helper.Click(pageObjects.MainPage.EditBenefit);
 
@@ -152,12 +153,12 @@ namespace ZfssUZ.AutomatedTests.Tests.Functional
             helper.Click(pageObjects.MainPage.FirstRowInGrid);
             var benefitNumber = pageObjects.MainPage.BenefitNumberFirstRow.Text;
             helper.Click(pageObjects.MainPage.DeleteBenefit);
-            helper.Sleep(1);
             helper.AcceptAlert();
             helper.AcceptAlert();
 
             helper.SetText(pageObjects.MainPage.Search, benefitNumber);
-            Assert.True(pageObjects.MainPage.FirstRowInGrid.GetAttribute("value") == "No matching records found");
+            helper.Sleep(1);
+            Assert.True(pageObjects.MainPage.FirstRowInGrid.Text == "No matching records found");
         }
 
         [TestCase]
@@ -192,7 +193,7 @@ namespace ZfssUZ.AutomatedTests.Tests.Functional
 
             helper.AcceptAlert();
 
-            Assert.IsTrue(pageObjects.MainPage.BenefitStatus.Text == "Zatwierdzony");
+            Assert.IsTrue(pageObjects.MainPage.BenefitStatus.Text == "Zaakceptowany");
         }
 
         [TestCase]
@@ -209,7 +210,7 @@ namespace ZfssUZ.AutomatedTests.Tests.Functional
             helper.Click(pageObjects.MainPage.FirstRowInGrid);
             helper.Click(pageObjects.MainPage.RejectBenefit);
 
-            helper.SetText(pageObjects.RejectionPage.RejectionReason, "Odrzeucenie przez test automatyczny");
+            helper.SetText(pageObjects.RejectionPage.RejectionReason, "Odrzucenie przez test automatyczny");
             helper.Click(pageObjects.RejectionPage.Save);
 
             helper.AcceptAlert();
@@ -243,6 +244,16 @@ namespace ZfssUZ.AutomatedTests.Tests.Functional
         {
             driver.Navigate().GoToUrl(Configuration.URL);
             pageObjects.LoginPage.LogIn();
+
+            helper.SetText(pageObjects.MainPage.Search, "Wniosek o pożyczkę mieszkaniową Przekazany");
+            helper.Click(pageObjects.MainPage.FirstRowInGrid);
+            helper.Click(pageObjects.MainPage.EditBenefit);
+            helper.SetText(pageObjects.HomeLoan.LoanPurpose, "3000");
+            helper.SetText(pageObjects.HomeLoan.Months, "12");
+            helper.Click(pageObjects.HomeLoan.SaveBenefit);
+            helper.AcceptAlert();
+            helper.Click(pageObjects.MainPage.FirstRowInGrid);
+            helper.Click(pageObjects.MainPage.ShowBenefit);
         }
 
         [TestCase]
@@ -251,6 +262,12 @@ namespace ZfssUZ.AutomatedTests.Tests.Functional
         {
             driver.Navigate().GoToUrl(Configuration.URL);
             pageObjects.LoginPage.LogIn();
+
+            helper.SetText(pageObjects.MainPage.Search, "Wniosek o pożyczkę mieszkaniową");
+            helper.Click(pageObjects.MainPage.FirstRowInGrid);
+            helper.Click(pageObjects.MainPage.ShowBenefit);
+            helper.Sleep(2);
+            Assert.True(helper.IsDisplayed(pageObjects.MainPage.BenefitDialog));
         }
 
         [TestCase]
@@ -259,51 +276,126 @@ namespace ZfssUZ.AutomatedTests.Tests.Functional
         {
             driver.Navigate().GoToUrl(Configuration.URL);
             pageObjects.LoginPage.LogIn();
+
+            helper.Click(pageObjects.MainPage.AdministrativePanel);
+            helper.Click(pageObjects.MainPage.UserList);
+            helper.SetText(pageObjects.UserList.Search, Configuration.LOGIN);
+            helper.Click(pageObjects.UserList.Edit);
+            var userToEdit = pageObjects.EditUser.Username.Text;
+
+            var postcode = "65-200";
+            var phonenumber = "987654321";
+            var city = "Miasto Testowe";
+
+            helper.SetText(pageObjects.EditUser.PostCode, postcode);
+            helper.SetText(pageObjects.EditUser.PhoneNumber, phonenumber);
+            helper.SetText(pageObjects.EditUser.City, city);
+
+            helper.Click(pageObjects.EditUser.Save);
+            helper.SetText(pageObjects.UserList.Edit, userToEdit);
+
+            var assertionList = new List<bool>();
+            assertionList.Add(pageObjects.UserInfo.PostCode.Text == postcode);
+            assertionList.Add(pageObjects.UserInfo.City.Text == city);
+            assertionList.Add(pageObjects.UserInfo.PhoneNumber.Text == phonenumber);
+            Assert.True(assertionList.TrueForAll(a => a == true));
         }
 
         [TestCase]
-        [Description("Usunięcie konta użytkownika")]
+        [Description("Wyświetlenie konta użytkownika")]
         public void ZFSS_FUN_14()
         {
             driver.Navigate().GoToUrl(Configuration.URL);
             pageObjects.LoginPage.LogIn();
+
+            helper.Click(pageObjects.MainPage.AdministrativePanel);
+            helper.Click(pageObjects.MainPage.UserList);
+
+            helper.Click(pageObjects.UserList.Show);
+            helper.Sleep(1);
+            Assert.IsTrue(helper.IsDisplayed(pageObjects.UserInfo.UserInfoWindow));
         }
 
         [TestCase]
-        [Description("Zablokowanie użytkownika")]
+        [Description("Usunięcie konta użytkownika")]
         public void ZFSS_FUN_15()
         {
             driver.Navigate().GoToUrl(Configuration.URL);
             pageObjects.LoginPage.LogIn();
+
+            helper.Click(pageObjects.MainPage.AdministrativePanel);
+            helper.Click(pageObjects.MainPage.UserList);
+            helper.SetText(pageObjects.UserList.Search, "TesterAutomatyczny");
+
+            helper.Click(pageObjects.UserList.Delete);
+            helper.AcceptAlert();
+            helper.AcceptAlert();
         }
 
         [TestCase]
-        [Description("Odblokowanie użytkownika")]
+        [Description("Zablokowanie użytkownika")]
         public void ZFSS_FUN_16()
         {
             driver.Navigate().GoToUrl(Configuration.URL);
             pageObjects.LoginPage.LogIn();
+
+            helper.Click(pageObjects.MainPage.AdministrativePanel);
+            helper.Click(pageObjects.MainPage.UserList);
+            helper.SetText(pageObjects.UserList.Search, "TesterAutomatyczny");
+            var userToLock = pageObjects.UserList.NameAndSurmane.Text;
+            helper.Click(pageObjects.UserList.Lock);
+            helper.SetText(pageObjects.UserList.Search, userToLock);
+            Assert.True(pageObjects.UserList.NameAndSurmane.Text == userToLock && helper.IsDisplayed(pageObjects.UserList.FirstLockedUserInGrid));
         }
 
         [TestCase]
-        [Description("Edycja danych aktualnie zalogowanego użytkownika")]
+        [Description("Odblokowanie użytkownika")]
         public void ZFSS_FUN_17()
         {
             driver.Navigate().GoToUrl(Configuration.URL);
             pageObjects.LoginPage.LogIn();
+
+            helper.Click(pageObjects.MainPage.AdministrativePanel);
+            helper.Click(pageObjects.MainPage.UserList);
+            helper.SetText(pageObjects.UserList.Search, "TesterAutomatyczny");
+            var userToLock = pageObjects.UserList.NameAndSurmane.Text;
+            helper.Click(pageObjects.UserList.Unlock);
+            helper.SetText(pageObjects.UserList.Search, userToLock);
+            Assert.True(pageObjects.UserList.NameAndSurmane.Text == userToLock);
         }
 
         [TestCase]
-        [Description("Wysłanie wiadomości do obsługi klienta")]
+        [Description("Edycja danych aktualnie zalogowanego użytkownika")]
         public void ZFSS_FUN_18()
         {
             driver.Navigate().GoToUrl(Configuration.URL);
             pageObjects.LoginPage.LogIn();
+
+            helper.Click(pageObjects.MainPage.LoggedUser);
+            helper.Click(pageObjects.MainPage.ShowProfile);
+
+            helper.SetText(pageObjects.AccountManagement.City, "Test");
+            helper.SetText(pageObjects.AccountManagement.PostCode, "55-100");
+            helper.SetText(pageObjects.AccountManagement.PhoneNumber, "123456789");
+            helper.Click(pageObjects.AccountManagement.UpdateProfile);
+            Assert.True(helper.IsDisplayed(pageObjects.AccountManagement.ProfileUpdated));
+        }
+
+        [TestCase]
+        [Description("Wysłanie wiadomości do obsługi klienta")]
+        public void ZFSS_FUN_19()
+        {
+            driver.Navigate().GoToUrl(Configuration.URL);
+            pageObjects.LoginPage.LogIn();
+
+            helper.Click(pageObjects.MainPage.Contact);
+            helper.SetText(pageObjects.ContactPage.EmailAddress, "TestAutomatyczny@gmail.com");
+            helper.SetText(pageObjects.ContactPage.MessageContent, "Wiadomość wygenerowana przez test automatyczny");
         }
 
         [TestCase]
         [Description("Wylogowanie z aplikacji ZFŚS")]
-        public void ZFSS_FUN_19()
+        public void ZFSS_FUN_20()
         {
             driver.Navigate().GoToUrl(Configuration.URL);
             pageObjects.LoginPage.LogIn();

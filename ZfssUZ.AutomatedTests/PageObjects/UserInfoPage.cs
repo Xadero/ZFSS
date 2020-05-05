@@ -15,6 +15,12 @@ namespace ZfssUZ.AutomatedTests.PageObjects
         }
 
         /// <summary>
+        /// Okno Informacje o użytkowniku
+        /// </summary>
+        [FindsBy(How = How.Id, Using = "exampleModal")]
+        public IWebElement UserInfoWindow { get; set; }
+
+        /// <summary>
         /// Nazwa użytkownika
         /// </summary>
         [FindsBy(How = How.Id, Using = "Username")]

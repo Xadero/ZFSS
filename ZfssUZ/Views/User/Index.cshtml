@@ -73,7 +73,7 @@
     </div>
 </div>
 @section Scripts {
-<script>
+    <script>
     $(document).ready(function () {
         var userNames = document.getElementsByName("username");
         var loggedUser = "@UserManager.GetUserAsync(User).Result.UserName";
@@ -92,7 +92,7 @@
 
         $("#userIndexTable").DataTable({
             dom: '<"top"i>rt<"bottom"flp><"clear">',
-            searching: false,
+            searching: true,
             language: {
                 info: "@Localizer["EntriesInfo"]",
                 lengthMenu: "@Localizer["RecordsPerPage"]",
@@ -104,11 +104,12 @@
             }
         });
 
-        $("#myInput").on("keyup", function () {
-            var value = $(this).val().toLowerCase();
-            $("#myTable tr").filter(function () {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
+        $("#userIndexTable_filter").hide();
+
+        var table = $('#userIndexTable').DataTable();
+
+        $('#myInput').on('keyup', function () {
+            table.search( this.value ).draw();
         });
 
         $("#userIndexTable tbody").on("click", "tr", function () {
@@ -165,5 +166,5 @@
             });
         }
     }
-</script>
+    </script>
 }

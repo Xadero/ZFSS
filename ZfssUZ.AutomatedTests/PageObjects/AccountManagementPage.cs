@@ -35,6 +35,12 @@ namespace ZfssUZ.AutomatedTests.PageObjects
 
         #region Profil
         /// <summary>
+        /// Profil został zaktualizowany
+        /// </summary>
+        [FindsBy(How = How.XPath, Using = ".//*[@class='alert alert-success alert-dismissible']")]
+        public IWebElement ProfileUpdated { get; set; }
+
+        /// <summary>
         /// Nazwa użytkownika
         /// </summary>
         [FindsBy(How = How.Id, Using = "Username")]

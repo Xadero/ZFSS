@@ -55,5 +55,23 @@ namespace ZfssUZ.AutomatedTests.PageObjects
         /// </summary>
         [FindsBy(How = How.Id, Using = "unlockUser")]
         public IWebElement Unlock { get; set; }
+
+        /// <summary>
+        /// Imię i nazwisko użytkownika
+        /// </summary>
+        [FindsBy(How = How.XPath, Using = ".//*[@id='myTable']//tr[1]/td[2]")]
+        public IWebElement NameAndSurmane { get; set; }
+
+        /// <summary>
+        /// Pierwszy wiersz w siatce
+        /// </summary>
+        [FindsBy(How = How.XPath, Using = ".//*[@style=''][1]")]
+        public IWebElement FirstUnlockUserInGrid { get; set; }
+
+        /// <summary>
+        /// Pierwszy wiersz w siatce
+        /// </summary>
+        [FindsBy(How = How.XPath, Using = ".//*[@style='background-color: red;'][1]")]
+        public IWebElement FirstLockedUserInGrid { get; set; }
     }
 }

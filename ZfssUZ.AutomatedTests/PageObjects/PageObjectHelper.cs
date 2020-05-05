@@ -29,6 +29,7 @@ namespace ZfssUZ.AutomatedTests.PageObjects
 
         public void AcceptAlert()
         {
+            Sleep(1);
             driver.SwitchTo().Alert().Accept();
             Sleep(1);
         }

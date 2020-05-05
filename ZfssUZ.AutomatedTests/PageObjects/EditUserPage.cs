@@ -84,7 +84,7 @@ namespace ZfssUZ.AutomatedTests.PageObjects
         /// <summary>
         /// Zapisz
         /// </summary>
-        [FindsBy(How = How.Id, Using = "Save")]
+        [FindsBy(How = How.Id, Using = "save")]
         public IWebElement Save { get; set; }
 
         /// <summary>
