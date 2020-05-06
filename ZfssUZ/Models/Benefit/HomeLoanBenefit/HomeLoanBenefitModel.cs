@@ -32,8 +32,7 @@ namespace ZfssUZ.Models.Benefit.HomeLoanBenefit
 
         [Display(Name = "Instalment")]
         [Required]
-        [DisplayFormat(DataFormatString = "{0:0.###}")]
-        public decimal Instalment { get; set; }
+        public string Instalment { get; set; }
 
         [Display(Name = "Months")]
         [Required(ErrorMessage = "ValidateMonhts")]

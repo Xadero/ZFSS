@@ -292,7 +292,7 @@ namespace ZfssUZ.Controllers
                         LoanCost = benefit.LoanCost,
                         LoanPurpose = benefit.LoanPurpose,
                         Months = benefit.Months,
-                        Instalment = benefit.Instalment,
+                        Instalment = benefit.Instalment.ToString().Replace(".", ","),
                         SubmittingUser = benefit.SubmittingUser != null ? new UserModel { Firstname = benefit.SubmittingUser.FirstName, LastName = benefit.SubmittingUser.LastName } : new UserModel()
                     };
 
@@ -368,7 +368,7 @@ namespace ZfssUZ.Controllers
                         BeneficiaryPhoneNumber = benefit.BeneficiaryPhoneNumber,
                         BenefitNumber = benefit.BenefitNumber,
                         Id = benefit.Id,
-                        Instalment = benefit.Instalment,
+                        Instalment = benefit.Instalment.ToString().Replace(".", ","),
                         LoanPurpose = benefit.LoanPurpose,
                         Months = benefit.Months,
                         BenefitType = mapper.Map<BenefitTypeModel>(benefit.BenefitType),
@@ -436,7 +436,7 @@ namespace ZfssUZ.Controllers
                 LoanCost = model.LoanCost,
                 LoanPurpose = model.LoanPurpose,
                 Months = model.Months,
-                Instalment = model.Instalment,
+                Instalment = decimal.Parse(model.Instalment.Replace(".", ",")),
                 BenefitNumber = model.BenefitNumber,
             };
 
