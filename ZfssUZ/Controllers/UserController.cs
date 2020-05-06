@@ -146,7 +146,7 @@ namespace ZfssUZ.Controllers
                 Id = model.Id,
                 DateOfBirth = model.DateOfBirth,
                 Address = model.Address,
-                City = model.Address,
+                City = model.City,
                 PostCode = model.PostCode,
                 UserName = model.Username,
                 UserGroupId = model.UserGroup.Id

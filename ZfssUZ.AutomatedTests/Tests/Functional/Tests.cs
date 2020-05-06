@@ -292,12 +292,13 @@ namespace ZfssUZ.AutomatedTests.Tests.Functional
             helper.SetText(pageObjects.EditUser.City, city);
 
             helper.Click(pageObjects.EditUser.Save);
-            helper.SetText(pageObjects.UserList.Edit, userToEdit);
+            helper.SetText(pageObjects.UserList.Search, userToEdit);
+            helper.Click(pageObjects.UserList.Show);
 
             var assertionList = new List<bool>();
-            assertionList.Add(pageObjects.UserInfo.PostCode.Text == postcode);
-            assertionList.Add(pageObjects.UserInfo.City.Text == city);
-            assertionList.Add(pageObjects.UserInfo.PhoneNumber.Text == phonenumber);
+            assertionList.Add(pageObjects.UserInfo.PostCode.GetAttribute("value") == postcode);
+            assertionList.Add(pageObjects.UserInfo.City.GetAttribute("value") == city);
+            assertionList.Add(pageObjects.UserInfo.PhoneNumber.GetAttribute("value") == phonenumber);
             Assert.True(assertionList.TrueForAll(a => a == true));
         }
 

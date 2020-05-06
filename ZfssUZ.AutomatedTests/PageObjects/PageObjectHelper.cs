@@ -18,20 +18,19 @@ namespace ZfssUZ.AutomatedTests.PageObjects
             this.driver = driver;
             wait = new DefaultWait<IWebDriver>(driver);
             wait.IgnoreExceptionTypes(typeof(NoSuchElementException));
-            wait.PollingInterval = TimeSpan.FromSeconds(0.1);
             wait.Timeout = TimeSpan.FromSeconds(Configuration.TIMEOUT);
         }
 
         public void Sleep(int seconds)
         {
-            Thread.Sleep(seconds * 1000);
+            Thread.Sleep(seconds * 300);
         }
 
         public void AcceptAlert()
         {
-            Sleep(1);
+            Sleep(Configuration.WAIT);
             driver.SwitchTo().Alert().Accept();
-            Sleep(1);
+            Sleep(Configuration.WAIT);
         }
 
         public bool IsDisplayed(IWebElement webElement)
@@ -97,10 +96,10 @@ namespace ZfssUZ.AutomatedTests.PageObjects
             return this;
         }
 
-        public void Wait(IWebElement element, int time = 60)
+        public void Wait(IWebElement element, int time = 30)
         {
             while (!IsDisplayed(element) && time-- > 0)
-                Sleep(1);
+                Sleep(Configuration.WAIT);
 
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(element));
             wait.Until(x => element);
